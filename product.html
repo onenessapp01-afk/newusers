@@ -546,6 +546,55 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
   }
 }
 
+
+
+/* ==========================================================
+   ADMIN-CONTROLLED RETAILER SPLASH
+   ========================================================== */
+.on-splash-runtime{
+  position:fixed;inset:0;z-index:25000;display:grid;place-items:center;padding:18px;
+  background:rgba(19,5,9,.72);backdrop-filter:blur(8px)
+}
+.on-splash-runtime[hidden]{display:none!important}
+.on-splash-runtime-card{
+  width:min(450px,94vw);max-height:92dvh;overflow:hidden;
+  border:1px solid rgba(237,203,120,.28);border-radius:18px;
+  background:#081d34;box-shadow:0 30px 100px rgba(0,0,0,.42)
+}
+.on-splash-runtime-media{position:relative;display:grid;place-items:center;background:#081d34}
+.on-splash-runtime-media img{width:100%;max-height:76dvh;object-fit:contain;object-position:center;background:#081d34}
+.on-splash-runtime-bar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;
+  padding:10px 11px;background:#081d34
+}
+.on-splash-runtime-copy{min-width:0}
+.on-splash-runtime-copy b{
+  display:block;color:#ffe19b;font-size:12px;font-weight:850;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.on-splash-runtime-copy span{
+  display:block;margin-top:3px;color:#c4c9c8;font-size:8px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.on-splash-runtime-actions{display:flex;gap:5px}
+.on-splash-runtime-actions button,.on-splash-runtime-actions a{
+  min-height:32px;display:flex;align-items:center;justify-content:center;
+  padding:5px 8px;border:1px solid rgba(255,230,171,.20);border-radius:7px;
+  background:rgba(255,255,255,.07);color:#ffe7b0;font-size:8px;font-weight:850
+}
+.on-splash-runtime-actions .primary{
+  background:#d5a83f!important;border-color:#d5a83f!important;color:#2d1909!important
+}
+.on-splash-runtime-dots{
+  display:flex;justify-content:center;gap:4px;padding:0 10px 9px;background:#081d34
+}
+.on-splash-runtime-dot{width:5px;height:5px;border-radius:50%;background:#566470}
+.on-splash-runtime-dot.active{width:15px;border-radius:999px;background:#d5a83f}
+@media(max-width:560px){
+  .on-splash-runtime{padding:0;align-items:end}
+  .on-splash-runtime-card{width:100%;max-width:none;border:0;border-radius:18px 18px 0 0}
+}
+
 </style>
 </head>
 <body data-page="product">
@@ -1281,5 +1330,136 @@ load()
 
 })();
 </script>
+
+<script>
+(()=>{
+'use strict';
+const SPLASH_URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
+const SPLASH_KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+const splashPage=document.body?.dataset?.page||'home';
+
+function splashRevision(p){
+  return String(p?.updated_at||p?.created_at||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,40);
+}
+function splashStorageKey(p){
+  // Revision is intentional: editing/replacing an existing poster should allow the new version to show again.
+  return `oneness-splash:${p.id}:${splashRevision(p)}`;
+}
+function splashSeen(p){
+  const key=splashStorageKey(p),freq=p.display_frequency||'once_per_session';
+  if(freq==='always')return false;
+  if(freq==='once_per_session')return sessionStorage.getItem(key)==='1';
+  const value=localStorage.getItem(key);
+  if(freq==='once_per_account')return value==='1';
+  if(freq==='once_per_day')return value===new Date().toISOString().slice(0,10);
+  return false;
+}
+function markSplashSeen(p){
+  const key=splashStorageKey(p),freq=p.display_frequency||'once_per_session';
+  if(freq==='once_per_session')sessionStorage.setItem(key,'1');
+  else if(freq==='once_per_account')localStorage.setItem(key,'1');
+  else if(freq==='once_per_day')localStorage.setItem(key,new Date().toISOString().slice(0,10));
+}
+function preloadSplash(url,timeout=4800){
+  return new Promise(resolve=>{
+    if(!url){resolve(false);return}
+    const image=new Image();let finished=false;
+    const done=v=>{if(finished)return;finished=true;resolve(v)};
+    image.onload=()=>done(true);image.onerror=()=>done(false);image.src=url;
+    setTimeout(()=>done(false),timeout);
+  });
+}
+async function showSplash(rows){
+  let queue=(Array.isArray(rows)?rows:[]).filter(x=>x?.image_url&&!splashSeen(x));
+  while(queue.length&&!(await preloadSplash(queue[0].image_url))){
+    markSplashSeen(queue[0]);queue.shift();
+  }
+  if(!queue.length)return;
+
+  let index=0;
+  const overlay=document.createElement('section');
+  overlay.className='on-splash-runtime';
+  overlay.innerHTML=`<div class="on-splash-runtime-card">
+    <div class="on-splash-runtime-media"><img alt=""></div>
+    <div class="on-splash-runtime-bar">
+      <div class="on-splash-runtime-copy"><b></b><span></span></div>
+      <div class="on-splash-runtime-actions"></div>
+    </div>
+    <div class="on-splash-runtime-dots"></div>
+  </div>`;
+  document.body.append(overlay);
+
+  const image=overlay.querySelector('img');
+  const title=overlay.querySelector('.on-splash-runtime-copy b');
+  const caption=overlay.querySelector('.on-splash-runtime-copy span');
+  const actions=overlay.querySelector('.on-splash-runtime-actions');
+  const dots=overlay.querySelector('.on-splash-runtime-dots');
+
+  const close=()=>{
+    overlay.remove();
+  };
+  const draw=async()=>{
+    const p=queue[index];
+    if(!p)return close();
+
+    if(index>0&&!(await preloadSplash(p.image_url))){
+      markSplashSeen(p);
+      if(index<queue.length-1){index++;return draw()}
+      return close();
+    }
+
+    image.src=p.image_url;
+    image.alt=p.alt_text||p.title||'ONeness';
+    title.textContent=p.title||'ONeness';
+    caption.textContent=p.caption||'';
+    actions.innerHTML='';
+
+    if(p.dismissible!==false){
+      const skip=document.createElement('button');
+      skip.type='button';skip.textContent='Skip';
+      skip.onclick=()=>{markSplashSeen(p);close()};
+      actions.append(skip);
+    }
+    if(p.button_url){
+      const link=document.createElement('a');
+      link.href=p.button_url;link.textContent=p.button_label||'Open';
+      actions.append(link);
+    }
+    const next=document.createElement('button');
+    next.type='button';next.className='primary';
+    next.textContent=index===queue.length-1?'Continue':'Next';
+    next.onclick=()=>{
+      markSplashSeen(p);
+      if(index<queue.length-1){index++;draw()}else close();
+    };
+    actions.append(next);
+
+    dots.innerHTML=queue.map((_,i)=>`<span class="on-splash-runtime-dot ${i===index?'active':''}"></span>`).join('');
+    if(index<queue.length-1)preloadSplash(queue[index+1].image_url).catch(()=>{});
+  };
+  draw();
+}
+async function runRetailerSplash(){
+  try{
+    if(!window.supabase?.createClient)return;
+    const client=window.supabase.createClient(SPLASH_URL,SPLASH_KEY,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'oneness-retailer'}
+    });
+    const {data,error}=await client.rpc('retailer_splash_feed',{p_page:splashPage});
+    if(error){
+      console.warn('ONeness splash feed:',error.message||error);
+      return;
+    }
+    const rows=Array.isArray(data)?data:Array.isArray(data?.items)?data.items:[];
+    await showSplash(rows);
+  }catch(err){
+    console.warn('ONeness splash:',err);
+  }
+}
+window.ONenessSplash={run:runRetailerSplash};
+setTimeout(runRetailerSplash,650);
+})();
+</script>
+
 </body>
 </html>
