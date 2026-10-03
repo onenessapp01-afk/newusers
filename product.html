@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#68141d">
+<title>ONeness · Product</title>
+<style>
+:root{
+  --bg:#f5f6f1;--surface:#fff;--ink:#14251f;--muted:#78857e;
+  --green:#17634c;--green-dark:#104d3c;--green-soft:#eaf3ec;
+  --lime:#dff2a8;--orange:#efaa61;--orange-soft:#fff0df;
+  --line:#e3e9e3;--danger:#b34235;--shadow:0 15px 45px rgba(20,55,43,.08);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}[hidden]{display:none!important}
+.shell{width:min(1160px,100%);margin:auto}.app{min-height:100vh;padding-bottom:110px}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(245,246,241,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,233,227,.9)}
+.topbar-inner{height:64px;padding:8px 13px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.back{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:white;display:grid;place-items:center;font-size:18px}
+.brand{text-align:center}.brand strong{display:block;font-size:13px}.brand span{display:block;font-size:8px;color:var(--muted);margin-top:1px}
+.cart-btn{position:relative;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:white;display:grid;place-items:center}
+.badge{position:absolute;right:-4px;top:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:var(--orange);border:2px solid var(--bg);display:grid;place-items:center;font-size:8px;font-weight:900}
+
+.main{padding:14px 14px 36px}
+.product-layout{display:grid;gap:18px}
+.gallery-card,.detail-card,.section-card{background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.gallery-main{height:340px;background:#f0f3ed;display:grid;place-items:center;position:relative}
+.gallery-main img{width:100%;height:100%;object-fit:contain;background:white}
+.gallery-placeholder{font-size:54px;color:#9ba69f}
+.image-count{position:absolute;right:12px;bottom:12px;padding:6px 9px;border-radius:999px;background:rgba(20,37,31,.82);color:#fff;font-size:8px;font-weight:850}
+.thumbs{display:flex;gap:8px;overflow:auto;padding:10px;scrollbar-width:none}
+.thumbs::-webkit-scrollbar{display:none}
+.thumb{flex:0 0 58px;width:58px;height:58px;border-radius:11px;border:1px solid var(--line);background:#f2f4ef;overflow:hidden;padding:0}
+.thumb.active{border:2px solid var(--green)}
+.thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
+
+.detail-card{padding:18px}
+.category{font-size:8px;color:#8a968f;text-transform:uppercase;letter-spacing:.7px;font-weight:850}
+.title{font-size:26px;line-height:1.08;letter-spacing:-.9px;margin:5px 0 8px}
+.desc{font-size:10px;line-height:1.6;color:var(--muted);margin:0}
+.price-block{margin-top:17px;padding:15px;border-radius:16px;background:#f7f9f5}
+.price-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.wholesale{font-size:30px;font-weight:950;color:var(--green);letter-spacing:-1px}
+.mrp{font-size:11px;color:#939d97;text-decoration:line-through}
+.save-chip{padding:5px 8px;border-radius:999px;background:var(--orange-soft);color:#985a22;font-size:8px;font-weight:900}
+.margin-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.profit-chip,.margin-chip{display:inline-flex;padding:6px 8px;border-radius:999px;font-size:8px;font-weight:900}
+.profit-chip{background:var(--green-soft);color:var(--green)}
+.margin-chip{background:#edf0ff;color:#49559d}
+
+.stock-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.stock-box{padding:10px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.stock-box span{display:block;font-size:7px;color:var(--muted)}
+.stock-box strong{display:block;font-size:10px;margin-top:3px}
+
+.qty-panel{margin-top:18px;padding:15px;border:1px solid var(--line);border-radius:16px}
+.qty-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.qty-head strong{font-size:11px}.qty-head span{font-size:8px;color:var(--muted)}
+.qty-control{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;height:45px;border:1px solid #b9cdbf;border-radius:13px;overflow:hidden;margin-top:10px}
+.qty-control button{border:0;background:#eff6ef;color:var(--green);font-size:18px;font-weight:950}
+.qty-control strong{display:grid;place-items:center;font-size:13px}
+.unlock{margin-top:10px;padding:10px 11px;border-radius:12px;background:#fff7e7;color:#785d3b;font-size:8px;line-height:1.45}
+.unlock strong{color:#51391d}
+.total-card{margin-top:12px;padding:13px;border-radius:14px;background:#173c31;color:#fff}
+.total-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.total-grid span{display:block;font-size:7px;color:#c8dbd2}
+.total-grid strong{display:block;font-size:14px;margin-top:2px}
+.total-profit{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:10px;font-size:9px}
+.total-profit b{color:var(--lime)}
+
+.bulk-section{margin-top:18px}
+.bulk-section h3,.section-card h3{font-size:14px;margin:0}
+.bulk-section p,.section-card .sub{font-size:8px;color:var(--muted);margin:3px 0 0}
+.bulk-table{display:grid;gap:7px;margin-top:10px}
+.slab{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:7px;padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.slab.active{border-color:#8caf9b;background:#edf6ef}
+.slab span{font-size:8px;color:var(--muted)}.slab strong{font-size:9px}
+.slab .best{color:#986025}
+
+.section-card{padding:16px;margin-top:14px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.info{padding:11px;border-radius:12px;background:#f6f8f4}
+.info span{display:block;font-size:7px;color:var(--muted)}
+.info strong{display:block;font-size:9px;margin-top:3px}
+.description-full{font-size:10px;color:#5f6b65;line-height:1.65;margin-top:10px;white-space:pre-line}
+
+.similar{display:flex;gap:10px;overflow:auto;scrollbar-width:none;margin-top:11px;padding-bottom:3px}
+.similar::-webkit-scrollbar{display:none}
+.sim-card{flex:0 0 165px;background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer}
+.sim-pic{height:120px;background:#f0f3ed;display:grid;place-items:center}
+.sim-pic img{width:100%;height:100%;object-fit:contain;background:#fff}
+.sim-body{padding:10px}
+.sim-body strong{display:block;font-size:10px;line-height:1.25}
+.sim-body span{display:block;font-size:8px;color:var(--muted);margin-top:4px}
+.sim-body b{display:block;color:var(--green);font-size:12px;margin-top:4px}
+
+.action-bar{position:fixed;z-index:70;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);padding:9px 11px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(17px);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;display:grid;grid-template-columns:1fr 1.2fr;gap:8px}
+.secondary,.primary{height:48px;border-radius:13px;font-size:10px;font-weight:900}
+.secondary{background:#fff;border:1px solid #aac2b6;color:var(--green)}
+.primary{background:var(--green);border:1px solid var(--green);color:#fff}
+.primary:disabled,.secondary:disabled{opacity:.5;cursor:not-allowed}
+.toast{position:fixed;z-index:100;left:50%;bottom:82px;transform:translate(-50%,15px);opacity:0;background:#17382e;color:#fff;padding:10px 13px;border-radius:12px;font-size:9px;transition:.2s;max-width:88vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.error{padding:30px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;color:var(--muted);font-size:9px}
+.error strong{display:block;color:var(--ink);font-size:13px;margin-bottom:6px}
+.retry{margin-top:10px;border:0;background:var(--ink);color:#fff;border-radius:10px;padding:9px 12px;font-size:9px;font-weight:850}
+
+@media(min-width:760px){
+  .main{padding:24px}
+  .product-layout{grid-template-columns:1fr 1fr;align-items:start}
+  .gallery-card{position:sticky;top:86px}
+  .gallery-main{height:520px}
+  .title{font-size:36px}
+  .detail-card{padding:24px}
+}
+@media(min-width:1000px){
+  .main{padding:30px 24px 48px}
+  .action-bar{bottom:12px;border-radius:20px;border-bottom:1px solid var(--line)}
+  .app{padding-bottom:125px}
+  .toast{bottom:100px}
+}
+</style>
+<link rel="stylesheet" href="retailer-ui.css">
+</head>
+<body data-page="product">
+<div class="app">
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <button class="back" id="backBtn">←</button>
+    <div class="brand"><strong>ONeness</strong><span>Product details</span></div>
+    <button class="cart-btn" id="cartBtn">🛒<span id="cartCount" class="badge" hidden>0</span></button>
+  </div>
+</header>
+
+<main class="shell main">
+  <div id="pageContent">
+    <div class="product-layout">
+      <section class="gallery-card">
+        <div id="galleryMain" class="gallery-main"><div class="gallery-placeholder">◇</div></div>
+        <div id="thumbs" class="thumbs"></div>
+      </section>
+
+      <section class="detail-card">
+        <div id="category" class="category">Loading</div>
+        <h1 id="title" class="title">Product</h1>
+        <p id="desc" class="desc">Loading product details…</p>
+
+        <div class="price-block">
+          <div class="price-row">
+            <span id="unitPrice" class="wholesale">₹0</span>
+            <span id="mrp" class="mrp">MRP ₹0</span>
+            <span id="saveChip" class="save-chip">Save ₹0</span>
+          </div>
+          <div class="margin-row">
+            <span id="profitChip" class="profit-chip">Potential +₹0/unit</span>
+            <span id="marginChip" class="margin-chip">0% margin</span>
+          </div>
+        </div>
+
+        <div class="stock-row">
+          <div class="stock-box"><span>Stock</span><strong id="stockText">—</strong></div>
+          <div class="stock-box"><span>Minimum qty</span><strong id="minQtyText">—</strong></div>
+          <div class="stock-box"><span>Quantity step</span><strong id="stepText">—</strong></div>
+        </div>
+
+        <div class="qty-panel">
+          <div class="qty-head">
+            <strong>Select quantity</strong>
+            <span id="qtyHint">Minimum quantity applies</span>
+          </div>
+          <div class="qty-control">
+            <button id="minusBtn">−</button>
+            <strong id="qtyValue">1</strong>
+            <button id="plusBtn">+</button>
+          </div>
+          <div id="unlockBox" class="unlock" hidden></div>
+
+          <div class="total-card">
+            <div class="total-grid">
+              <div><span>Current unit price</span><strong id="currentUnitPrice">₹0</strong></div>
+              <div><span>Order total</span><strong id="orderTotal">₹0</strong></div>
+            </div>
+            <div class="total-profit">
+              <span>Potential retail profit</span>
+              <b id="orderProfit">₹0</b>
+            </div>
+          </div>
+        </div>
+
+        <div id="bulkSection" class="bulk-section" hidden>
+          <h3>Quantity pricing</h3>
+          <p>Unit price changes automatically when you reach a pricing slab.</p>
+          <div id="bulkTable" class="bulk-table"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="section-card">
+      <h3>Product information</h3>
+      <div class="info-grid">
+        <div class="info"><span>Category</span><strong id="infoCategory">—</strong></div>
+        <div class="info"><span>Unit</span><strong id="infoUnit">—</strong></div>
+        <div class="info"><span>Wholesale price</span><strong id="infoPrice">—</strong></div>
+        <div class="info"><span>MRP</span><strong id="infoMrp">—</strong></div>
+      </div>
+      <div id="descriptionFull" class="description-full"></div>
+    </section>
+
+    <section id="similarSection" class="section-card" hidden>
+      <h3>Similar products</h3>
+      <div class="sub">More products from the same category.</div>
+      <div id="similarProducts" class="similar"></div>
+    </section>
+  </div>
+</main>
+
+<div class="action-bar">
+  <button id="addCartBtn" class="secondary">Add to cart</button>
+  <button id="buyNowBtn" class="primary">Buy now</button>
+</div>
+
+<div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(()=>{
+'use strict';
+
+const URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
+const KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+
+const db=window.supabase.createClient(URL,KEY,{
+  auth:{
+    persistSession:true,
+    autoRefreshToken:true,
+    detectSessionInUrl:true,
+    storageKey:'oneness-retailer'
+  }
+});
+
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+
+const money=p=>new Intl.NumberFormat('en-IN',{
+  style:'currency',currency:'INR',maximumFractionDigits:0
+}).format(Number(p||0)/100);
+
+const state={
+  product:null,
+  similar:[],
+  qty:1,
+  selectedImage:0,
+  cart:readCart()
+};
+
+function readCart(){
+  try{
+    const x=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');
+    return Array.isArray(x)?x:[];
+  }catch{return[]}
+}
+function saveCart(){
+  localStorage.setItem('oneness-retailer-cart',JSON.stringify(state.cart));
+  updateCartBadge();
+}
+function cartCount(){
+  return state.cart.reduce((n,x)=>n+Number(x.qty||0),0);
+}
+function updateCartBadge(){
+  const n=cartCount();
+  $('cartCount').textContent=n>99?'99+':n;
+  $('cartCount').hidden=n===0;
+}
+function toast(t){
+  const e=$('toast');
+  e.textContent=t;
+  e.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t=setTimeout(()=>e.classList.remove('show'),2300);
+}
+function productId(){
+  const id=Number(new URLSearchParams(location.search).get('id'));
+  return Number.isInteger(id)&&id>0?id:null;
+}
+function imagesOf(p){
+  return Array.isArray(p?.images)?p.images.filter(Boolean):[];
+}
+function minQty(){
+  return Math.max(1,Number(state.product?.min_qty||1));
+}
+function stepQty(){
+  return Math.max(1,Number(state.product?.qty_step||1));
+}
+function stock(){
+  return Math.max(0,Number(state.product?.stock||0));
+}
+function rules(){
+  return Array.isArray(state.product?.bulk_rules)
+    ?state.product.bulk_rules.slice().sort((a,b)=>Number(a.min_qty||0)-Number(b.min_qty||0))
+    :[];
+}
+function currentUnitPrice(qty=state.qty){
+  let price=Number(state.product?.price_paise||0);
+  for(const r of rules()){
+    if(qty>=Number(r.min_qty||0))price=Number(r.price_paise||price);
+  }
+  return price;
+}
+function potentialPerUnit(qty=state.qty){
+  return Math.max(0,Number(state.product?.mrp_paise||0)-currentUnitPrice(qty));
+}
+function marginPercent(qty=state.qty){
+  const mrp=Number(state.product?.mrp_paise||0);
+  return mrp?Math.max(0,Math.round(potentialPerUnit(qty)*100/mrp)):0;
+}
+function savePerUnit(qty=state.qty){
+  return Math.max(0,Number(state.product?.mrp_paise||0)-currentUnitPrice(qty));
+}
+function nextSlab(){
+  return rules().find(r=>Number(r.min_qty||0)>state.qty)||null;
+}
+function unavailable(){
+  return stock()<minQty();
+}
+
+async function load(){
+  const id=productId();
+  if(!id){
+    showError('Product ID is missing.');
+    return;
+  }
+
+  const {data:{user},error:uerr}=await db.auth.getUser();
+  if(uerr||!user){
+    location.replace('index.html');
+    return;
+  }
+
+  const {data,error}=await db.rpc('retailer_product_detail',{p_product_id:id});
+  if(error)throw error;
+
+  if(data?.ok!==true){
+    if(data?.reason==='not_authenticated'){
+      location.replace('index.html');
+      return;
+    }
+    if(data?.reason==='not_retailer'){
+      await db.auth.signOut({scope:'local'});
+      location.replace('index.html');
+      return;
+    }
+    if(data?.reason==='blocked'){
+      showError('Your retailer account is blocked.');
+      return;
+    }
+    if(data?.reason==='not_found'){
+      showError('This product is unavailable or has been removed.');
+      return;
+    }
+    showError('Product could not be loaded.');
+    return;
+  }
+
+  state.product=data.product;
+  state.similar=Array.isArray(data.similar_products)?data.similar_products:[];
+  state.qty=Math.min(stock(),minQty());
+
+  if(unavailable())state.qty=minQty();
+
+  render();
+}
+
+function render(){
+  const p=state.product;
+  document.title=`${p.title} · ONeness`;
+
+  $('category').textContent=p.category_name||'Wholesale';
+  $('title').textContent=p.title||'Product';
+  $('desc').textContent=(p.description||'').trim()||`${p.category_name||'Wholesale'} product for retailer purchase.`;
+
+  $('mrp').textContent='MRP '+money(p.mrp_paise);
+  $('stockText').textContent=unavailable()?'Unavailable':`${stock()} ${p.unit||'units'}`;
+  $('minQtyText').textContent=`${minQty()} ${p.unit||'units'}`;
+  $('stepText').textContent=`${stepQty()} ${p.unit||'units'}`;
+
+  $('infoCategory').textContent=p.category_name||'—';
+  $('infoUnit').textContent=p.unit||'—';
+  $('infoPrice').textContent=money(p.price_paise);
+  $('infoMrp').textContent=money(p.mrp_paise);
+  $('descriptionFull').textContent=(p.description||'').trim()||'No additional description is available for this product yet.';
+
+  renderGallery();
+  renderPricing();
+  renderBulk();
+  renderSimilar();
+  updateActions();
+  updateCartBadge();
+}
+
+function renderGallery(){
+  const imgs=imagesOf(state.product);
+  const main=$('galleryMain');
+  const thumbs=$('thumbs');
+
+  if(!imgs.length){
+    main.innerHTML='<div class="gallery-placeholder">◇</div>';
+    thumbs.innerHTML='';
+    return;
+  }
+
+  const index=Math.min(state.selectedImage,imgs.length-1);
+  main.innerHTML=`<img src="${esc(imgs[index])}" alt="${esc(state.product.title)}"><span class="image-count">${index+1}/${imgs.length}</span>`;
+
+  thumbs.innerHTML=imgs.map((src,i)=>`
+    <button class="thumb ${i===index?'active':''}" data-image="${i}">
+      <img src="${esc(src)}" alt="">
+    </button>`).join('');
+
+  for(const b of thumbs.querySelectorAll('[data-image]')){
+    b.onclick=()=>{
+      state.selectedImage=Number(b.dataset.image);
+      renderGallery();
+    };
+  }
+}
+
+function renderPricing(){
+  const p=state.product;
+  const unit=currentUnitPrice();
+  const total=unit*state.qty;
+  const potential=potentialPerUnit()*state.qty;
+  const margin=marginPercent();
+
+  $('qtyValue').textContent=state.qty;
+  $('unitPrice').textContent=money(unit);
+  $('currentUnitPrice').textContent=money(unit);
+  $('orderTotal').textContent=money(total);
+  $('orderProfit').textContent=money(potential);
+
+  $('saveChip').textContent='Save '+money(savePerUnit());
+  $('profitChip').textContent=`Potential +${money(potentialPerUnit())}/${p.unit||'unit'}`;
+  $('marginChip').textContent=`${margin}% margin`;
+
+  $('qtyHint').textContent=`Min ${minQty()} · step ${stepQty()} · stock ${stock()}`;
+
+  const next=nextSlab();
+  const box=$('unlockBox');
+
+  if(next){
+    const more=Math.max(0,Number(next.min_qty)-state.qty);
+    const saving=Math.max(0,currentUnitPrice()-Number(next.price_paise||0));
+    box.hidden=false;
+    box.innerHTML=`Add <strong>${more} more</strong> to unlock <strong>${money(next.price_paise)}/${esc(p.unit||'unit')}</strong>${saving>0?` and save another <strong>${money(saving)}/${esc(p.unit||'unit')}</strong>`:''}.`;
+  }else{
+    box.hidden=rules().length===0;
+    if(rules().length){
+      box.innerHTML='<strong>Best available pricing unlocked.</strong> Your current quantity qualifies for the highest configured pricing slab.';
+    }
+  }
+
+  renderBulk();
+}
+
+function renderBulk(){
+  const rs=rules();
+  const section=$('bulkSection');
+
+  if(!rs.length){
+    section.hidden=true;
+    return;
+  }
+
+  section.hidden=false;
+
+  const base=[{
+    min_qty:minQty(),
+    price_paise:Number(state.product.price_paise||0),
+    label:'Base'
+  },...rs.map((r,i)=>({...r,label:i===rs.length-1?'Best slab':'Slab'}))];
+
+  $('bulkTable').innerHTML=base.map(r=>{
+    const active=state.qty>=Number(r.min_qty||0)&&currentUnitPrice()===Number(r.price_paise||0);
+    const profit=Math.max(0,Number(state.product.mrp_paise||0)-Number(r.price_paise||0));
+    return `
+      <div class="slab ${active?'active':''}">
+        <div><span>Quantity</span><strong>${Number(r.min_qty||0)}+</strong></div>
+        <div><span>Unit price</span><strong>${money(r.price_paise)}</strong></div>
+        <div><span>Potential/unit</span><strong class="best">${money(profit)}</strong></div>
+      </div>`;
+  }).join('');
+}
+
+function renderSimilar(){
+  const sec=$('similarSection');
+  if(!state.similar.length){
+    sec.hidden=true;
+    return;
+  }
+  sec.hidden=false;
+
+  $('similarProducts').innerHTML=state.similar.map(p=>{
+    const img=Array.isArray(p.images)&&p.images[0]?p.images[0]:'';
+    const profit=Math.max(0,Number(p.mrp_paise||0)-Number(p.price_paise||0));
+    return `
+      <article class="sim-card" data-sim="${p.id}">
+        <div class="sim-pic">${img?`<img src="${esc(img)}" alt="${esc(p.title)}">`:'◇'}</div>
+        <div class="sim-body">
+          <strong>${esc(p.title)}</strong>
+          <span>${esc(p.category_name||'Wholesale')}</span>
+          <b>${money(p.price_paise)}</b>
+          <span>Potential +${money(profit)}/${esc(p.unit||'unit')}</span>
+        </div>
+      </article>`;
+  }).join('');
+
+  for(const card of $('similarProducts').querySelectorAll('[data-sim]')){
+    card.onclick=()=>location.href='product.html?id='+encodeURIComponent(card.dataset.sim);
+  }
+}
+
+function updateActions(){
+  const disabled=unavailable();
+  $('addCartBtn').disabled=disabled;
+  $('buyNowBtn').disabled=disabled;
+  if(disabled){
+    $('addCartBtn').textContent='Unavailable';
+    $('buyNowBtn').textContent='Out of stock';
+  }else{
+    $('addCartBtn').textContent='Add to cart';
+    $('buyNowBtn').textContent='Buy now';
+  }
+}
+
+function changeQty(direction){
+  const min=minQty();
+  const step=stepQty();
+  const max=stock();
+  let next=state.qty+(direction*step);
+
+  if(direction<0&&next<min){
+    next=min;
+  }
+  if(direction>0&&next>max){
+    next=max;
+    toast('You reached the available stock limit.');
+  }
+
+  state.qty=next;
+  renderPricing();
+}
+
+function addToCart(){
+  if(unavailable())return;
+
+  const id=Number(state.product.id);
+  const existing=state.cart.find(x=>Number(x.product_id)===id);
+
+  if(existing){
+    existing.qty=Math.min(stock(),Math.max(existing.qty,state.qty));
+  }else{
+    state.cart.push({product_id:id,qty:state.qty});
+  }
+
+  saveCart();
+  toast('Product added to cart.');
+}
+
+function buyNow(){
+  addToCart();
+  location.href='cart.html';
+}
+
+function showError(message){
+  $('pageContent').innerHTML=`
+    <div class="error">
+      <strong>Product unavailable</strong>
+      ${esc(message)}
+      <br>
+      <button class="retry" onclick="location.href='retailer-dashboard.html'">Back to products</button>
+    </div>`;
+  $('addCartBtn').disabled=true;
+  $('buyNowBtn').disabled=true;
+}
+
+$('minusBtn').onclick=()=>changeQty(-1);
+$('plusBtn').onclick=()=>changeQty(1);
+$('addCartBtn').onclick=addToCart;
+$('buyNowBtn').onclick=buyNow;
+$('cartBtn').onclick=()=>location.href='cart.html';
+$('backBtn').onclick=()=>{
+  if(history.length>1)history.back();
+  else location.href='retailer-dashboard.html';
+};
+
+updateCartBadge();
+load().catch(err=>{
+  console.error(err);
+  showError(err?.message||'Unexpected error');
+});
+
+})();
+</script>
+<script src="retailer-ui.js"></script>
+</body>
+</html>

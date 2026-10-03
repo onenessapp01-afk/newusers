@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#68141d">
+<title>ONeness · Cart</title>
+<style>
+:root{
+  --bg:#f5f6f1;--surface:#fff;--ink:#14251f;--muted:#78857e;
+  --green:#17634c;--green-dark:#104d3c;--green-soft:#eaf3ec;
+  --lime:#dff2a8;--orange:#efaa61;--orange-soft:#fff0df;
+  --line:#e3e9e3;--danger:#b34235;--danger-soft:#fff1ee;
+  --shadow:0 15px 45px rgba(20,55,43,.08);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}[hidden]{display:none!important}
+.shell{width:min(1120px,100%);margin:auto}.app{min-height:100vh;padding-bottom:110px}
+.topbar{position:sticky;top:0;z-index:60;background:rgba(245,246,241,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,233,227,.9)}
+.topbar-inner{height:64px;padding:8px 13px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.back{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;place-items:center;font-size:18px}
+.titlebox{text-align:center}.titlebox strong{display:block;font-size:13px}.titlebox span{display:block;font-size:8px;color:var(--muted);margin-top:1px}
+.shop{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:8px;font-weight:900;color:var(--green)}
+.main{padding:15px 14px 34px}
+.layout{display:grid;gap:14px}
+
+.profit-hero{background:linear-gradient(135deg,#123e31,#17634c 68%,#2e765e);color:#fff;border-radius:23px;padding:19px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.profit-hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-75px;top:-85px;background:rgba(223,242,168,.14)}
+.hero-content{position:relative;z-index:2}
+.kicker{font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:#cfe1d7;font-weight:900}
+.hero-profit{font-size:clamp(36px,8vw,56px);font-weight:950;line-height:1;letter-spacing:-2px;margin:8px 0 5px}
+.hero-copy{font-size:9px;color:#ccddd5;line-height:1.5}
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
+.hero-stat{padding:10px;border-radius:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.07)}
+.hero-stat span{display:block;font-size:7px;color:#c8dbd2}
+.hero-stat strong{display:block;font-size:12px;margin-top:3px}
+.hero-note{margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:7px;color:#bed2c8}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:18px}
+.section-head{display:flex;justify-content:space-between;gap:10px;align-items:end;margin-bottom:10px}
+.section-head h2{font-size:17px;margin:0;letter-spacing:-.4px}
+.section-head p{font-size:8px;color:var(--muted);margin:3px 0 0}
+.count{font-size:8px;color:var(--muted);font-weight:800;white-space:nowrap}
+
+.items{display:grid;gap:9px}
+.item{padding:10px;display:grid;grid-template-columns:76px minmax(0,1fr);gap:11px}
+.item.invalid{border-color:#efc2bc;background:#fffafa}
+.item-img{width:76px;height:76px;border-radius:12px;background:#f0f3ed;overflow:hidden;display:grid;place-items:center;color:#98a49d;font-size:26px;cursor:pointer}
+.item-img img{width:100%;height:100%;object-fit:contain;background:#fff}
+.item-main{min-width:0}
+.item-top{display:flex;gap:8px;justify-content:space-between}
+.item-name{font-size:11px;font-weight:900;line-height:1.25;cursor:pointer}
+.remove{border:0;background:transparent;color:#a3594f;font-size:8px;font-weight:850;padding:0}
+.item-meta{font-size:7px;color:var(--muted);margin-top:2px}
+.price-line{display:flex;align-items:baseline;gap:7px;margin-top:7px;flex-wrap:wrap}
+.unit-price{font-size:15px;font-weight:950;color:var(--green)}
+.mrp{text-decoration:line-through;color:#9aa39e;font-size:8px}
+.margin{padding:4px 6px;background:var(--green-soft);color:var(--green);border-radius:999px;font-size:7px;font-weight:900}
+.item-bottom{display:flex;justify-content:space-between;align-items:end;gap:9px;margin-top:8px}
+.stepper{display:grid;grid-template-columns:32px 46px 32px;height:34px;border:1px solid #b6ccbf;border-radius:10px;overflow:hidden}
+.stepper button{border:0;background:#eff6ef;color:var(--green);font-weight:950}
+.stepper strong{display:grid;place-items:center;font-size:9px}
+.item-totals{text-align:right}.item-totals span{display:block;font-size:7px;color:var(--muted)}.item-totals strong{display:block;font-size:10px;margin-top:2px}.item-profit{color:var(--green)!important}
+.slab-tip{grid-column:1/-1;margin-top:1px;padding:8px 9px;border-radius:10px;background:#fff7e7;color:#755b39;font-size:7px;line-height:1.45}
+.slab-tip button{border:0;background:transparent;color:#8f5725;font-size:7px;font-weight:950;padding:0;margin-left:4px}
+.line-error{grid-column:1/-1;margin-top:1px;padding:8px 9px;border-radius:10px;background:var(--danger-soft);color:var(--danger);font-size:7px;font-weight:800}
+
+.booster{padding:15px}
+.booster-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.booster-title h2{font-size:16px;margin:0}
+.booster-title p{font-size:8px;color:var(--muted);margin:3px 0 0;line-height:1.45}
+.booster-badge{padding:6px 8px;border-radius:999px;background:var(--lime);font-size:7px;font-weight:950;white-space:nowrap}
+.recommendations{display:flex;gap:9px;overflow:auto;scrollbar-width:none;margin-top:11px;padding-bottom:2px}
+.recommendations::-webkit-scrollbar{display:none}
+.rec{flex:0 0 175px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.rec-img{height:112px;background:#f0f3ed;display:grid;place-items:center;color:#9ba69f;font-size:30px}
+.rec-img img{width:100%;height:100%;object-fit:contain;background:#fff}
+.rec-body{padding:9px}
+.rec-title{font-size:9px;font-weight:900;line-height:1.25;min-height:23px}
+.rec-price{font-size:12px;font-weight:950;color:var(--green);margin-top:5px}
+.rec-profit{font-size:7px;color:#8b5a28;margin-top:2px}
+.rec button{width:100%;height:31px;margin-top:8px;border:0;border-radius:9px;background:#17382e;color:#fff;font-size:7px;font-weight:900}
+
+.coupon{padding:14px}
+.coupon-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:9px}
+.coupon input{height:40px;border:1px solid var(--line);border-radius:11px;padding:0 11px;outline:none;text-transform:uppercase}
+.coupon input:focus{border-color:#9bb8a9;box-shadow:0 0 0 4px rgba(23,99,76,.07)}
+.coupon button{border:0;border-radius:11px;background:var(--ink);color:#fff;padding:0 14px;font-size:8px;font-weight:900}
+.coupon-message{margin-top:7px;font-size:7px;color:var(--muted)}
+.coupon-message.good{color:var(--green)}.coupon-message.bad{color:var(--danger)}
+
+.summary{padding:15px}
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:9px;color:#65726b;border-bottom:1px dashed #e8ede8}
+.summary-row:last-of-type{border-bottom:0}
+.summary-row strong{color:var(--ink)}
+.summary-row.saving{color:var(--green)}
+.summary-row.saving strong{color:var(--green)}
+.payable{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:10px;padding-top:11px;border-top:1px solid var(--line)}
+.payable span{font-size:8px;color:var(--muted)}
+.payable strong{display:block;font-size:23px;letter-spacing:-.7px;margin-top:2px}
+.margin-summary{margin-top:11px;padding:11px;border-radius:13px;background:var(--green-soft)}
+.margin-summary div{display:flex;justify-content:space-between;gap:10px;font-size:8px;color:#476658}
+.margin-summary strong{color:var(--green)}
+.minimum{margin-top:10px}
+.minimum-text{font-size:7px;color:var(--muted);display:flex;justify-content:space-between}
+.progress{height:7px;border-radius:999px;background:#edf1ec;overflow:hidden;margin-top:5px}
+.progress span{display:block;height:100%;background:var(--green);width:0}
+
+.empty{padding:34px 20px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:18px}
+.empty-icon{font-size:40px}.empty strong{display:block;font-size:14px;margin-top:7px}.empty p{font-size:9px;color:var(--muted);line-height:1.5}.empty button{border:0;background:var(--green);color:#fff;border-radius:11px;padding:10px 13px;font-size:8px;font-weight:900}
+.loading{padding:30px;text-align:center;color:var(--muted);font-size:9px}
+.spinner{width:30px;height:30px;border-radius:50%;border:3px solid #dce5dd;border-top-color:var(--green);animation:spin .7s linear infinite;margin:0 auto 10px}@keyframes spin{to{transform:rotate(360deg)}}
+
+.checkout{position:fixed;z-index:70;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);padding:9px 11px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(17px);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 1.2fr;gap:9px;align-items:center}
+.checkout-copy span{display:block;font-size:7px;color:var(--muted)}.checkout-copy strong{display:block;font-size:18px;letter-spacing:-.5px;margin-top:2px}.checkout-copy b{display:block;color:var(--green);font-size:7px;margin-top:2px}
+.checkout button{height:48px;border:0;border-radius:13px;background:var(--green);color:#fff;font-size:9px;font-weight:950}.checkout button:disabled{opacity:.5;cursor:not-allowed}
+.toast{position:fixed;z-index:100;left:50%;bottom:86px;transform:translate(-50%,15px);opacity:0;background:#17382e;color:#fff;padding:10px 13px;border-radius:12px;font-size:9px;transition:.2s;max-width:88vw}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:720px){
+  .main{padding:24px}
+  .item{grid-template-columns:96px minmax(0,1fr);padding:13px}.item-img{width:96px;height:96px}
+}
+@media(min-width:940px){
+  .main{padding:28px 24px 48px}
+  .layout{grid-template-columns:minmax(0,1.45fr) minmax(310px,.7fr);align-items:start}
+  .right-col{position:sticky;top:86px}
+  .checkout{bottom:12px;border-radius:20px;border-bottom:1px solid var(--line)}
+  .app{padding-bottom:128px}.toast{bottom:104px}
+}
+</style>
+<link rel="stylesheet" href="retailer-ui.css">
+</head>
+<body data-page="cart">
+<div class="app">
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <button id="backBtn" class="back">←</button>
+    <div class="titlebox"><strong>My Cart</strong><span>Build a better-margin order</span></div>
+    <button class="shop" onclick="location.href='retailer-dashboard.html'">+ Products</button>
+  </div>
+</header>
+
+<main class="shell main">
+  <div id="loading" class="loading"><div class="spinner"></div>Checking live prices and stock…</div>
+
+  <div id="emptyState" class="empty" hidden>
+    <div class="empty-icon">🛒</div>
+    <strong>Your cart is empty</strong>
+    <p>Add wholesale products and we’ll show the potential retail profit before you place the order.</p>
+    <button onclick="location.href='retailer-dashboard.html'">Browse products</button>
+  </div>
+
+  <div id="cartContent" hidden>
+    <section class="profit-hero">
+      <div class="hero-content">
+        <div class="kicker">Potential profit from this cart</div>
+        <div id="heroProfit" class="hero-profit">₹0</div>
+        <div id="heroFormula" class="hero-copy">MRP value ₹0 − final payable ₹0</div>
+        <div class="hero-grid">
+          <div class="hero-stat"><span>You pay</span><strong id="heroPay">₹0</strong></div>
+          <div class="hero-stat"><span>MRP value</span><strong id="heroMrp">₹0</strong></div>
+          <div class="hero-stat"><span>Potential margin</span><strong id="heroMargin">0%</strong></div>
+        </div>
+        <div class="hero-note">Potential profit assumes products are later sold at their listed MRP. It is not guaranteed realized profit.</div>
+      </div>
+    </section>
+
+    <div class="layout" style="margin-top:14px">
+      <div class="left-col">
+        <section>
+          <div class="section-head">
+            <div><h2>Your products</h2><p>Live prices are recalculated from Supabase.</p></div>
+            <div id="itemCount" class="count">0 items</div>
+          </div>
+          <div id="items" class="items"></div>
+        </section>
+
+        <section id="boosterSection" class="card booster" style="margin-top:14px" hidden>
+          <div class="booster-title">
+            <div><h2>Grow this cart’s potential profit</h2><p>Add a high-margin product that is not already in your cart.</p></div>
+            <span class="booster-badge">Profit booster</span>
+          </div>
+          <div id="recommendations" class="recommendations"></div>
+        </section>
+      </div>
+
+      <aside class="right-col">
+        <section class="card coupon">
+          <div class="section-head" style="margin:0"><div><h2>Coupon</h2><p>Apply an eligible retailer offer.</p></div></div>
+          <div class="coupon-row">
+            <input id="couponInput" maxlength="40" placeholder="Enter code">
+            <button id="applyCoupon">Apply</button>
+          </div>
+          <div id="couponMessage" class="coupon-message">Optional</div>
+        </section>
+
+        <section class="card summary" style="margin-top:12px">
+          <div class="section-head" style="margin:0 0 5px"><div><h2>Order summary</h2><p>Calculated from current live catalogue pricing.</p></div></div>
+
+          <div class="summary-row"><span>Wholesale products</span><strong id="sumWholesale">₹0</strong></div>
+          <div class="summary-row"><span>MRP retail value</span><strong id="sumMrp">₹0</strong></div>
+          <div class="summary-row saving"><span>Bulk-price savings</span><strong id="sumBulk">₹0</strong></div>
+          <div class="summary-row saving"><span>Coupon savings</span><strong id="sumCoupon">₹0</strong></div>
+          <div class="summary-row"><span>Delivery</span><strong id="sumDelivery">₹0</strong></div>
+
+          <div class="payable">
+            <div><span>Final payable</span><strong id="sumPayable">₹0</strong></div>
+          </div>
+
+          <div class="margin-summary">
+            <div><span>Potential retail profit</span><strong id="sumProfit">₹0</strong></div>
+            <div style="margin-top:5px"><span>Potential margin</span><strong id="sumMargin">0%</strong></div>
+          </div>
+
+          <div id="minimumBox" class="minimum" hidden>
+            <div class="minimum-text"><span id="minimumText">Minimum order</span><b id="minimumValue">₹0</b></div>
+            <div class="progress"><span id="minimumProgress"></span></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<div id="checkoutBar" class="checkout" hidden>
+  <div class="checkout-copy">
+    <span>Final payable</span>
+    <strong id="stickyPayable">₹0</strong>
+    <b id="stickyProfit">Potential profit ₹0</b>
+  </div>
+  <button id="continueBtn">Continue to address →</button>
+</div>
+
+<div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(()=>{
+'use strict';
+
+const URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
+const KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+
+const db=window.supabase.createClient(URL,KEY,{
+  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}
+});
+
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+const money=p=>new Intl.NumberFormat('en-IN',{
+  style:'currency',currency:'INR',maximumFractionDigits:0
+}).format(Number(p||0)/100);
+
+const state={
+  cart:readCart(),
+  quote:null,
+  coupon:'',
+  loading:false,
+  quoteTimer:null
+};
+
+function readCart(){
+  try{
+    const x=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');
+    return Array.isArray(x)?x.filter(i=>Number(i.product_id)>0&&Number(i.qty)>0):[];
+  }catch{return[]}
+}
+function saveCart(){
+  localStorage.setItem('oneness-retailer-cart',JSON.stringify(state.cart));
+}
+function toast(text){
+  const e=$('toast');e.textContent=text;e.classList.add('show');
+  clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2300);
+}
+function imageOf(x){return Array.isArray(x?.images)&&x.images[0]?x.images[0]:''}
+function cartUnits(){return state.cart.reduce((n,x)=>n+Number(x.qty||0),0)}
+function findCart(id){return state.cart.find(x=>Number(x.product_id)===Number(id))}
+function lineStatusText(status){
+  return ({
+    not_found:'This product no longer exists.',
+    inactive:'This product is currently unavailable.',
+    below_minimum:'Quantity is below the minimum order quantity.',
+    insufficient_stock:'Selected quantity is higher than available stock.',
+    invalid_step:'Quantity must follow the product quantity step.'
+  })[status]||'This cart item needs attention.';
+}
+
+async function quoteCart(showLoader=false){
+  if(state.loading)return;
+  if(!state.cart.length){
+    state.quote=null;
+    render();
+    return;
+  }
+
+  state.loading=true;
+  if(showLoader)$('loading').hidden=false;
+
+  try{
+    const {data:{user},error:uerr}=await db.auth.getUser();
+    if(uerr||!user){location.replace('index.html');return}
+
+    const payload=state.cart.map(x=>({product_id:Number(x.product_id),qty:Number(x.qty)}));
+
+    const {data,error}=await db.rpc('retailer_cart_quote',{
+      p_items:payload,
+      p_coupon_code:state.coupon||null
+    });
+
+    if(error)throw error;
+
+    if(data?.ok!==true){
+      if(data?.reason==='not_authenticated'){location.replace('index.html');return}
+      if(data?.reason==='not_retailer'){
+        await db.auth.signOut({scope:'local'});
+        location.replace('index.html');return;
+      }
+      if(data?.reason==='blocked')throw Error('Your retailer account is blocked.');
+      throw Error('Cart could not be checked.');
+    }
+
+    state.quote=data;
+    reconcileCart();
+    render();
+  }catch(err){
+    console.error(err);
+    toast(err?.message||'Could not refresh cart.');
+  }finally{
+    state.loading=false;
+    $('loading').hidden=true;
+  }
+}
+
+function reconcileCart(){
+  if(!state.quote?.items)return;
+  const validIds=new Set(state.quote.items.map(x=>Number(x.product_id)));
+  const before=state.cart.length;
+  state.cart=state.cart.filter(x=>validIds.has(Number(x.product_id)));
+  if(state.cart.length!==before)saveCart();
+}
+
+function queueQuote(){
+  clearTimeout(state.quoteTimer);
+  state.quoteTimer=setTimeout(()=>quoteCart(false),220);
+}
+
+function render(){
+  const empty=!state.cart.length;
+  $('loading').hidden=true;
+  $('emptyState').hidden=!empty;
+  $('cartContent').hidden=empty;
+  $('checkoutBar').hidden=empty;
+
+  if(empty)return;
+  if(!state.quote)return;
+
+  const q=state.quote;
+  const totals=q.totals||{};
+  const finalPotential=Math.max(0,Number(totals.mrp_paise||0)-Number(totals.payable_paise||0));
+  const finalMargin=Number(totals.mrp_paise||0)>0
+    ?finalPotential*100/Number(totals.mrp_paise)
+    :0;
+
+  $('heroProfit').textContent=money(finalPotential);
+  $('heroFormula').textContent=`MRP value ${money(totals.mrp_paise)} − final payable ${money(totals.payable_paise)}`;
+  $('heroPay').textContent=money(totals.payable_paise);
+  $('heroMrp').textContent=money(totals.mrp_paise);
+  $('heroMargin').textContent=finalMargin.toFixed(1)+'%';
+
+  $('itemCount').textContent=`${cartUnits()} unit${cartUnits()===1?'':'s'}`;
+  renderItems(q.items||[]);
+  renderRecommendations(q.recommendations||[]);
+  renderSummary(q,finalPotential,finalMargin);
+  renderCoupon(q.coupon);
+  renderCheckout(q,finalPotential);
+
+  const invalid=Number(totals.invalid_lines||0)>0;
+  const minOrder=Number(q.settings?.minimum_order_paise||0);
+  const belowMinimum=Number(totals.wholesale_paise||0)<minOrder;
+
+  $('continueBtn').disabled=invalid||belowMinimum;
+  if(invalid)$('continueBtn').textContent='Fix cart items first';
+  else if(belowMinimum)$('continueBtn').textContent='Minimum order not reached';
+  else $('continueBtn').textContent='Continue to address →';
+}
+
+function renderItems(items){
+  $('items').innerHTML=items.map(line=>{
+    const img=imageOf(line);
+    const ok=line.status==='ok';
+    const next=line.next_slab;
+    const baseProfit=Math.max(0,Number(line.mrp_paise||0)-Number(line.unit_price_paise||0));
+    const margin=Number(line.mrp_paise||0)>0?baseProfit*100/Number(line.mrp_paise):0;
+
+    let slabTip='';
+    if(ok&&next){
+      const target=Number(next.min_qty||0);
+      const add=Math.max(0,target-Number(line.qty||0));
+      const nextPrice=Number(next.price_paise||0);
+      const extraProfit=Math.max(0,(Number(line.mrp_paise||0)-nextPrice)*target-Number(line.potential_profit_paise||0));
+      slabTip=`<div class="slab-tip">Add <strong>${add} more</strong> to unlock ${money(nextPrice)}/${esc(line.unit||'unit')} and lift total potential profit by about <strong>${money(extraProfit)}</strong>.<button data-unlock="${line.product_id}" data-target="${target}">Unlock slab</button></div>`;
+    }
+
+    return `<article class="card item ${ok?'':'invalid'}">
+      <div class="item-img" data-open="${line.product_id}">
+        ${img?`<img src="${esc(img)}" alt="${esc(line.title||'Product')}">`:'◇'}
+      </div>
+      <div class="item-main">
+        <div class="item-top">
+          <div>
+            <div class="item-name" data-open="${line.product_id}">${esc(line.title||'Unavailable product')}</div>
+            <div class="item-meta">${esc(line.category_name||'Wholesale')} · ${esc(line.unit||'unit')}</div>
+          </div>
+          <button class="remove" data-remove="${line.product_id}">Remove</button>
+        </div>
+
+        ${ok?`
+        <div class="price-line">
+          <span class="unit-price">${money(line.unit_price_paise)}/${esc(line.unit||'unit')}</span>
+          <span class="mrp">MRP ${money(line.mrp_paise)}</span>
+          <span class="margin">${margin.toFixed(0)}% potential margin</span>
+        </div>
+
+        <div class="item-bottom">
+          <div class="stepper">
+            <button data-minus="${line.product_id}">−</button>
+            <strong>${Number(line.qty||0)}</strong>
+            <button data-plus="${line.product_id}">+</button>
+          </div>
+          <div class="item-totals">
+            <span>Wholesale ${money(line.line_wholesale_paise)}</span>
+            <strong class="item-profit">Potential +${money(line.potential_profit_paise)}</strong>
+          </div>
+        </div>`:''}
+      </div>
+      ${ok?'':`<div class="line-error">${esc(lineStatusText(line.status))}</div>`}
+      ${slabTip}
+    </article>`;
+  }).join('');
+
+  for(const b of $('items').querySelectorAll('[data-remove]')){
+    b.onclick=()=>removeItem(Number(b.dataset.remove));
+  }
+  for(const b of $('items').querySelectorAll('[data-minus]')){
+    b.onclick=()=>changeQty(Number(b.dataset.minus),-1);
+  }
+  for(const b of $('items').querySelectorAll('[data-plus]')){
+    b.onclick=()=>changeQty(Number(b.dataset.plus),1);
+  }
+  for(const b of $('items').querySelectorAll('[data-unlock]')){
+    b.onclick=()=>setQty(Number(b.dataset.unlock),Number(b.dataset.target),true);
+  }
+  for(const e of $('items').querySelectorAll('[data-open]')){
+    e.onclick=()=>location.href='product.html?id='+encodeURIComponent(e.dataset.open);
+  }
+}
+
+function renderRecommendations(rows){
+  const section=$('boosterSection');
+
+  if(!rows.length){
+    section.hidden=true;
+    return;
+  }
+
+  section.hidden=false;
+
+  $('recommendations').innerHTML=rows.map(p=>{
+    const img=imageOf(p);
+    const qty=Math.max(1,Number(p.min_qty||1));
+    const addProfit=Number(p.potential_profit_per_unit_paise||0)*qty;
+
+    return `<article class="rec">
+      <div class="rec-img" data-rec-open="${p.id}">
+        ${img?`<img src="${esc(img)}" alt="${esc(p.title)}">`:'◇'}
+      </div>
+      <div class="rec-body">
+        <div class="rec-title">${esc(p.title)}</div>
+        <div class="rec-price">${money(p.price_paise)}</div>
+        <div class="rec-profit">Add min ${qty} → potential +${money(addProfit)}</div>
+        <button data-rec-add="${p.id}" data-min="${qty}">Add profit booster</button>
+      </div>
+    </article>`;
+  }).join('');
+
+  for(const b of $('recommendations').querySelectorAll('[data-rec-add]')){
+    b.onclick=()=>addRecommended(Number(b.dataset.recAdd),Number(b.dataset.min));
+  }
+  for(const e of $('recommendations').querySelectorAll('[data-rec-open]')){
+    e.onclick=()=>location.href='product.html?id='+encodeURIComponent(e.dataset.recOpen);
+  }
+}
+
+function renderSummary(q,profit,margin){
+  const t=q.totals||{};
+  const settings=q.settings||{};
+
+  $('sumWholesale').textContent=money(t.wholesale_paise);
+  $('sumMrp').textContent=money(t.mrp_paise);
+  $('sumBulk').textContent='− '+money(t.bulk_savings_paise);
+  $('sumCoupon').textContent='− '+money(t.coupon_discount_paise);
+  $('sumDelivery').textContent=Number(t.delivery_paise||0)>0?money(t.delivery_paise):'Free';
+  $('sumPayable').textContent=money(t.payable_paise);
+  $('sumProfit').textContent=money(profit);
+  $('sumMargin').textContent=margin.toFixed(1)+'%';
+
+  const min=Number(settings.minimum_order_paise||0);
+  const wholesale=Number(t.wholesale_paise||0);
+
+  $('minimumBox').hidden=min<=0;
+  if(min>0){
+    const left=Math.max(0,min-wholesale);
+    $('minimumText').textContent=left>0?`Add ${money(left)} more to reach minimum`:'Minimum order reached';
+    $('minimumValue').textContent=money(min);
+    $('minimumProgress').style.width=Math.min(100,wholesale*100/min)+'%';
+  }
+}
+
+function renderCoupon(coupon){
+  const msg=$('couponMessage');
+
+  if(!state.coupon){
+    msg.className='coupon-message';
+    msg.textContent='Optional';
+    return;
+  }
+
+  if(coupon?.valid){
+    msg.className='coupon-message good';
+    msg.textContent=`${coupon.code} applied · you save ${money(coupon.discount_paise)}.`;
+  }else{
+    msg.className='coupon-message bad';
+    msg.textContent=coupon?.reason==='not_eligible'
+      ?'This coupon is not eligible for the current cart.'
+      :'Coupon is invalid or expired.';
+  }
+}
+
+function renderCheckout(q,profit){
+  $('stickyPayable').textContent=money(q.totals?.payable_paise||0);
+  $('stickyProfit').textContent=`Potential profit ${money(profit)}`;
+}
+
+function removeItem(id){
+  state.cart=state.cart.filter(x=>Number(x.product_id)!==id);
+  saveCart();
+  state.quote=null;
+  if(!state.cart.length){
+    render();
+    toast('Product removed.');
+    return;
+  }
+  toast('Product removed.');
+  quoteCart(false);
+}
+
+function setQty(id,qty,instant=false){
+  const row=findCart(id);
+  const line=state.quote?.items?.find(x=>Number(x.product_id)===id);
+  if(!row||!line)return;
+
+  const min=Math.max(1,Number(line.min_qty||1));
+  const max=Math.max(0,Number(line.stock||0));
+
+  row.qty=Math.max(min,Math.min(max,Number(qty)));
+  saveCart();
+
+  if(instant)quoteCart(false);
+  else queueQuote();
+}
+
+function changeQty(id,direction){
+  const row=findCart(id);
+  const line=state.quote?.items?.find(x=>Number(x.product_id)===id);
+  if(!row||!line)return;
+
+  const min=Math.max(1,Number(line.min_qty||1));
+  const step=Math.max(1,Number(line.qty_step||1));
+  const max=Math.max(0,Number(line.stock||0));
+
+  let next=Number(row.qty)+direction*step;
+
+  if(direction<0&&next<min){
+    removeItem(id);
+    return;
+  }
+
+  if(next>max){
+    toast('You reached the available stock.');
+    next=max;
+  }
+
+  row.qty=next;
+  saveCart();
+  queueQuote();
+}
+
+function addRecommended(id,minQty){
+  const existing=findCart(id);
+
+  if(existing){
+    existing.qty=Math.max(Number(existing.qty||0),minQty);
+  }else{
+    state.cart.push({product_id:id,qty:minQty});
+  }
+
+  saveCart();
+  toast('Profit booster added.');
+  quoteCart(false);
+}
+
+$('applyCoupon').onclick=()=>{
+  state.coupon=$('couponInput').value.trim().toUpperCase();
+  quoteCart(false);
+};
+
+$('couponInput').onkeydown=e=>{
+  if(e.key==='Enter'){
+    e.preventDefault();
+    $('applyCoupon').click();
+  }
+};
+
+$('continueBtn').onclick=()=>{
+  if($('continueBtn').disabled)return;
+  location.href='address.html';
+};
+
+$('backBtn').onclick=()=>{
+  if(history.length>1)history.back();
+  else location.href='retailer-dashboard.html';
+};
+
+(async()=>{
+  if(!state.cart.length){
+    $('loading').hidden=true;
+    render();
+    return;
+  }
+  await quoteCart(true);
+})();
+})();
+</script>
+<script src="retailer-ui.js"></script>
+</body>
+</html>

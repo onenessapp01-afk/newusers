@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#68141d">
+<title>ONeness · Payment</title>
+<style>
+:root{--bg:#f5f6f1;--surface:#fff;--ink:#14251f;--muted:#78857e;--green:#17634c;--green-dark:#104d3c;--green-soft:#eaf3ec;--lime:#dff2a8;--orange:#efaa61;--orange-soft:#fff0df;--line:#e3e9e3;--danger:#b34235;--danger-soft:#fff1ee;--blue-soft:#eef1ff;--shadow:0 15px 45px rgba(20,55,43,.08)}
+*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}[hidden]{display:none!important}.shell{width:min(1120px,100%);margin:auto}.app{min-height:100vh;padding-bottom:118px}
+.topbar{position:sticky;top:0;z-index:70;background:rgba(245,246,241,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,233,227,.9)}.topbar-inner{height:64px;padding:8px 13px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}.back{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;place-items:center;font-size:18px}.titlebox{text-align:center}.titlebox strong{display:block;font-size:13px}.titlebox span{display:block;font-size:8px;color:var(--muted);margin-top:1px}.secure{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:8px;font-weight:900;color:var(--green)}
+.main{padding:15px 14px 36px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}.step{padding:9px 8px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:8px;color:var(--muted);text-align:center;font-weight:800}.step.done{background:#eef5ef;color:var(--green)}.step.active{background:var(--ink);border-color:var(--ink);color:#fff}.layout{display:grid;gap:14px}.left,.right{min-width:0}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.card+.card{margin-top:11px}.section-head{display:flex;justify-content:space-between;align-items:start;gap:10px}.section-head h2{font-size:16px;margin:0;letter-spacing:-.35px}.section-head p{font-size:8px;color:var(--muted);line-height:1.45;margin:3px 0 0}.link{border:0;background:transparent;color:var(--green);font-size:8px;font-weight:900;padding:2px}
+.address-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;margin-top:11px}.address-icon{width:38px;height:38px;border-radius:11px;background:var(--green-soft);display:grid;place-items:center}.address-card strong{display:block;font-size:10px}.address-card span{display:block;font-size:8px;color:var(--muted);line-height:1.5;margin-top:3px}.address-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.mini{padding:4px 6px;border-radius:999px;background:#f0f4ef;font-size:6px!important;font-weight:900!important;color:#64736b!important}
+.profit-hero{background:linear-gradient(135deg,#123e31,#17634c 68%,#2e765e);color:#fff;border-radius:21px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}.profit-hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;top:-75px;background:rgba(223,242,168,.14)}.profit-hero>*{position:relative;z-index:2}.eyebrow{font-size:8px;color:#c8dcd2;text-transform:uppercase;letter-spacing:1.2px;font-weight:900}.profit-value{font-size:clamp(34px,7vw,52px);font-weight:950;letter-spacing:-1.8px;line-height:1;margin:8px 0 5px}.profit-value small{font-size:13px;letter-spacing:0;color:var(--lime)}.profit-formula{font-size:8px;color:#cde0d6;line-height:1.5}.profit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}.profit-stat{padding:9px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.07)}.profit-stat span{display:block;font-size:6px;color:#c7dbd1}.profit-stat strong{display:block;font-size:11px;margin-top:3px}.disclaimer{font-size:6px;color:#bdd0c6;border-top:1px solid rgba(255,255,255,.1);padding-top:9px;margin-top:10px;line-height:1.5}
+.products{margin-top:10px;display:grid;gap:7px}.product{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px;align-items:center;padding:9px;border-radius:12px;background:#f7f9f5}.product-icon{width:38px;height:38px;border-radius:10px;background:#eaf0e9;display:grid;place-items:center;font-size:15px}.product strong{display:block;font-size:9px}.product span{display:block;font-size:7px;color:var(--muted);margin-top:2px}.product-total{text-align:right}.product-total strong{font-size:9px}.product-total b{display:block;font-size:6px;color:var(--green);margin-top:2px}.product-more{border:0;background:transparent;color:var(--green);font-size:8px;font-weight:900;margin-top:8px;padding:3px 0}
+.payment-option{margin-top:10px;border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:start}.payment-option.selected{border:2px solid var(--green);background:#fbfdfb}.payment-option.disabled{opacity:.62;background:#f8f8f7}.radio{width:19px;height:19px;border-radius:50%;border:2px solid #b7c4bd;display:grid;place-items:center;margin-top:1px}.selected .radio{border-color:var(--green)}.selected .radio:after{content:"";width:9px;height:9px;border-radius:50%;background:var(--green)}.pay-copy strong{display:block;font-size:10px}.pay-copy span{display:block;font-size:7px;color:var(--muted);line-height:1.5;margin-top:3px}.pay-status{padding:5px 7px;border-radius:999px;font-size:6px;font-weight:900;background:var(--green-soft);color:var(--green);white-space:nowrap}.pay-status.off{background:var(--danger-soft);color:var(--danger)}.pay-status.soon{background:var(--blue-soft);color:#5964a5}
+.note textarea{width:100%;min-height:76px;margin-top:9px;border:1px solid var(--line);border-radius:12px;padding:10px 11px;resize:vertical;outline:none;font-size:9px}.note textarea:focus{border-color:#9bb8a9;box-shadow:0 0 0 4px rgba(23,99,76,.07)}.note-count{text-align:right;font-size:6px;color:var(--muted);margin-top:3px}
+.coupon-box{margin-top:9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.coupon-box input{height:39px;border:1px solid var(--line);border-radius:11px;padding:0 10px;outline:none;text-transform:uppercase}.coupon-box button{border:0;border-radius:11px;background:var(--ink);color:#fff;padding:0 12px;font-size:7px;font-weight:900}.coupon-msg{font-size:7px;color:var(--muted);margin-top:6px}.coupon-msg.good{color:var(--green)}.coupon-msg.bad{color:var(--danger)}
+.booster{margin-top:10px;padding:10px 11px;border-radius:12px;background:#fff7e7;color:#72593b;font-size:7px;line-height:1.5}.booster strong{color:#4f381e}.booster button{border:0;background:transparent;color:#8d5523;font-size:7px;font-weight:950;padding:0;margin-left:4px}
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed #e7ece7;font-size:8px;color:#65726b}.summary-row strong{color:var(--ink)}.summary-row.saving{color:var(--green)}.summary-row.saving strong{color:var(--green)}.payable{display:flex;justify-content:space-between;align-items:end;gap:10px;padding-top:11px;margin-top:3px}.payable span{font-size:7px;color:var(--muted)}.payable strong{display:block;font-size:23px;letter-spacing:-.7px;margin-top:2px}.final-profit{margin-top:10px;background:var(--green-soft);padding:11px;border-radius:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.final-profit span{font-size:7px;color:#4c675b}.final-profit strong{font-size:11px;color:var(--green)}.terms{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px;border-radius:12px;background:#f7f9f5}.terms input{width:17px;height:17px;accent-color:var(--green);margin:0;flex:0 0 auto}.terms strong{display:block;font-size:8px}.terms span{display:block;font-size:6px;color:var(--muted);line-height:1.5;margin-top:2px}
+.price-alert{margin-bottom:12px;padding:12px;border:1px solid #e8c790;background:#fff7e8;border-radius:14px}.price-alert strong{display:block;font-size:10px;color:#72501e}.price-alert span{display:block;font-size:7px;color:#80694a;line-height:1.5;margin-top:4px}.price-alert button{margin-top:8px;border:0;background:#6e4d1d;color:#fff;border-radius:9px;padding:8px 10px;font-size:7px;font-weight:900}
+.loading{padding:38px;text-align:center;color:var(--muted);font-size:9px}.spinner{width:31px;height:31px;border:3px solid #dce5dd;border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}@keyframes spin{to{transform:rotate(360deg)}}.error{padding:28px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;color:var(--muted);font-size:9px}.error strong{display:block;color:var(--ink);font-size:13px;margin-bottom:6px}.error button{margin-top:10px;border:0;background:var(--ink);color:#fff;border-radius:10px;padding:9px 12px;font-size:8px;font-weight:900}
+.checkout{position:fixed;z-index:65;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);padding:9px 11px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.98);backdrop-filter:blur(17px);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 1.15fr;gap:9px;align-items:center}.checkout-copy span{display:block;font-size:7px;color:var(--muted)}.checkout-copy strong{display:block;font-size:18px;letter-spacing:-.5px;margin-top:1px}.checkout-copy b{display:block;font-size:7px;color:var(--green);margin-top:2px}.checkout button{height:48px;border:0;border-radius:13px;background:var(--green);color:#fff;font-size:9px;font-weight:950}.checkout button:disabled{opacity:.45;cursor:not-allowed}
+.success-wrap{max-width:680px;margin:auto}.success-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;text-align:center;box-shadow:var(--shadow)}.success-icon{width:64px;height:64px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:29px;font-weight:950;margin:auto}.success-card h1{font-size:24px;margin:12px 0 4px}.success-card>p{font-size:9px;color:var(--muted);line-height:1.55}.order-no{display:inline-flex;margin-top:6px;padding:6px 9px;border-radius:999px;background:#f2f5f1;font-size:8px;font-weight:900}.success-profit{margin-top:15px;background:linear-gradient(135deg,#143f32,#17634c);color:#fff;border-radius:16px;padding:14px}.success-profit span{display:block;font-size:7px;color:#cbe0d5}.success-profit strong{display:block;font-size:24px;margin-top:4px}.success-profit b{display:block;font-size:7px;color:var(--lime);margin-top:4px}.success-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:11px}.success-grid div{padding:10px;border-radius:12px;background:#f6f8f4;text-align:left}.success-grid span{display:block;font-size:6px;color:var(--muted)}.success-grid strong{display:block;font-size:9px;margin-top:3px}.timeline{display:grid;grid-template-columns:repeat(5,1fr);margin-top:17px;position:relative}.timeline:before{content:"";position:absolute;left:9%;right:9%;top:9px;height:2px;background:#e0e7e1}.tstep{position:relative;z-index:2;text-align:center}.dot{width:19px;height:19px;border-radius:50%;background:#e6ebe7;margin:auto;display:grid;place-items:center;font-size:8px}.tstep.active .dot{background:var(--green);color:#fff}.tstep span{display:block;font-size:5px;color:var(--muted);margin-top:5px}.success-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.success-actions button{height:43px;border-radius:11px;font-size:8px;font-weight:900}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}.primary{border:0;background:var(--green);color:#fff}.toast{position:fixed;z-index:110;left:50%;bottom:88px;transform:translate(-50%,15px);opacity:0;background:#17382e;color:#fff;padding:10px 13px;border-radius:12px;font-size:9px;transition:.2s;max-width:88vw}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:900px){.main{padding:28px 24px 48px}.layout{grid-template-columns:minmax(0,1.3fr) minmax(310px,.72fr);align-items:start}.right{position:sticky;top:84px}.checkout{bottom:12px;border-radius:20px;border-bottom:1px solid var(--line)}.app{padding-bottom:130px}.toast{bottom:104px}}
+</style>
+<link rel="stylesheet" href="retailer-ui.css">
+</head>
+<body data-page="payment">
+<div class="app">
+<header class="topbar"><div class="shell topbar-inner"><button id="backBtn" class="back">←</button><div class="titlebox"><strong>Review & payment</strong><span>Final checkout step</span></div><div class="secure">🔒 Secure</div></div></header>
+
+<main class="shell main">
+<div id="checkoutView">
+  <div class="steps"><div class="step done">1 · Cart</div><div class="step done">2 · Address</div><div class="step active">3 · Payment</div></div>
+  <div id="loading" class="loading"><div class="spinner"></div>Rechecking live prices, stock and delivery…</div>
+  <div id="errorBox" class="error" hidden></div>
+  <div id="priceAlert" class="price-alert" hidden><strong>Order total changed</strong><span id="priceAlertText">Prices or charges changed after your last review.</span><button id="acceptUpdatedPrice">Review updated total</button></div>
+
+  <div id="content" class="layout" hidden>
+    <div class="left">
+      <section class="card"><div class="section-head"><div><h2>Delivering to</h2><p>Your selected address is verified again before the order is created.</p></div><button class="link" onclick="location.href='address.html'">Change</button></div><div class="address-card"><div class="address-icon">⌂</div><div><strong id="addressName">—</strong><span id="addressText">—</span><div class="address-badges"><span id="addressLabel" class="mini">Shop</span><span class="mini">PIN verified</span></div></div></div></section>
+
+      <section class="profit-hero" style="margin-top:11px"><div class="eyebrow">Potential retail profit</div><div id="profitValue" class="profit-value">₹0 <small>(0%)</small></div><div id="profitFormula" class="profit-formula">MRP value ₹0 − final payable ₹0</div><div class="profit-grid"><div class="profit-stat"><span>Wholesale subtotal</span><strong id="heroSubtotal">₹0</strong></div><div class="profit-stat"><span>MRP retail value</span><strong id="heroMrp">₹0</strong></div><div class="profit-stat"><span>Final payable</span><strong id="heroPayable">₹0</strong></div></div><div class="disclaimer">Potential profit assumes the purchased stock is later sold at the listed MRP. It is an opportunity estimate, not guaranteed realized profit.</div></section>
+
+      <section class="card"><div class="section-head"><div><h2>Products</h2><p id="productSubtitle">Your order items.</p></div><button class="link" onclick="location.href='cart.html'">Edit cart</button></div><div id="products" class="products"></div><button id="productToggle" class="product-more" hidden>View all products ↓</button><div id="booster" class="booster" hidden></div></section>
+
+      <section class="card"><div class="section-head"><div><h2>Payment method</h2><p>Select how you want to pay for this wholesale order.</p></div></div>
+        <div id="codOption" class="payment-option"><div class="radio"></div><div class="pay-copy"><strong>💵 Cash on Delivery</strong><span id="codText">Pay the order amount when your stock is delivered.</span></div><span id="codStatus" class="pay-status">Available</span></div>
+        <div class="payment-option disabled"><div class="radio"></div><div class="pay-copy"><strong>⚡ UPI / Online Payment</strong><span>UPI, cards and net banking can be enabled after payment-gateway integration.</span></div><span class="pay-status soon">Coming soon</span></div>
+      </section>
+
+      <section class="card"><div class="section-head"><div><h2>Coupon</h2><p>Apply or change an eligible retailer offer before placing the order.</p></div></div><div class="coupon-box"><input id="couponInput" maxlength="40" placeholder="Enter coupon code"><button id="applyCoupon">Apply</button></div><div id="couponMsg" class="coupon-msg">Optional</div></section>
+
+      <section class="card note"><div class="section-head"><div><h2>Order note</h2><p>Optional delivery instruction for the ONeness team.</p></div></div><textarea id="orderNote" maxlength="1000" placeholder="Example: Please deliver after 4 PM. Shop remains closed between 1–3 PM."></textarea><div id="noteCount" class="note-count">0 / 1000</div></section>
+    </div>
+
+    <aside class="right"><section class="card"><div class="section-head"><div><h2>Order summary</h2><p>Final values from the authoritative checkout engine.</p></div></div>
+      <div class="summary-row"><span>Wholesale subtotal</span><strong id="sumSubtotal">₹0</strong></div>
+      <div id="bulkRow" class="summary-row saving" hidden><span>Bulk pricing saved</span><strong id="sumBulk">− ₹0</strong></div>
+      <div class="summary-row saving"><span>Coupon discount</span><strong id="sumDiscount">− ₹0</strong></div>
+      <div class="summary-row"><span>Delivery</span><strong id="sumDelivery">₹0</strong></div>
+      <div class="payable"><div><span>Final payable</span><strong id="sumPayable">₹0</strong></div></div>
+      <div class="summary-row" style="margin-top:8px"><span>MRP retail value</span><strong id="sumMrp">₹0</strong></div>
+      <div class="final-profit"><span>Potential retail profit</span><strong id="sumProfit">₹0 (0%)</strong></div>
+      <label class="terms"><input id="confirmCheck" type="checkbox"><span><strong>I confirm this address and order.</strong><span>Stock, prices, coupon and eligibility will be verified once more when I place the order.</span></span></label>
+    </section></aside>
+  </div>
+</div>
+
+<div id="successView" class="success-wrap" hidden><section class="success-card"><div class="success-icon">✓</div><h1>Order placed successfully</h1><p>Your order has been received by ONeness. We’ll keep you updated as it is confirmed, packed and dispatched.</p><div id="successOrderNo" class="order-no">Order #ON—</div><div class="success-profit"><span>Potential retail profit from this order</span><strong id="successProfit">₹0</strong><b id="successMargin">(0%) potential margin</b></div><div class="success-grid"><div><span>Order total</span><strong id="successTotal">₹0</strong></div><div><span>MRP retail value</span><strong id="successMrp">₹0</strong></div><div><span>Payment</span><strong>Cash on Delivery</strong></div><div><span>Deliver to</span><strong id="successCity">—</strong></div></div><div class="timeline"><div class="tstep active"><div class="dot">✓</div><span>Placed</span></div><div class="tstep"><div class="dot"></div><span>Confirmed</span></div><div class="tstep"><div class="dot"></div><span>Packed</span></div><div class="tstep"><div class="dot"></div><span>Dispatched</span></div><div class="tstep"><div class="dot"></div><span>Delivered</span></div></div><div class="success-actions"><button class="secondary" onclick="location.href='index.html#orders'">View order</button><button class="primary" onclick="location.href='retailer-dashboard.html'">Continue shopping</button></div></section></div>
+</main>
+
+<div id="checkoutBar" class="checkout" hidden><div class="checkout-copy"><span>Amount payable</span><strong id="stickyPayable">₹0</strong><b id="stickyProfit">Potential profit ₹0 (0%)</b></div><button id="placeOrderBtn" disabled>Place Order · ₹0</button></div>
+<div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(()=>{
+'use strict';
+const URL='https://djnpsgtlzgebmjtxfpei.supabase.co',KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+const db=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}});
+const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=p=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(p||0)/100);
+const pct=n=>Number(n||0).toFixed(Number(n||0)%1?1:0)+'%';
+const profitText=(a,p)=>`${money(a)} (${pct(p)})`;
+const state={cart:readCart(),addressId:Number(sessionStorage.getItem('oneness-checkout-address-id')||0),coupon:sessionStorage.getItem('oneness-checkout-coupon')||'',note:sessionStorage.getItem('oneness-checkout-note')||'',review:null,catalogue:new Map(),cartQuote:null,placing:false,productsExpanded:false,requestId:sessionStorage.getItem('oneness-checkout-request-id')||crypto.randomUUID()};
+sessionStorage.setItem('oneness-checkout-request-id',state.requestId);
+
+function readCart(){try{const a=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');return Array.isArray(a)?a.filter(x=>Number(x.product_id)>0&&Number(x.qty)>0):[]}catch{return[]}}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2500)}
+function payloadItems(){return state.cart.map(x=>({product_id:Number(x.product_id),qty:Number(x.qty)}))}
+function fullAddress(a){return[a.address_line1,a.address_line2,a.landmark?`Near ${a.landmark}`:'',a.city,a.taluka,a.district,a.state,a.pincode].filter(Boolean).join(', ')}
+function bulkSavings(){if(!state.review)return 0;let base=0;for(const l of state.review.items||[]){const p=state.catalogue.get(Number(l.product_id));base+=(p?Number(p.price_paise||0):Number(l.unit_price_paise||0))*Number(l.qty||0)}return Math.max(0,base-Number(state.review.subtotal_paise||0))}
+
+async function boot(){
+ if(!state.cart.length){location.replace('cart.html');return}
+ if(!state.addressId){location.replace('address.html');return}
+ const {data:{user},error}=await db.auth.getUser();if(error||!user){location.replace('index.html');return}
+ $('couponInput').value=state.coupon;$('orderNote').value=state.note;updateNoteCount();
+ await Promise.all([loadCatalogue(),loadCartQuote()]);await refreshReview(true);
+}
+async function loadCatalogue(){try{const {data}=await db.rpc('retailer_dashboard_home');if(data?.ok===true)for(const p of data.products||[])state.catalogue.set(Number(p.id),p)}catch{}}
+async function loadCartQuote(){try{const {data}=await db.rpc('retailer_cart_quote',{p_items:payloadItems(),p_coupon_code:null});if(data?.ok===true)state.cartQuote=data}catch{}}
+async function refreshReview(initial=false){
+ $('loading').hidden=false;if(initial)$('content').hidden=true;$('errorBox').hidden=true;
+ const {data,error}=await db.rpc('retailer_checkout_review',{p_items:payloadItems(),p_address_id:state.addressId,p_coupon_code:state.coupon||null,p_note:state.note||''});
+ $('loading').hidden=true;
+ if(error){showError(error.message||'Could not review checkout.');return false}
+ if(data?.ok!==true){const msg=data?.message||'Could not review checkout.';
+   if(state.coupon&&/coupon/i.test(msg)){ $('couponMsg').className='coupon-msg bad';$('couponMsg').textContent=msg;if(initial){state.coupon='';sessionStorage.removeItem('oneness-checkout-coupon');$('couponInput').value='';return refreshReview(true)}return false}
+   if(/Address not found|PIN code/i.test(msg)){showError(msg,'address.html','Choose address');return false}
+   if(/stock|Product unavailable|quantity|pack|minimum order/i.test(msg)){showError(msg,'cart.html','Review cart');return false}
+   showError(msg);return false
+ }
+ state.review=data.review;$('priceAlert').hidden=true;$('content').hidden=false;$('checkoutBar').hidden=false;
+ if(state.coupon){$('couponMsg').className='coupon-msg good';$('couponMsg').textContent=`${state.coupon} applied · saving ${money(state.review.discount_paise||0)}.`}else{$('couponMsg').className='coupon-msg';$('couponMsg').textContent='Optional'}
+ render();return true;
+}
+function render(){
+ const r=state.review;if(!r)return;const a=r.address||{},profit=Number(r.potential_profit_paise||0),margin=Number(r.potential_margin_pct||0);
+ $('addressName').textContent=`${r.address_label||'Address'} · ${a.contact_name||''}${a.business_name?' · '+a.business_name:''}`;$('addressText').textContent=`${fullAddress(a)} · +91 ${a.phone||''}`;$('addressLabel').textContent=r.address_label||'Address';
+ $('profitValue').innerHTML=`${money(profit)} <small>(${pct(margin)})</small>`;$('profitFormula').textContent=`MRP value ${money(r.mrp_total_paise)} − final payable ${money(r.total_paise)}`;$('heroSubtotal').textContent=money(r.subtotal_paise);$('heroMrp').textContent=money(r.mrp_total_paise);$('heroPayable').textContent=money(r.total_paise);
+ renderProducts();renderPayment();renderSummary();renderBooster();updatePlaceState();
+}
+function renderProducts(){
+ const rows=state.review?.items||[],shown=state.productsExpanded?rows:rows.slice(0,4),units=rows.reduce((n,x)=>n+Number(x.qty||0),0);$('productSubtitle').textContent=`${rows.length} product${rows.length===1?'':'s'} · ${units} unit${units===1?'':'s'}`;
+ $('products').innerHTML=shown.map(x=>{const m=Number(x.mrp_paise||0)*Number(x.qty||0),pay=Number(x.unit_price_paise||0)*Number(x.qty||0),pr=Math.max(0,m-pay),pp=m?pr*100/m:0;return `<div class="product"><div class="product-icon">▣</div><div><strong>${esc(x.title)}</strong><span>${Number(x.qty)} ${esc(x.unit||'unit')} × ${money(x.unit_price_paise)} · MRP ${money(x.mrp_paise)}/${esc(x.unit||'unit')}</span></div><div class="product-total"><strong>${money(pay)}</strong><b>+${money(pr)} (${pct(pp)})</b></div></div>`}).join('');
+ $('productToggle').hidden=rows.length<=4;$('productToggle').textContent=state.productsExpanded?'Show less ↑':`View all ${rows.length} products ↓`;
+}
+function renderPayment(){
+ const ok=state.review?.cod_available===true;$('codOption').classList.toggle('selected',ok);$('codOption').classList.toggle('disabled',!ok);$('codStatus').className='pay-status'+(ok?'':' off');$('codStatus').textContent=ok?'Available':'Unavailable';
+ $('codText').textContent=ok?`Pay ${money(state.review.total_paise)} when your order is delivered.`:(state.review?.store_cod_enabled===false?'Cash on Delivery is currently disabled by the store.':'Cash on Delivery is not enabled for this retailer account. Contact ONeness to request COD access.');
+}
+function renderSummary(){
+ const r=state.review,bulk=bulkSavings(),pr=Number(r.potential_profit_paise||0),pm=Number(r.potential_margin_pct||0);
+ $('sumSubtotal').textContent=money(r.subtotal_paise);$('bulkRow').hidden=bulk<=0;$('sumBulk').textContent='− '+money(bulk);$('sumDiscount').textContent='− '+money(r.discount_paise||0);$('sumDelivery').textContent=Number(r.shipping_paise||0)>0?money(r.shipping_paise):'Free';$('sumPayable').textContent=money(r.total_paise);$('sumMrp').textContent=money(r.mrp_total_paise);$('sumProfit').textContent=profitText(pr,pm);$('stickyPayable').textContent=money(r.total_paise);$('stickyProfit').textContent=`Potential profit ${profitText(pr,pm)}`;$('placeOrderBtn').textContent=`Place Order · ${money(r.total_paise)}`;
+}
+function renderBooster(){
+ const c=(state.cartQuote?.items||[]).find(x=>x.status==='ok'&&x.next_slab);if(!c){$('booster').hidden=true;return}
+ const t=Number(c.next_slab.min_qty||0),add=Math.max(0,t-Number(c.qty||0)),np=Number(c.next_slab.price_paise||0),mrp=Number(c.mrp_paise||0),extra=Math.max(0,(mrp-np)*t-Number(c.potential_profit_paise||0));
+ $('booster').hidden=false;$('booster').innerHTML=`Add <strong>${add} more ${esc(c.unit||'units')}</strong> of ${esc(c.title)} to unlock ${money(np)}/${esc(c.unit||'unit')} and increase that line’s potential profit by about <strong>${money(extra)}</strong>.<button id="boosterBtn">Edit cart</button>`;$('boosterBtn').onclick=()=>location.href='cart.html';
+}
+function updatePlaceState(){const ready=!!state.review&&$('confirmCheck').checked&&state.review.cod_available===true&&!state.placing&&$('priceAlert').hidden;$('placeOrderBtn').disabled=!ready;if(state.placing)$('placeOrderBtn').textContent='Placing your order…';else if(state.review?.cod_available!==true)$('placeOrderBtn').textContent='Payment method unavailable';else $('placeOrderBtn').textContent=`Place Order · ${money(state.review?.total_paise||0)}`}
+function showError(msg,href='cart.html',label='Back to cart'){$('loading').hidden=true;$('content').hidden=true;$('checkoutBar').hidden=true;$('errorBox').hidden=false;$('errorBox').innerHTML=`<strong>Checkout needs attention</strong>${esc(msg)}<br><button id="errorAction">${esc(label)}</button>`;$('errorAction').onclick=()=>location.href=href}
+async function placeOrder(){
+ if(state.placing||!state.review||!$('confirmCheck').checked||state.review.cod_available!==true)return;state.placing=true;updatePlaceState();
+ try{const {data,error}=await db.rpc('retailer_checkout_place',{p_items:payloadItems(),p_address_id:state.addressId,p_coupon_code:state.coupon||null,p_note:state.note||'',p_request_id:state.requestId,p_expected_total_paise:Number(state.review.total_paise||0)});if(error)throw error;
+   if(data?.ok===true){showSuccess(data.result);return}
+   if(data?.reason==='price_changed'&&data.review){const old=Number(state.review.total_paise||0);state.review=data.review;const newer=Number(state.review.total_paise||0);$('confirmCheck').checked=false;$('priceAlert').hidden=false;$('priceAlertText').textContent=`Your payable amount changed from ${money(old)} to ${money(newer)}. No order was created. Review the updated values before confirming again.`;render();$('priceAlert').scrollIntoView({behavior:'smooth',block:'center'});return}
+   const msg=data?.message||'The order could not be placed.';if(/COD/i.test(msg)){state.review.cod_available=false;renderPayment();updatePlaceState()}toast(msg)
+ }catch(err){console.error(err);toast('We could not confirm the order. You can safely retry; duplicate-order protection is enabled.')}finally{state.placing=false;updatePlaceState()}
+}
+function showSuccess(result){
+ const o=result?.order||{},s=result?.snapshot||state.review||{},pr=Number(s.potential_profit_paise||o.potential_profit_paise||0),mrp=Number(s.mrp_total_paise||o.mrp_total_paise||0),tot=Number(s.total_paise||o.total_paise||0),pm=mrp?pr*100/mrp:0,a=s.address||{};
+ localStorage.removeItem('oneness-retailer-cart');for(const k of['oneness-checkout-address-id','oneness-checkout-address','oneness-checkout-coupon','oneness-checkout-note','oneness-checkout-request-id'])sessionStorage.removeItem(k);
+ $('checkoutView').hidden=true;$('checkoutBar').hidden=true;$('successView').hidden=false;$('successOrderNo').textContent=`Order #ON${o.id||'—'}`;$('successProfit').textContent=money(pr);$('successMargin').textContent=`(${pct(pm)}) potential margin`;$('successTotal').textContent=money(tot);$('successMrp').textContent=money(mrp);$('successCity').textContent=`${a.city||''}${a.pincode?' · '+a.pincode:''}`||'Selected address';scrollTo({top:0,behavior:'smooth'});
+}
+$('productToggle').onclick=()=>{state.productsExpanded=!state.productsExpanded;renderProducts()};
+$('applyCoupon').onclick=async()=>{const next=$('couponInput').value.trim().toUpperCase(),prev=state.coupon;state.coupon=next;const ok=await refreshReview(false);if(ok){if(next)sessionStorage.setItem('oneness-checkout-coupon',next);else sessionStorage.removeItem('oneness-checkout-coupon');$('confirmCheck').checked=false;updatePlaceState()}else state.coupon=prev};
+$('couponInput').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('applyCoupon').click()}};
+$('orderNote').oninput=()=>{state.note=$('orderNote').value.slice(0,1000);sessionStorage.setItem('oneness-checkout-note',state.note);updateNoteCount();$('confirmCheck').checked=false;updatePlaceState()};
+function updateNoteCount(){$('noteCount').textContent=`${$('orderNote').value.length} / 1000`}
+$('confirmCheck').onchange=updatePlaceState;$('placeOrderBtn').onclick=placeOrder;
+$('acceptUpdatedPrice').onclick=()=>{$('priceAlert').hidden=true;render();$('confirmCheck').checked=false;$('content').scrollIntoView({behavior:'smooth',block:'start'})};
+$('backBtn').onclick=()=>history.length>1?history.back():location.href='address.html';
+boot().catch(err=>{console.error(err);showError(err?.message||'Unexpected checkout error.')});
+})();
+</script>
+<script src="retailer-ui.js"></script>
+</body>
+</html>

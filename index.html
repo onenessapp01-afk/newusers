@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#68141d">
+<title>ONeness · Retailer Account</title>
+<style>
+:root{
+  --bg:#f5f6f1;
+  --surface:#fff;
+  --ink:#12241f;
+  --muted:#748079;
+  --green:#17634c;
+  --green-dark:#0f4d3b;
+  --green-soft:#e9f3eb;
+  --lime:#dff2a8;
+  --orange:#f1aa62;
+  --orange-soft:#fff0df;
+  --line:#e2e8e2;
+  --danger:#b43f32;
+  --danger-soft:#fff0ed;
+  --shadow:0 20px 60px rgba(22,55,43,.10);
+  --r:22px;
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{
+  margin:0;min-height:100vh;background:var(--bg);color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+[hidden]{display:none!important}
+.shell{width:min(1160px,100%);margin:auto}
+.auth-layout{
+  min-height:100vh;display:grid;grid-template-columns:1fr;padding:18px;
+}
+.auth-visual{
+  display:none;position:relative;overflow:hidden;border-radius:30px;
+  background:linear-gradient(145deg,#123c30,#17634c 58%,#2d7760);
+  color:white;padding:46px;
+}
+.auth-visual:before,.auth-visual:after{
+  content:"";position:absolute;border-radius:50%;pointer-events:none
+}
+.auth-visual:before{width:340px;height:340px;right:-130px;top:-110px;background:rgba(223,242,168,.16)}
+.auth-visual:after{width:250px;height:250px;left:-80px;bottom:-100px;background:rgba(241,170,98,.14)}
+.visual-inner{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.5px}
+.brand-mark{
+  width:44px;height:44px;border-radius:15px;display:grid;place-items:center;
+  color:#18372d;background:var(--lime);font-size:21px;font-weight:950
+}
+.visual-main{margin:auto 0;max-width:570px}
+.kicker{text-transform:uppercase;letter-spacing:2px;font-size:10px;font-weight:900;color:#cce1d7}
+.visual-main h1{font-size:clamp(38px,5vw,66px);line-height:.98;letter-spacing:-3px;margin:12px 0 18px}
+.visual-main p{font-size:15px;color:#d6e5dd;line-height:1.6;max-width:480px}
+.visual-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px}
+.visual-stat{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.08);padding:14px;border-radius:16px}
+.visual-stat strong{display:block;font-size:18px}
+.visual-stat span{font-size:10px;color:#c9dbd3}
+.visual-note{font-size:10px;color:#bad2c6;margin-top:auto}
+
+.auth-side{display:flex;align-items:center;justify-content:center;padding:8px}
+.auth-card{width:min(470px,100%);background:white;border:1px solid var(--line);border-radius:27px;padding:24px;box-shadow:var(--shadow)}
+.mobile-brand{display:flex;align-items:center;gap:10px;margin-bottom:27px}
+.mobile-brand .brand-mark{background:var(--green);color:white}
+.mobile-brand div:last-child strong{display:block;font-size:16px}
+.mobile-brand div:last-child span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.eyebrow{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;font-weight:900;color:var(--green)}
+.auth-card h2{font-size:29px;letter-spacing:-1.2px;margin:7px 0 7px}
+.auth-card .lead{margin:0 0 22px;color:var(--muted);font-size:12px;line-height:1.55}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:#f1f3ee;border-radius:13px;padding:4px;margin-bottom:20px}
+.tab{height:39px;border:0;background:transparent;border-radius:10px;color:#6f7b74;font-size:11px;font-weight:850}
+.tab.active{background:white;color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.05)}
+.form{display:grid;gap:13px}
+.label{display:grid;gap:6px;font-size:10px;font-weight:850;color:#526058}
+.input-wrap{position:relative}
+.input{
+  width:100%;height:48px;border:1px solid var(--line);border-radius:13px;background:#fff;
+  padding:0 13px;outline:none;color:var(--ink);transition:.18s
+}
+.input:focus{border-color:#94b5a5;box-shadow:0 0 0 4px rgba(23,99,76,.08)}
+.input::placeholder{color:#adb5b0}
+.password-input{padding-right:48px}
+.eye{
+  position:absolute;right:6px;top:6px;width:36px;height:36px;border:0;border-radius:10px;background:#f2f4f0;color:#67746d
+}
+.row-2{display:grid;grid-template-columns:1fr;gap:13px}
+.primary{
+  width:100%;height:49px;border:0;border-radius:13px;background:var(--green);color:#fff;
+  font-size:12px;font-weight:900;transition:.18s;box-shadow:0 9px 20px rgba(23,99,76,.16)
+}
+.primary:hover{background:var(--green-dark)}
+.primary:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed}
+.secondary{
+  width:100%;height:46px;border:1px solid var(--line);border-radius:13px;background:white;color:var(--ink);
+  font-size:11px;font-weight:850
+}
+.text-btn{border:0;background:transparent;padding:2px;color:var(--green);font-size:11px;font-weight:850}
+.auth-links{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px}
+.notice{padding:11px 12px;border-radius:12px;background:var(--green-soft);color:#2d5c4a;font-size:10px;line-height:1.5}
+.notice.error{background:var(--danger-soft);color:var(--danger)}
+.secure{display:flex;gap:8px;align-items:flex-start;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);color:#7c8881;font-size:9px;line-height:1.55}
+.otp-input{
+  width:100%;height:62px;border:1px solid var(--line);border-radius:15px;text-align:center;
+  font-size:26px;letter-spacing:.35em;font-weight:800;outline:none
+}
+.otp-input:focus{border-color:#94b5a5;box-shadow:0 0 0 4px rgba(23,99,76,.08)}
+.otp-mail{padding:12px;border-radius:12px;background:#f4f6f1;font-size:11px;color:#526058;margin-bottom:14px}
+.timer{text-align:center;font-size:10px;color:var(--muted);margin:10px 0}
+.success-check{
+  width:62px;height:62px;border-radius:50%;background:var(--green-soft);color:var(--green);
+  display:grid;place-items:center;font-size:28px;margin:0 auto 14px;font-weight:900
+}
+
+/* account state */
+.account-app{min-height:100vh;padding-bottom:90px}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(245,246,241,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,226,.86)}
+.topbar-inner{height:68px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.account-brand{display:flex;align-items:center;gap:9px;font-weight:900}
+.account-brand .brand-mark{width:38px;height:38px;border-radius:13px;background:var(--green);color:white;font-size:18px}
+.shop-btn{border:0;border-radius:12px;background:var(--green);color:white;padding:10px 13px;font-size:10px;font-weight:900}
+.account-main{padding:19px 15px 32px}
+.profile-hero{
+  background:linear-gradient(135deg,#143e32,#17634c 67%,#317a61);color:white;
+  border-radius:25px;padding:22px;position:relative;overflow:hidden;box-shadow:var(--shadow)
+}
+.profile-hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;top:-65px;background:rgba(223,242,168,.14)}
+.profile-main{display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+.avatar{width:58px;height:58px;border-radius:18px;background:var(--lime);color:#163c30;display:grid;place-items:center;font-size:22px;font-weight:950}
+.profile-main h1{margin:0;font-size:22px;letter-spacing:-.8px}
+.profile-main p{margin:3px 0 0;font-size:11px;color:#d0e1d8}
+.status{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.12);font-size:9px;font-weight:850;color:#e3f2ea}
+.hero-info{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.hero-info div{padding:11px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.07)}
+.hero-info span{display:block;font-size:9px;color:#c9ddd3}
+.hero-info strong{display:block;font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0 24px}
+.quick{
+  background:white;border:1px solid var(--line);border-radius:17px;padding:15px;min-height:100px;
+  display:flex;flex-direction:column;justify-content:space-between
+}
+.quick-icon{width:35px;height:35px;border-radius:11px;background:var(--green-soft);display:grid;place-items:center;font-size:16px}
+.quick strong{font-size:12px}
+.quick span{font-size:9px;color:var(--muted)}
+.section{margin:0 0 20px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.section-head h2{font-size:16px;margin:0;letter-spacing:-.4px}
+.card{background:white;border:1px solid var(--line);border-radius:19px;overflow:hidden}
+.menu-row{display:flex;align-items:center;gap:12px;padding:14px 15px;border-bottom:1px solid #edf0ec}
+.menu-row:last-child{border-bottom:0}
+.menu-icon{width:38px;height:38px;border-radius:12px;background:#f1f4ef;display:grid;place-items:center}
+.menu-copy{flex:1;min-width:0}
+.menu-copy strong{display:block;font-size:11px}
+.menu-copy span{display:block;font-size:9px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chev{color:#9aa59f}
+.edit-form{padding:15px;display:grid;gap:12px}
+.danger-btn{width:100%;height:46px;border:1px solid #f0c7c1;border-radius:13px;background:#fff8f7;color:var(--danger);font-size:11px;font-weight:900}
+.bottom-nav{
+  position:fixed;z-index:40;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(700px,100%);height:76px;padding:7px 11px calc(7px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border:1px solid var(--line);border-bottom:0;
+  border-radius:21px 21px 0 0;display:grid;grid-template-columns:repeat(4,1fr)
+}
+.nav{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#89938e;font-size:9px;font-weight:800}
+.nav-icon{font-size:18px}
+.nav.active{background:var(--green-soft);color:var(--green);border-radius:13px}
+.toast{
+  position:fixed;z-index:80;left:50%;bottom:92px;transform:translate(-50%,15px);opacity:0;
+  max-width:88vw;background:#17382e;color:white;padding:11px 14px;border-radius:12px;font-size:10px;
+  transition:.2s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.15)
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.loading-screen{min-height:100vh;display:grid;place-items:center;padding:20px}
+.loader-card{text-align:center;color:var(--muted);font-size:11px}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid #dce5dd;border-top-color:var(--green);animation:spin .75s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+
+/* My Orders */
+.orders-panel{scroll-margin-top:85px}.orders-tools{display:flex;gap:7px;overflow:auto;margin-bottom:10px}.order-filter{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:8px;font-weight:900;color:#66746d}.order-filter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.orders-list{display:grid;gap:9px}.retail-order{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px;color:var(--ink)}.order-top{display:flex;justify-content:space-between;gap:10px}.order-id{font-size:12px;font-weight:950}.order-date{font-size:8px;color:var(--muted);margin-top:3px}.order-status{padding:5px 7px;border-radius:999px;background:#eef2ed;font-size:7px;font-weight:950;text-transform:uppercase;white-space:nowrap}.order-status.syncing,.order-status.placed{background:#fff3df;color:#8b6024}.order-status.confirmed{background:#eef1ff;color:#5563a8}.order-status.packed{background:#f2edff;color:#6b58a0}.order-status.dispatched{background:#fff0d9;color:#945d1d}.order-status.delivered{background:#e7f3e8;color:#397149}.order-status.cancelled{background:#fff0ed;color:var(--danger)}
+.order-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.order-meta div{padding:8px;border-radius:10px;background:#f6f8f5}.order-meta span{display:block;font-size:6px;color:var(--muted)}.order-meta strong{display:block;font-size:9px;margin-top:2px}.order-meta .profit strong{color:var(--green)}.order-foot{display:flex;justify-content:space-between;gap:8px;margin-top:9px;padding-top:9px;border-top:1px solid #edf0ec}.order-foot span{font-size:7px;color:var(--muted)}.order-foot b{font-size:8px;color:var(--green)}
+.orders-empty,.orders-loading{padding:25px 14px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:17px;color:var(--muted);font-size:9px}.orders-empty strong{display:block;color:var(--ink);font-size:12px;margin:6px 0 3px}
+.order-dialog,.receipt-dialog{border:0;padding:0;background:#fff;color:var(--ink);box-shadow:0 30px 100px rgba(14,38,29,.28)}.order-dialog{width:min(720px,100vw);height:min(880px,100vh);max-width:100vw;max-height:100vh;border-radius:22px}.receipt-dialog{width:min(620px,94vw);max-height:92vh;border-radius:20px}.order-dialog::backdrop,.receipt-dialog::backdrop{background:rgba(12,35,27,.58)}
+.dialog-head{position:sticky;top:0;z-index:4;background:#fff;border-bottom:1px solid var(--line);padding:13px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}.dialog-head h2{font-size:16px;margin:0}.dialog-head p{font-size:7px;color:var(--muted);margin:2px 0 0}.dialog-close{width:35px;height:35px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:18px}.dialog-body{padding:14px 14px 26px}
+.detail-card{border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:10px}.detail-card h3{font-size:12px;margin:0 0 9px}.order-summary-hero{background:linear-gradient(135deg,#143e32,#17634c);color:#fff;border:0}.hero-order-row{display:flex;justify-content:space-between;gap:10px}.hero-order-row span{font-size:7px;color:#c9ddd3}.hero-order-row strong{display:block;font-size:22px;margin-top:3px}.profit-line{margin-top:10px;padding:9px;border-radius:11px;background:rgba(255,255,255,.08);display:flex;justify-content:space-between;font-size:8px}.profit-line b{color:var(--lime)}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);position:relative}.timeline:before{content:"";position:absolute;left:9%;right:9%;top:10px;height:2px;background:#e3e9e4}.tl-step{position:relative;z-index:2;text-align:center}.tl-dot{width:21px;height:21px;border-radius:50%;background:#e8ece8;margin:auto;display:grid;place-items:center;font-size:8px}.tl-step.done .tl-dot,.tl-step.current .tl-dot{background:var(--green);color:#fff}.tl-step span{display:block;font-size:5px;color:var(--muted);margin-top:5px}.cancelled-box,.sync-notice{padding:10px;border-radius:11px;font-size:7px;line-height:1.5}.cancelled-box{background:var(--danger-soft);color:var(--danger)}.sync-notice{background:#fff6e7;color:#775d34}
+.detail-address{font-size:8px;color:#58675f;line-height:1.6}.item-list{display:grid;gap:7px}.order-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;padding:9px;border-radius:11px;background:#f7f9f6}.order-item strong{display:block;font-size:9px}.order-item span{display:block;font-size:7px;color:var(--muted);margin-top:2px}.item-money{text-align:right}.item-money b{display:block;font-size:6px;color:var(--green);margin-top:2px}.fin-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed #e5eae5;font-size:8px;color:#647169}.fin-row strong{color:var(--ink)}.fin-row.total{font-size:11px}.fin-row.profit{border:0;background:var(--green-soft);border-radius:10px;padding:9px;margin-top:6px}.fin-row.profit strong{color:var(--green)}
+.detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.detail-actions button,.receipt-actions button{height:42px;border-radius:11px;font-size:8px;font-weight:900}.receipt-btn{border:0;background:var(--green);color:#fff}.outline-btn{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.receipt-wrap{padding:18px}.receipt-paper{border:1px solid var(--line);border-radius:15px;padding:18px}.receipt-brand{display:flex;justify-content:space-between;gap:12px;padding-bottom:13px;border-bottom:2px solid var(--green)}.receipt-brand h2{margin:0;font-size:21px;color:var(--green)}.receipt-brand p{margin:3px 0 0;font-size:7px;color:var(--muted)}.receipt-no{text-align:right;font-size:8px}.receipt-no strong{display:block;font-size:12px}.receipt-customer{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:13px 0}.receipt-customer div{font-size:7px;color:var(--muted);line-height:1.55}.receipt-customer strong{display:block;color:var(--ink);font-size:9px}.receipt-items{width:100%;border-collapse:collapse}.receipt-items th,.receipt-items td{padding:8px 5px;border-bottom:1px solid #edf0ec;font-size:7px;text-align:left}.receipt-items th:last-child,.receipt-items td:last-child{text-align:right}.receipt-total{margin-left:auto;width:min(300px,100%);padding-top:10px}.receipt-foot{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:6px;line-height:1.6;color:var(--muted)}.receipt-actions{display:flex;gap:7px;padding:12px 18px 18px}.receipt-actions button{flex:1}
+@media(max-width:620px){.order-dialog{margin:auto 0 0;width:100vw;height:94vh;border-radius:22px 22px 0 0}.receipt-dialog{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:22px 22px 0 0}.receipt-customer{grid-template-columns:1fr}.order-meta{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.orders-list{grid-template-columns:repeat(2,minmax(0,1fr))}.order-dialog{margin:auto 0 auto auto;height:100vh;max-height:100vh;border-radius:22px 0 0 22px}}
+
+@media(min-width:540px){
+  .auth-card{padding:32px}
+  .row-2{grid-template-columns:1fr 1fr}
+  .quick-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:860px){
+  .auth-layout{grid-template-columns:1.06fr .94fr;gap:16px;padding:16px}
+  .auth-visual{display:block}
+  .auth-side{padding:20px}
+  .account-main{padding:28px 24px 42px}
+  .topbar-inner{padding:0 24px}
+  .hero-info{grid-template-columns:repeat(4,1fr)}
+  .bottom-nav{bottom:13px;border-radius:21px;border-bottom:1px solid var(--line)}
+  .account-app{padding-bottom:110px}
+  .toast{bottom:108px}
+}
+</style>
+<link rel="stylesheet" href="retailer-ui.css">
+</head>
+<body data-page="account">
+
+<div id="loadingScreen" class="loading-screen">
+  <div class="loader-card"><div class="spinner"></div>Opening your ONeness account…</div>
+</div>
+
+<div id="authView" hidden>
+  <div class="auth-layout">
+    <aside class="auth-visual">
+      <div class="visual-inner">
+        <div class="brand"><div class="brand-mark">O</div><span>ONeness</span></div>
+        <div class="visual-main">
+          <div class="kicker">Retailer wholesale account</div>
+          <h1>Buy wholesale.<br>Grow every margin.</h1>
+          <p>One account for wholesale products, bulk pricing, orders and your potential retail earnings.</p>
+          <div class="visual-stats">
+            <div class="visual-stat"><strong>Bulk</strong><span>Quantity-based wholesale pricing</span></div>
+            <div class="visual-stat"><strong>MRP</strong><span>See retail value before buying</span></div>
+            <div class="visual-stat"><strong>Margin</strong><span>Track potential earnings</span></div>
+          </div>
+        </div>
+        <div class="visual-note">Secure retailer access · Email verification required</div>
+      </div>
+    </aside>
+
+    <section class="auth-side">
+      <div class="auth-card">
+        <div class="mobile-brand">
+          <div class="brand-mark">O</div>
+          <div><strong>ONeness</strong><span>Retailer wholesale account</span></div>
+        </div>
+        <div id="authContent"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="accountView" class="account-app" hidden>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="account-brand" href="retailer-dashboard.html"><div class="brand-mark">O</div><span>ONeness</span></a>
+      <button class="shop-btn" onclick="location.href='retailer-dashboard.html'">Shop wholesale →</button>
+    </div>
+  </header>
+
+  <main class="shell account-main">
+    <section class="profile-hero">
+      <div class="profile-main">
+        <div class="avatar" id="avatarLetter">R</div>
+        <div>
+          <h1 id="accountName">Retailer</h1>
+          <p id="accountBusiness">Retailer account</p>
+          <span class="status" id="accountStatus">● Active retailer</span>
+        </div>
+      </div>
+      <div class="hero-info">
+        <div><span>Email</span><strong id="accountEmail">—</strong></div>
+        <div><span>Mobile</span><strong id="accountPhone">—</strong></div>
+        <div><span>Email verification</span><strong id="accountVerified">Verified</strong></div>
+        <div><span>Cash on delivery</span><strong id="accountCod">Not enabled</strong></div>
+      </div>
+    </section>
+
+    <section class="quick-grid">
+      <a class="quick" href="retailer-dashboard.html"><div class="quick-icon">🛍️</div><div><strong>Shop products</strong><br><span>Browse wholesale catalogue</span></div></a>
+      <a class="quick" href="earnings.html"><div class="quick-icon">📈</div><div><strong>Earnings</strong><br><span>Potential margin & order profit</span></div></a>
+      <a class="quick" href="cart.html"><div class="quick-icon">🛒</div><div><strong>My cart</strong><br><span>Continue your current order</span></div></a>
+      <button class="quick" id="editProfileOpen" style="text-align:left"><div class="quick-icon">✎</div><div><strong>Edit profile</strong><br><span>Business & contact details</span></div></button>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>My account</h2></div>
+      <div class="card">
+        <a class="menu-row" href="earnings.html">
+          <div class="menu-icon">📊</div><div class="menu-copy"><strong>Earnings & margins</strong><span>See earnings by month, order and product</span></div><div class="chev">›</div>
+        </a>
+        <button class="menu-row" id="ordersShortcut" style="width:100%;border-top:0;border-left:0;border-right:0;background:white;text-align:left">
+          <div class="menu-icon">📦</div><div class="menu-copy"><strong>My orders</strong><span id="ordersSummaryText">Placed, packed, dispatched and delivered orders</span></div><div class="chev">›</div>
+        </button>
+        <a class="menu-row" href="address.html">
+          <div class="menu-icon">📍</div><div class="menu-copy"><strong>Saved addresses</strong><span>Manage shop, warehouse and delivery addresses</span></div><div class="chev">›</div>
+        </a>
+        <button class="menu-row" id="editProfileRow" style="width:100%;border:0;background:white;text-align:left">
+          <div class="menu-icon">👤</div><div class="menu-copy"><strong>Profile details</strong><span id="profileSummary">Update retailer information</span></div><div class="chev">›</div>
+        </button>
+      </div>
+    </section>
+
+
+    <section class="section orders-panel" id="ordersSection" hidden>
+      <div class="section-head"><h2>My orders</h2><div><button class="text-btn" id="refreshOrders">Refresh</button><button class="text-btn" id="closeOrders">Close</button></div></div>
+      <div class="orders-tools">
+        <button class="order-filter active" data-order-filter="">All</button>
+        <button class="order-filter" data-order-filter="active">Active</button>
+        <button class="order-filter" data-order-filter="delivered">Delivered</button>
+        <button class="order-filter" data-order-filter="cancelled">Cancelled</button>
+      </div>
+      <div id="ordersList" class="orders-list"></div>
+    </section>
+
+    <section class="section" id="editSection" hidden>
+      <div class="section-head"><h2>Edit retailer profile</h2><button class="text-btn" id="closeEdit">Close</button></div>
+      <div class="card">
+        <form class="edit-form" id="editForm">
+          <label class="label">Full name<input class="input" name="name" maxlength="120" required></label>
+          <label class="label">Business / shop name<input class="input" name="business_name" maxlength="180" required></label>
+          <label class="label">Mobile number<input class="input" name="phone" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required></label>
+          <button class="primary" id="saveProfile">Save profile</button>
+          <div class="notice" id="editMessage" hidden></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Security</h2></div>
+      <div class="card">
+        <div class="menu-row">
+          <div class="menu-icon">✓</div><div class="menu-copy"><strong>Verified email account</strong><span id="securityEmail">Your email is confirmed with ONeness</span></div>
+        </div>
+        <button class="menu-row" id="changePassword" style="width:100%;border:0;background:white;text-align:left">
+          <div class="menu-icon">🔐</div><div class="menu-copy"><strong>Change password</strong><span>Verify your email before resetting the password</span></div><div class="chev">›</div>
+        </button>
+      </div>
+    </section>
+
+    <button class="danger-btn" id="logoutBtn">Sign out of this account</button>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="nav" href="retailer-dashboard.html"><span class="nav-icon">⌂</span><span>Home</span></a>
+    <a class="nav" href="earnings.html"><span class="nav-icon">↗</span><span>Earnings</span></a>
+    <a class="nav" href="cart.html"><span class="nav-icon">🛒</span><span>Cart</span></a>
+    <a class="nav active" href="index.html"><span class="nav-icon">◯</span><span>Account</span></a>
+  </nav>
+</div>
+
+
+<dialog id="orderDialog" class="order-dialog">
+  <div class="dialog-head"><div><h2 id="orderDialogTitle">Order</h2><p id="orderDialogSub">Order details</p></div><button class="dialog-close" id="orderDialogClose">×</button></div>
+  <div id="orderDialogBody" class="dialog-body"></div>
+</dialog>
+<dialog id="receiptDialog" class="receipt-dialog">
+  <div class="dialog-head"><div><h2>Order receipt</h2><p>View, download or print</p></div><button class="dialog-close" id="receiptDialogClose">×</button></div>
+  <div id="receiptBody"></div>
+  <div class="receipt-actions"><button class="outline-btn" id="downloadReceipt">Download receipt</button><button class="receipt-btn" id="printReceipt">Print / Save PDF</button></div>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(()=>{
+'use strict';
+
+const SUPABASE_URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
+const SUPABASE_KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
+  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}
+});
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const OTP_KEY='oneness-retailer-otp';
+const RESEND_MS=60000;
+let mode='login',busy=false,otp=null,recoverySession=false,account=null,timer=null,orders=[],ordersLoaded=false,orderFilter='',currentOrderDetail=null;
+
+function setVisible(id,show){$(id).hidden=!show}
+function showLoading(){setVisible('loadingScreen',true);setVisible('authView',false);setVisible('accountView',false)}
+function showAuth(){setVisible('loadingScreen',false);setVisible('authView',true);setVisible('accountView',false)}
+function showAccountView(){setVisible('loadingScreen',false);setVisible('authView',false);setVisible('accountView',true)}
+function toast(text){const t=$('toast');t.textContent=text;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2500)}
+
+function money(p){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(p||0)/100)}
+function pct(n){const x=Number(n||0);return x.toFixed(x%1?1:0)+'%'}
+function profitText(a,mrp){const x=Number(a||0),m=Number(mrp||0);return `${money(x)} (${pct(m?x*100/m:0)})`}
+function orderDate(v){return v?new Date(v).toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—'}
+function orderStatusLabel(s){return ({syncing:'Processing',placed:'Placed',confirmed:'Confirmed',packed:'Packed',dispatched:'Dispatched',delivered:'Delivered',cancelled:'Cancelled'})[s]||String(s||'—')}
+function paymentLabel(s){return ({unpaid:'Unpaid',collected:'Collected',paid:'Paid',pending:'Pending'})[s]||String(s||'—')}
+function fullAddress(a){if(!a||typeof a!=='object')return 'Address snapshot unavailable.';return [a.contact_name,a.business_name,a.address_line1,a.address_line2,a.landmark?`Near ${a.landmark}`:'',a.city,a.taluka,a.district,a.state,a.pincode,a.phone?`Mobile: ${a.phone}`:''].filter(Boolean).join(', ')}
+
+function message(text,error=false){
+  const el=$('authMessage');if(!el)return;
+  el.textContent=text;el.hidden=false;el.className='notice'+(error?' error':'');
+}
+function normalizePhone(v){return String(v||'').replace(/\D/g,'').slice(-10)}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+function saveOtp(){if(otp)sessionStorage.setItem(OTP_KEY,JSON.stringify(otp));else sessionStorage.removeItem(OTP_KEY)}
+function loadOtp(){
+  try{const x=JSON.parse(sessionStorage.getItem(OTP_KEY)||'null');if(x?.email&&x?.purpose)return x}catch{}
+  return null;
+}
+function clearOtp(){otp=null;saveOtp();stopTimer()}
+function showPassword(btn,input){
+  const x=$(input);if(!x)return;
+  const next=x.type==='password'?'text':'password';x.type=next;btn.textContent=next==='text'?'Hide':'Show';
+}
+function inputField(label,name,type='text',extra=''){
+  return `<label class="label">${label}<div class="input-wrap"><input class="input" name="${name}" type="${type}" ${extra}></div></label>`;
+}
+function passwordField(label,name,autocomplete,min=''){
+  return `<label class="label">${label}<div class="input-wrap"><input class="input password-input" id="${name}Field" name="${name}" type="password" ${min?`minlength="${min}"`:''} required autocomplete="${autocomplete}"><button class="eye" type="button" data-eye="${name}Field">Show</button></div></label>`;
+}
+function bindEyes(){for(const b of document.querySelectorAll('[data-eye]'))b.onclick=()=>showPassword(b,b.dataset.eye)}
+
+function renderLogin(){
+  mode='login';stopTimer();showAuth();
+  $('authContent').innerHTML=`
+    <div class="eyebrow">Retailer account</div><h2>Welcome back</h2>
+    <p class="lead">Sign in to shop wholesale products and manage your retailer account.</p>
+    <div class="tabs"><button class="tab active" type="button">Login</button><button class="tab" id="goSignup" type="button">Create account</button></div>
+    <form class="form" id="authForm">
+      ${inputField('Email address','email','email','maxlength="254" autocomplete="email" required placeholder="you@business.com"')}
+      ${passwordField('Password','password','current-password')}
+      <button class="primary" id="authSubmit">Login to ONeness</button>
+      <div class="notice" id="authMessage" hidden></div>
+    </form>
+    <div class="auth-links"><button class="text-btn" id="forgotBtn">Forgot password?</button><button class="text-btn" id="verifyBtn">Verify email</button></div>
+    <div class="secure">🔒 <span>Your login is handled by Supabase Auth. No secret/service-role key is stored in this page.</span></div>`;
+  bindEyes();
+  $('goSignup').onclick=renderSignup;
+  $('forgotBtn').onclick=()=>renderEmailAction('recovery');
+  $('verifyBtn').onclick=()=>renderEmailAction('signup');
+  $('authForm').onsubmit=login;
+}
+function renderSignup(){
+  mode='signup';stopTimer();showAuth();
+  $('authContent').innerHTML=`
+    <div class="eyebrow">New retailer</div><h2>Create your account</h2>
+    <p class="lead">Register your business. We will send an OTP to verify your email before activating the retailer account.</p>
+    <div class="tabs"><button class="tab" id="goLogin" type="button">Login</button><button class="tab active" type="button">Create account</button></div>
+    <form class="form" id="authForm">
+      <div class="row-2">
+        ${inputField('Full name','name','text','maxlength="120" autocomplete="name" required placeholder="Your full name"')}
+        ${inputField('Mobile number','phone','tel','maxlength="10" inputmode="numeric" autocomplete="tel" required placeholder="10 digit mobile"')}
+      </div>
+      ${inputField('Business / shop name','business_name','text','maxlength="180" autocomplete="organization" required placeholder="Your business name"')}
+      ${inputField('Email address','email','email','maxlength="254" autocomplete="email" required placeholder="you@business.com"')}
+      <div class="row-2">
+        ${passwordField('Create password','password','new-password','8')}
+        ${passwordField('Confirm password','confirm_password','new-password','8')}
+      </div>
+      <button class="primary" id="authSubmit">Create account & send OTP</button>
+      <div class="notice" id="authMessage" hidden></div>
+    </form>
+    <div class="auth-links"><span style="font-size:10px;color:#7c8881">Already registered?</span><button class="text-btn" id="backLogin">Login</button></div>
+    <div class="secure">✉️ <span>Email verification is mandatory. After the OTP is verified, the retailer profile becomes active automatically.</span></div>`;
+  bindEyes();
+  $('goLogin').onclick=renderLogin;$('backLogin').onclick=renderLogin;
+  $('authForm').onsubmit=signup;
+}
+function renderEmailAction(purpose){
+  mode=purpose==='recovery'?'forgot':'verify';stopTimer();showAuth();
+  const recovery=purpose==='recovery';
+  $('authContent').innerHTML=`
+    <div class="eyebrow">${recovery?'Password recovery':'Email verification'}</div>
+    <h2>${recovery?'Reset your password':'Verify your email'}</h2>
+    <p class="lead">${recovery?'Enter your registered retailer email. We will send a verification OTP before allowing a new password.':'Enter the email used while creating your retailer account.'}</p>
+    <form class="form" id="authForm">
+      ${inputField('Email address','email','email','maxlength="254" autocomplete="email" required placeholder="you@business.com"')}
+      <button class="primary" id="authSubmit">${recovery?'Send reset OTP':'Send verification OTP'}</button>
+      <div class="notice" id="authMessage" hidden></div>
+    </form>
+    <div class="auth-links"><button class="text-btn" id="backLogin">← Back to login</button></div>`;
+  $('backLogin').onclick=renderLogin;
+  $('authForm').onsubmit=e=>sendExistingOtp(e,purpose);
+}
+function renderOtp(){
+  if(!otp){renderLogin();return}
+  mode='otp';showAuth();stopTimer();
+  $('authContent').innerHTML=`
+    <div class="eyebrow">${otp.purpose==='recovery'?'Password recovery':'Email verification'}</div>
+    <h2>Enter the OTP</h2>
+    <p class="lead">Enter the verification code sent to your email.</p>
+    <div class="otp-mail">Code sent to <strong>${esc(otp.email)}</strong></div>
+    <form class="form" id="otpForm">
+      <label class="label">Email OTP<input class="otp-input" id="otpInput" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required></label>
+      <button class="primary" id="verifyOtpBtn">Verify OTP</button>
+      <div class="notice" id="authMessage" hidden></div>
+    </form>
+    <div class="timer" id="otpTimer"></div>
+    <div class="auth-links"><button class="text-btn" id="resendOtp">Resend OTP</button><button class="text-btn" id="otpBack">Back to login</button></div>
+    <div class="secure">✓ <span>Use the newest OTP email. Verification codes expire and can only be used once.</span></div>`;
+  $('otpInput').oninput=e=>e.target.value=e.target.value.replace(/\D/g,'').slice(0,10);
+  $('otpForm').onsubmit=verifyOtp;
+  $('resendOtp').onclick=resendOtp;
+  $('otpBack').onclick=()=>{clearOtp();renderLogin()};
+  tickOtp();timer=setInterval(tickOtp,1000);$('otpInput').focus();
+}
+function tickOtp(){
+  if(!otp||!$('otpTimer'))return;
+  const left=Math.max(0,otp.nextResend-Date.now());
+  $('resendOtp').disabled=left>0||busy;
+  $('otpTimer').textContent=left>0?`You can resend in ${Math.ceil(left/1000)} seconds.`:'Didn’t receive it? You can request a new OTP.';
+}
+function renderReset(){
+  mode='reset';showAuth();stopTimer();
+  $('authContent').innerHTML=`
+    <div class="success-check">✓</div><div class="eyebrow" style="text-align:center">Email verified</div>
+    <h2 style="text-align:center">Choose a new password</h2>
+    <p class="lead" style="text-align:center">Your recovery OTP was verified successfully.</p>
+    <form class="form" id="resetForm">
+      ${passwordField('New password','newPassword','new-password','8')}
+      ${passwordField('Confirm new password','confirmNewPassword','new-password','8')}
+      <button class="primary" id="authSubmit">Save new password</button>
+      <div class="notice" id="authMessage" hidden></div>
+    </form>`;
+  bindEyes();$('resetForm').onsubmit=saveNewPassword;
+}
+function setBusy(v){
+  busy=v;
+  for(const el of document.querySelectorAll('button'))if(el.id==='authSubmit'||el.id==='verifyOtpBtn')el.disabled=v;
+}
+function friendly(e){
+  const m=(e?.message||'').toLowerCase();
+  if(m.includes('invalid login credentials'))return 'Incorrect email or password.';
+  if(m.includes('email not confirmed'))return 'Your email is not verified yet. Use “Verify email” to request a new OTP.';
+  if(m.includes('already registered')||m.includes('user already'))return 'An account already exists with this email. Please login instead.';
+  if(m.includes('rate limit'))return 'Too many requests. Please wait before requesting another OTP.';
+  if(m.includes('password'))return e.message||'Please use a stronger password.';
+  return e?.message||'Something went wrong. Please try again.';
+}
+async function login(e){
+  e.preventDefault();if(busy)return;
+  const f=Object.fromEntries(new FormData(e.currentTarget));setBusy(true);
+  try{
+    const {data,error}=await db.auth.signInWithPassword({email:f.email.trim(),password:f.password});
+    if(error)throw error;
+    if(!data.user)throw Error('Could not confirm this account.');
+    const p=await fetchAccount();
+    if(p.role&&p.role!=='retailer')throw Error('This is not a retailer account.');
+    renderAccount(p);
+  }catch(err){message(err.code==='not_retailer'||err.code==='NOT_RETAILER'||err.message.includes('admin portal')?'This email belongs to the ONeness admin portal. Retailer accounts must use a separate retailer login.':friendly(err),true)}
+  finally{setBusy(false)}
+}
+async function signup(e){
+  e.preventDefault();if(busy)return;
+  const f=Object.fromEntries(new FormData(e.currentTarget));
+  f.email=f.email.trim().toLowerCase();f.phone=normalizePhone(f.phone);
+  if(f.name.trim().length<2)return message('Enter your full name.',true);
+  if(f.business_name.trim().length<2)return message('Enter your business / shop name.',true);
+  if(!/^\d{10}$/.test(f.phone))return message('Enter a valid 10 digit mobile number.',true);
+  if(f.password.length<8)return message('Password must be at least 8 characters.',true);
+  if(f.password!==f.confirm_password)return message('Passwords do not match.',true);
+  setBusy(true);
+  try{
+    const {data,error}=await db.auth.signUp({
+      email:f.email,password:f.password,
+      options:{data:{
+        account_type:'retailer',
+        name:f.name.trim(),
+        phone:f.phone,
+        business_name:f.business_name.trim()
+      }}
+    });
+    if(error)throw error;
+
+    // Supabase may intentionally return an obfuscated successful response
+    // when this email is already registered. In that case identities is empty
+    // and no new signup email is sent. Do not open the OTP screen.
+    if(data?.user && Array.isArray(data.user.identities) && data.user.identities.length===0){
+      renderLogin();
+      message('This email is already registered. Please login with the existing password, or use Forgot password if you cannot access it.',true);
+      return;
+    }
+
+    if(data.session){
+      await db.auth.signOut({scope:'local'});
+      throw Error('Email confirmation is disabled for this project. Enable email confirmation before public retailer signup.');
+    }
+
+    otp={email:f.email,purpose:'signup',nextResend:Date.now()+RESEND_MS};
+    saveOtp();renderOtp();message('A fresh verification OTP was requested. Check your newest ONeness email and enter that code here.');
+  }catch(err){message(friendly(err),true)}
+  finally{setBusy(false)}
+}
+async function sendExistingOtp(e,purpose){
+  e.preventDefault();if(busy)return;
+  const email=new FormData(e.currentTarget).get('email').trim().toLowerCase();
+  setBusy(true);
+  try{
+    let result;
+    if(purpose==='recovery')result=await db.auth.resetPasswordForEmail(email);
+    else result=await db.auth.resend({type:'signup',email});
+    if(result.error)throw result.error;
+    otp={email,purpose,nextResend:Date.now()+RESEND_MS};saveOtp();renderOtp();
+    message('If this email has an eligible retailer account, a code will arrive shortly.');
+  }catch(err){message(friendly(err),true)}
+  finally{setBusy(false)}
+}
+async function resendOtp(){
+  if(!otp||busy||Date.now()<otp.nextResend)return;
+  setBusy(true);
+  try{
+    let r;
+    if(otp.purpose==='recovery')r=await db.auth.resetPasswordForEmail(otp.email);
+    else r=await db.auth.resend({type:'signup',email:otp.email});
+    if(r.error)throw r.error;
+    otp.nextResend=Date.now()+RESEND_MS;saveOtp();tickOtp();message('A new OTP has been sent. Use the newest code.');
+  }catch(err){message(friendly(err),true)}
+  finally{setBusy(false);tickOtp()}
+}
+async function verifyOtp(e){
+  e.preventDefault();if(busy||!otp)return;
+  const token=$('otpInput').value.trim();
+  if(!/^\d{6,10}$/.test(token))return message('Enter the numeric OTP from your email.',true);
+  setBusy(true);
+  try{
+    const {data,error}=await db.auth.verifyOtp({
+      email:otp.email,token,
+      type:otp.purpose==='recovery'?'recovery':'email'
+    });
+    if(error)throw error;
+    if(!data.session)throw Error('OTP verification did not create a session. Request a new code.');
+    const purpose=otp.purpose;clearOtp();
+    if(purpose==='recovery'){recoverySession=true;renderReset()}
+    else{
+      const p=await fetchAccount();
+      renderAccount(p);toast('Email verified. Your retailer account is active.');
+    }
+  }catch(err){
+    message(err?.code==='otp_expired'?'That OTP is invalid, expired, or from an older email. Tap Resend OTP and use only the newest code.':friendly(err),true);
+    if($('otpInput')){$('otpInput').value='';$('otpInput').focus()}
+  }finally{setBusy(false)}
+}
+async function saveNewPassword(e){
+  e.preventDefault();if(busy)return;
+  const f=Object.fromEntries(new FormData(e.currentTarget));
+  if(f.newPassword.length<8)return message('Password must be at least 8 characters.',true);
+  if(f.newPassword!==f.confirmNewPassword)return message('Passwords do not match.',true);
+  if(!recoverySession)return message('Verify a recovery OTP first.',true);
+  setBusy(true);
+  try{
+    const {error}=await db.auth.updateUser({password:f.newPassword});if(error)throw error;
+    await db.auth.signOut({scope:'global'});recoverySession=false;clearOtp();renderLogin();message('Password changed successfully. Login with your new password.');
+  }catch(err){message(friendly(err),true)}
+  finally{setBusy(false)}
+}
+async function fetchAccount(){
+  const {data:{user},error:uerr}=await db.auth.getUser();
+  if(uerr||!user)throw Error('Please login again.');
+  const {data,error}=await db.rpc('retailer_account');
+  if(error)throw error;
+  if(data?.eligible!==true){
+    const err=Error(data?.reason==='not_retailer'
+      ? 'This email is registered for the ONeness admin portal, not the retailer portal.'
+      : data?.reason==='profile_missing'
+        ? 'This login does not have a retailer profile yet.'
+        : 'Please login again.');
+    err.code=data?.reason||'NOT_RETAILER';
+    throw err;
+  }
+  return {...data,role:'retailer'};
+}
+function renderAccount(p){
+  account=p;showAccountView();stopTimer();
+  const name=p.name||'Retailer',business=p.business_name||'Retailer business';
+  $('accountName').textContent=name;$('accountBusiness').textContent=business;
+  $('avatarLetter').textContent=(name.trim()[0]||'R').toUpperCase();
+  $('accountEmail').textContent=p.email||'—';$('accountPhone').textContent=p.phone||'—';
+  $('accountVerified').textContent=p.email_confirmed?'Verified ✓':'Verification required';
+  $('accountCod').textContent=p.cod_allowed?'Available':'Not enabled';
+  $('accountStatus').textContent=p.status==='blocked'?'● Account blocked':'● Active retailer';
+  $('securityEmail').textContent=p.email?`${p.email} is verified with ONeness`:'Your email is verified with ONeness';
+  $('profileSummary').textContent=[business,p.phone].filter(Boolean).join(' · ');
+  const f=$('editForm');f.elements.name.value=p.name||'';f.elements.phone.value=p.phone||'';f.elements.business_name.value=p.business_name||'';
+  if(p.status==='blocked'){toast('This retailer account is blocked. Please contact the store.')} if(location.hash==='#orders')setTimeout(()=>openOrders(),80);
+}
+
+async function fetchOrders(force=false){
+  if(ordersLoaded&&!force)return orders;
+  $('ordersList').innerHTML='<div class="orders-loading"><div class="spinner"></div>Loading your orders…</div>';
+  const {data,error}=await db.rpc('retailer_orders',{p_status:null,p_limit:200});
+  if(error)throw error;
+  if(data?.ok!==true)throw Error(data?.reason==='not_authenticated'?'Please login again.':'Could not load your orders.');
+  orders=Array.isArray(data.orders)?data.orders:[];ordersLoaded=true;
+  $('ordersSummaryText').textContent=orders.length?`${orders.length} order${orders.length===1?'':'s'} · view details & receipt`:'No orders placed yet';
+  renderOrders();return orders;
+}
+function visibleOrders(){
+  if(orderFilter==='active')return orders.filter(o=>!['delivered','cancelled'].includes(o.status));
+  if(orderFilter==='delivered')return orders.filter(o=>o.status==='delivered');
+  if(orderFilter==='cancelled')return orders.filter(o=>o.status==='cancelled');
+  return orders;
+}
+function renderOrders(){
+  const rows=visibleOrders();
+  for(const b of document.querySelectorAll('[data-order-filter]'))b.classList.toggle('active',b.dataset.orderFilter===orderFilter);
+  if(!rows.length){$('ordersList').innerHTML=`<div class="orders-empty"><div style="font-size:27px">📦</div><strong>${orders.length?'No orders in this filter':'No orders yet'}</strong><span>${orders.length?'Choose another filter.':'Orders, status and receipts will appear here after checkout.'}</span></div>`;return}
+  $('ordersList').innerHTML=rows.map(o=>`<button class="retail-order" data-order-id="${o.id}">
+    <div class="order-top"><div><div class="order-id">Order #ON${o.id}</div><div class="order-date">${esc(orderDate(o.created_at))}</div></div><span class="order-status ${esc(o.status)}">${esc(orderStatusLabel(o.status))}</span></div>
+    <div class="order-meta"><div><span>Order total</span><strong>${money(o.total_paise)}</strong></div><div><span>Products / units</span><strong>${Number(o.item_count||0)} / ${Number(o.unit_count||0)}</strong></div><div class="profit"><span>Potential profit</span><strong>${profitText(o.potential_profit_paise,o.mrp_total_paise)}</strong></div></div>
+    <div class="order-foot"><span>${esc((o.payment_method||'—').toUpperCase())} · ${esc(paymentLabel(o.payment_status))}</span><b>${o.receipt_available?'Details & receipt →':'View details →'}</b></div>
+  </button>`).join('');
+  for(const b of document.querySelectorAll('[data-order-id]'))b.onclick=()=>openOrderDetail(+b.dataset.orderId);
+}
+async function openOrders(){
+  $('editSection').hidden=true;$('ordersSection').hidden=false;$('ordersSection').scrollIntoView({behavior:'smooth',block:'start'});
+  try{await fetchOrders(false)}catch(err){$('ordersList').innerHTML=`<div class="orders-empty"><strong>Could not load orders</strong><span>${esc(friendly(err))}</span></div>`}
+}
+function statusTimeline(status){
+  if(status==='cancelled')return '<div class="cancelled-box">This order was cancelled.</div>';
+  const steps=['placed','confirmed','packed','dispatched','delivered'],cur=steps.indexOf(status);
+  return `<div class="timeline">${steps.map((s,i)=>`<div class="tl-step ${i<cur?'done':i===cur?'current':''}"><div class="tl-dot">${i<cur?'✓':i===cur?'•':''}</div><span>${orderStatusLabel(s)}</span></div>`).join('')}</div>${status==='syncing'?'<div class="sync-notice" style="margin-top:10px">Your order has been received and is being synchronized.</div>':''}`;
+}
+async function openOrderDetail(id){
+  currentOrderDetail=null;$('orderDialogTitle').textContent=`Order #ON${id}`;$('orderDialogSub').textContent='Loading…';$('orderDialogBody').innerHTML='<div class="orders-loading"><div class="spinner"></div>Opening order…</div>';$('orderDialog').showModal();
+  try{
+    const {data,error}=await db.rpc('retailer_order_detail',{p_order_id:id});if(error)throw error;if(data?.ok!==true)throw Error('This order could not be opened.');
+    currentOrderDetail=data;renderOrderDetail(data);
+  }catch(err){$('orderDialogBody').innerHTML=`<div class="orders-empty"><strong>Could not open order</strong><span>${esc(friendly(err))}</span></div>`}
+}
+function renderOrderDetail(d){
+  const o=d.order||{},items=d.items||[],subtotal=Number(d.subtotal_paise||0),profit=Number(o.potential_profit_paise||0),mrp=Number(o.mrp_total_paise||0);
+  $('orderDialogSub').textContent=`${orderDate(o.created_at)} · ${orderStatusLabel(o.status)} · ${(o.payment_method||'—').toUpperCase()}`;
+  const itemHtml=items.length?items.map(i=>{const q=Number(i.qty||0),r=Number(i.unit_price_paise||0),m=Number(i.mrp_paise||0),lp=Math.max(0,q*(m-r));return `<div class="order-item"><div><strong>${esc(i.title||'Product')}</strong><span>${q} ${esc(i.unit||'unit')} × ${money(r)} · MRP ${money(m)}</span></div><div class="item-money"><strong>${money(q*r)}</strong><b>+${profitText(lp,q*m)}</b></div></div>`}).join(''):'<div class="sync-notice">Item breakdown is unavailable for this older order.</div>';
+  $('orderDialogBody').innerHTML=`
+    <section class="detail-card order-summary-hero"><div class="hero-order-row"><div><span>Amount payable</span><strong>${money(o.total_paise)}</strong></div><span class="order-status ${esc(o.status)}">${esc(orderStatusLabel(o.status))}</span></div><div class="profit-line"><span>Potential retail profit</span><b>${profitText(profit,mrp)}</b></div></section>
+    <section class="detail-card"><h3>Order progress</h3>${statusTimeline(o.status)}</section>
+    <section class="detail-card"><h3>Products · ${items.reduce((n,i)=>n+Number(i.qty||0),0)} units</h3><div class="item-list">${itemHtml}</div></section>
+    <section class="detail-card"><h3>Delivery address</h3><div class="detail-address"><b>${esc(d.address_label||'Delivery')}</b><br>${esc(fullAddress(d.address))}</div>${o.tracking?`<div class="sync-notice" style="margin-top:8px"><b>Tracking:</b> ${esc(o.tracking)}</div>`:''}</section>
+    ${d.customer_note?`<section class="detail-card"><h3>Your order note</h3><div class="detail-address">${esc(d.customer_note)}</div></section>`:''}
+    <section class="detail-card"><h3>Payment & amount</h3><div class="fin-row"><span>Wholesale subtotal</span><strong>${money(subtotal)}</strong></div><div class="fin-row"><span>Coupon${d.coupon_code?` · ${esc(d.coupon_code)}`:''}</span><strong>− ${money(o.discount_paise)}</strong></div><div class="fin-row"><span>Delivery</span><strong>${Number(o.shipping_paise)?money(o.shipping_paise):'Free'}</strong></div><div class="fin-row total"><span>Total</span><strong>${money(o.total_paise)}</strong></div><div class="fin-row"><span>MRP retail value</span><strong>${money(mrp)}</strong></div><div class="fin-row profit"><span>Potential retail profit</span><strong>${profitText(profit,mrp)}</strong></div><div class="fin-row" style="border:0"><span>Payment</span><strong>${esc((o.payment_method||'—').toUpperCase())} · ${esc(paymentLabel(o.payment_status))}</strong></div></section>
+    <div class="detail-actions"><button class="outline-btn" id="detailCloseBtn">Close</button><button class="receipt-btn" id="viewReceiptBtn" ${d.receipt_available?'':'disabled'}>${d.receipt_available?'View receipt / bill':'Receipt unavailable'}</button></div>`;
+  $('detailCloseBtn').onclick=()=>$('orderDialog').close();$('viewReceiptBtn').onclick=()=>{if(d.receipt_available)openReceipt(d)};
+}
+function receiptMarkup(d,standalone=false){
+  const o=d.order||{},c=d.customer||{},items=d.items||[],rows=items.map(i=>`<tr><td>${esc(i.title||'Product')}</td><td>${Number(i.qty||0)}</td><td>${money(i.unit_price_paise)}</td><td>${money(Number(i.qty||0)*Number(i.unit_price_paise||0))}</td></tr>`).join('');
+  const inner=`<div class="receipt-paper"><div class="receipt-brand"><div><h2>ONeness</h2><p>Wholesale retailer order receipt</p></div><div class="receipt-no"><strong>#ON${o.id}</strong>${esc(orderDate(o.created_at))}<br>${esc(orderStatusLabel(o.status))}</div></div><div class="receipt-customer"><div><strong>Billed to</strong>${esc(c.business_name||c.name||'Retailer')}<br>${esc(c.name||'')}<br>${esc(c.phone||'')}<br>${esc(c.email||'')}</div><div><strong>Delivered to</strong>${esc(d.address_label||'Address')}<br>${esc(fullAddress(d.address))}</div></div><table class="receipt-items"><thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="receipt-total"><div class="fin-row"><span>Subtotal</span><strong>${money(d.subtotal_paise)}</strong></div><div class="fin-row"><span>Coupon</span><strong>− ${money(o.discount_paise)}</strong></div><div class="fin-row"><span>Delivery</span><strong>${Number(o.shipping_paise)?money(o.shipping_paise):'Free'}</strong></div><div class="fin-row total"><span>Total</span><strong>${money(o.total_paise)}</strong></div><div class="fin-row" style="border:0"><span>Payment</span><strong>${esc((o.payment_method||'—').toUpperCase())} · ${esc(paymentLabel(o.payment_status))}</strong></div></div><div class="receipt-foot">This is an ONeness order receipt generated from the order snapshot. It is not labelled as a GST tax invoice because GST/tax invoice fields are not configured in the current system.</div></div>`;
+  if(!standalone)return inner;
+  return `<!doctype html><html><head><meta charset="UTF-8"><title>ONeness Receipt #ON${o.id}</title><style>body{font-family:Arial,sans-serif;color:#14251f;margin:24px}.receipt-paper{max-width:760px;margin:auto;border:1px solid #ddd;padding:22px}.receipt-brand{display:flex;justify-content:space-between;border-bottom:2px solid #17634c;padding-bottom:12px}.receipt-brand h2{margin:0;color:#17634c}.receipt-no{text-align:right}.receipt-customer{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0;font-size:13px;line-height:1.6}.receipt-items{width:100%;border-collapse:collapse}.receipt-items th,.receipt-items td{padding:9px;border-bottom:1px solid #eee;text-align:left}.receipt-items th:last-child,.receipt-items td:last-child{text-align:right}.receipt-total{margin-left:auto;width:320px;max-width:100%;padding-top:12px}.fin-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #ddd}.fin-row.total{font-size:18px;font-weight:bold}.receipt-foot{font-size:11px;color:#66736c;margin-top:22px;padding-top:12px;border-top:1px solid #ddd}@media print{body{margin:0}.receipt-paper{border:0}}</style></head><body>${inner}</body></html>`;
+}
+function openReceipt(d){currentOrderDetail=d;$('receiptBody').innerHTML=`<div class="receipt-wrap">${receiptMarkup(d,false)}</div>`;$('receiptDialog').showModal()}
+function downloadCurrentReceipt(){if(!currentOrderDetail)return;const html=receiptMarkup(currentOrderDetail,true),id=currentOrderDetail.order?.id||'order',blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`ONeness-Receipt-ON${id}.html`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function printCurrentReceipt(){if(!currentOrderDetail)return;const w=window.open('','_blank');if(!w){toast('Allow pop-ups to print or save the receipt.');return}w.document.open();w.document.write(receiptMarkup(currentOrderDetail,true));w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
+
+async function saveProfile(e){
+  e.preventDefault();if(busy)return;
+  const f=Object.fromEntries(new FormData(e.currentTarget));f.phone=normalizePhone(f.phone);
+  const msg=$('editMessage');msg.hidden=true;
+  if(!/^\d{10}$/.test(f.phone)){msg.textContent='Enter a valid 10 digit mobile number.';msg.className='notice error';msg.hidden=false;return}
+  busy=true;$('saveProfile').disabled=true;
+  try{
+    const {data,error}=await db.rpc('retailer_profile_update',{p_name:f.name.trim(),p_phone:f.phone,p_business_name:f.business_name.trim()});
+    if(error)throw error;
+    account={...account,...data,email_confirmed:account.email_confirmed};renderAccount(account);$('editSection').hidden=true;toast('Profile updated successfully.');
+  }catch(err){msg.textContent=friendly(err);msg.className='notice error';msg.hidden=false}
+  finally{busy=false;$('saveProfile').disabled=false}
+}
+async function logout(){
+  $('logoutBtn').disabled=true;
+  try{await db.auth.signOut({scope:'local'})}catch{}
+  clearOtp();account=null;orders=[];ordersLoaded=false;currentOrderDetail=null;renderLogin();toast('Signed out.');
+}
+function openEdit(){$('editSection').hidden=false;$('editSection').scrollIntoView({behavior:'smooth',block:'start'})}
+
+$('editForm').onsubmit=saveProfile;
+$('logoutBtn').onclick=logout;
+$('editProfileOpen').onclick=openEdit;$('editProfileRow').onclick=openEdit;
+$('closeEdit').onclick=()=>$('editSection').hidden=true;
+$('changePassword').onclick=()=>{
+  const email=account?.email||'';
+  renderEmailAction('recovery');
+  const input=document.querySelector('input[name=email]');if(input&&email)input.value=email;
+};
+$('ordersShortcut').onclick=openOrders;
+$('closeOrders').onclick=()=>$('ordersSection').hidden=true;
+$('refreshOrders').onclick=async()=>{ordersLoaded=false;try{await fetchOrders(true);toast('Orders refreshed.')}catch(err){toast(friendly(err))}};
+for(const b of document.querySelectorAll('[data-order-filter]'))b.onclick=()=>{orderFilter=b.dataset.orderFilter;renderOrders()};
+$('orderDialogClose').onclick=()=>$('orderDialog').close();
+$('receiptDialogClose').onclick=()=>$('receiptDialog').close();
+$('downloadReceipt').onclick=downloadCurrentReceipt;
+$('printReceipt').onclick=printCurrentReceipt;
+
+async function boot(){
+  showLoading();
+  const callbackError=new URLSearchParams(location.hash.replace(/^#/,'')).get('error_description');
+  const {data:{user}}=await db.auth.getUser();
+  if(user){
+    try{const p=await fetchAccount();renderAccount(p);return}
+    catch(err){
+      try{await db.auth.signOut({scope:'local'})}catch{}
+      renderLogin();message(err.code==='not_retailer'||err.code==='NOT_RETAILER'||err.message.includes('admin portal')?'This email is registered for the ONeness admin portal, not the retailer portal. Use a different retailer email.':friendly(err),true);return
+    }
+  }
+  otp=loadOtp();
+  if(otp)renderOtp();else renderLogin();
+  if(callbackError)message(callbackError,true);
+}
+boot().catch(e=>{showAuth();renderLogin();message(friendly(e),true)});
+})();
+</script>
+<script src="retailer-ui.js"></script>
+</body>
+</html>

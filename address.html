@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#68141d">
+<title>ONeness · Delivery Address</title>
+<style>
+:root{
+  --bg:#f5f6f1;--surface:#fff;--ink:#14251f;--muted:#78857e;
+  --green:#17634c;--green-dark:#104d3c;--green-soft:#eaf3ec;
+  --lime:#dff2a8;--orange:#efaa61;--orange-soft:#fff0df;
+  --line:#e3e9e3;--danger:#b34235;--danger-soft:#fff1ee;
+  --shadow:0 15px 45px rgba(20,55,43,.08);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}[hidden]{display:none!important}
+.shell{width:min(1080px,100%);margin:auto}.app{min-height:100vh;padding-bottom:112px}
+
+.topbar{position:sticky;top:0;z-index:70;background:rgba(245,246,241,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,233,227,.9)}
+.topbar-inner{height:64px;padding:8px 13px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.back{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;place-items:center;font-size:18px}
+.titlebox{text-align:center}.titlebox strong{display:block;font-size:13px}.titlebox span{display:block;font-size:8px;color:var(--muted);margin-top:1px}
+.cart-btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:8px;font-weight:900;color:var(--green)}
+
+.main{padding:15px 14px 34px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:15px}
+.step{padding:9px 8px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:8px;color:var(--muted);text-align:center;font-weight:800}
+.step.done{background:#eef5ef;color:var(--green)}
+.step.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+.hero{background:linear-gradient(135deg,#173f33,#17634c);color:#fff;border-radius:20px;padding:17px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-60px;top:-60px;background:rgba(223,242,168,.13)}
+.hero > *{position:relative;z-index:2}.hero .eyebrow{font-size:8px;text-transform:uppercase;letter-spacing:1.2px;color:#c8dcd2;font-weight:900}.hero h1{font-size:23px;line-height:1.05;margin:5px 0 6px;letter-spacing:-.7px}.hero p{margin:0;font-size:9px;line-height:1.5;color:#cee0d7}
+.hero-summary{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.hero-chip{padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.1);font-size:7px;font-weight:850}
+
+.layout{display:grid;gap:14px;margin-top:14px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:10px}
+.section-head h2{margin:0;font-size:17px;letter-spacing:-.4px}.section-head p{font-size:8px;color:var(--muted);margin:3px 0 0}
+.add-btn{border:0;border-radius:11px;background:var(--green);color:#fff;padding:9px 11px;font-size:8px;font-weight:900}
+
+.address-list{display:grid;gap:9px}
+.address-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px;position:relative;transition:.18s}
+.address-card.selected{border:2px solid var(--green);box-shadow:0 8px 24px rgba(23,99,76,.08)}
+.address-card.unserviceable{border-color:#edc0ba}
+.address-top{display:flex;align-items:flex-start;gap:10px}
+.radio{flex:0 0 20px;width:20px;height:20px;border:2px solid #b9c6bf;border-radius:50%;margin-top:1px;display:grid;place-items:center}
+.selected .radio{border-color:var(--green)}.selected .radio:after{content:"";width:10px;height:10px;border-radius:50%;background:var(--green)}
+.address-main{min-width:0;flex:1}
+.label-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.label{font-size:10px;font-weight:950}
+.default-badge,.service-badge,.bad-badge{padding:4px 6px;border-radius:999px;font-size:6px;font-weight:950}
+.default-badge{background:var(--green-soft);color:var(--green)}
+.service-badge{background:#edf7e8;color:#3f7448}
+.bad-badge{background:var(--danger-soft);color:var(--danger)}
+.receiver{font-size:10px;font-weight:850;margin-top:6px}
+.business{font-size:8px;color:#6f7b74;margin-top:2px}
+.address-text{font-size:8px;color:#67736c;line-height:1.55;margin-top:5px}
+.phone{font-size:8px;color:var(--ink);font-weight:800;margin-top:5px}
+.actions{display:flex;gap:7px;margin-top:10px;padding-top:9px;border-top:1px solid #edf0ec}
+.actions button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:7px;font-weight:850;color:#5f6c65}
+.actions .default-action{color:var(--green);border-color:#b5cbbf}
+.actions .delete{color:var(--danger)}
+.select-action{margin-left:auto;color:#fff!important;background:var(--green)!important;border-color:var(--green)!important}
+
+.empty{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 20px;text-align:center}
+.empty-icon{font-size:38px}.empty strong{display:block;font-size:13px;margin-top:6px}.empty p{font-size:9px;line-height:1.5;color:var(--muted)}
+.empty button{border:0;background:var(--green);color:#fff;border-radius:11px;padding:10px 13px;font-size:8px;font-weight:900}
+
+.side-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px}
+.side-card h3{font-size:13px;margin:0}.side-card p{font-size:8px;line-height:1.5;color:var(--muted);margin:4px 0 0}
+.order-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed #e8ede8;font-size:8px;color:#65726b}.order-row:last-child{border-bottom:0}.order-row strong{color:var(--ink)}
+.profit-box{margin-top:10px;padding:11px;border-radius:12px;background:var(--green-soft);display:flex;justify-content:space-between;gap:12px;font-size:8px;color:#466758}.profit-box strong{color:var(--green)}
+
+.loading{padding:34px;text-align:center;color:var(--muted);font-size:9px}.spinner{width:30px;height:30px;border:3px solid #dce5dd;border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}@keyframes spin{to{transform:rotate(360deg)}}
+
+.checkout{position:fixed;z-index:65;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);padding:9px 11px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.98);backdrop-filter:blur(17px);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 1.1fr;gap:9px;align-items:center}
+.checkout-copy span{display:block;font-size:7px;color:var(--muted)}.checkout-copy strong{display:block;font-size:10px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.checkout-copy b{display:block;font-size:7px;color:var(--green);margin-top:2px}
+.checkout button{height:48px;border:0;border-radius:13px;background:var(--green);color:#fff;font-size:9px;font-weight:950}.checkout button:disabled{opacity:.45;cursor:not-allowed}
+
+/* sheet */
+.overlay{position:fixed;inset:0;z-index:90;background:rgba(8,22,17,.48);display:flex;align-items:flex-end;justify-content:center;padding-top:40px}
+.sheet{width:min(720px,100%);max-height:92vh;overflow:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.18)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.sheet-head h2{font-size:18px;margin:0}.close{width:35px;height:35px;border:1px solid var(--line);border-radius:11px;background:#fff;font-size:17px}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px}
+.label-options{display:flex;gap:7px;overflow:auto;scrollbar-width:none;margin-bottom:13px}.label-options::-webkit-scrollbar{display:none}
+.label-option{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:8px;font-weight:850;color:#617068}.label-option.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.form-grid{display:grid;gap:10px}
+.field label{display:block;font-size:7px;color:#69766f;font-weight:850;margin:0 0 5px 2px}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;outline:none;color:var(--ink)}
+.field input,.field select{height:42px;padding:0 11px}.field textarea{min-height:76px;resize:vertical;padding:10px 11px}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#9bb8a9;box-shadow:0 0 0 4px rgba(23,99,76,.07)}
+.field.error input,.field.error textarea{border-color:#dc8f85}.field-error{font-size:7px;color:var(--danger);margin-top:4px}
+.pin-status{margin-top:6px;padding:8px 9px;border-radius:10px;background:#f3f6f1;color:#68766f;font-size:7px}.pin-status.ok{background:var(--green-soft);color:var(--green)}.pin-status.bad{background:var(--danger-soft);color:var(--danger)}
+.check-row{display:flex;gap:9px;align-items:center;margin-top:11px;padding:11px;background:#f7f9f5;border-radius:12px}.check-row input{width:17px;height:17px;accent-color:var(--green)}.check-row strong{display:block;font-size:8px}.check-row span{display:block;font-size:7px;color:var(--muted);margin-top:2px}
+.form-actions{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;margin-top:12px}.form-actions button{height:43px;border-radius:11px;font-size:8px;font-weight:900}.cancel{border:1px solid var(--line);background:#fff;color:#5e6b64}.save{border:0;background:var(--green);color:#fff}.save:disabled{opacity:.5}
+.toast{position:fixed;z-index:110;left:50%;bottom:86px;transform:translate(-50%,15px);opacity:0;background:#17382e;color:#fff;padding:10px 13px;border-radius:12px;font-size:9px;transition:.2s;max-width:88vw}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:640px){
+  .main{padding:23px}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.field.full{grid-column:1/-1}
+}
+@media(min-width:900px){
+  .main{padding:28px 24px 48px}.layout{grid-template-columns:minmax(0,1.4fr) minmax(280px,.65fr);align-items:start}.side{position:sticky;top:84px}
+  .checkout{bottom:12px;border-radius:20px;border-bottom:1px solid var(--line)}.app{padding-bottom:128px}.toast{bottom:104px}
+  .sheet{border-radius:22px;max-height:88vh;margin-bottom:20px}.overlay{align-items:center;padding:20px}
+}
+</style>
+<link rel="stylesheet" href="retailer-ui.css">
+</head>
+<body data-page="address">
+<div class="app">
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <button id="backBtn" class="back">←</button>
+    <div class="titlebox"><strong>Delivery address</strong><span>Choose where to deliver</span></div>
+    <button class="cart-btn" onclick="location.href='cart.html'">Cart</button>
+  </div>
+</header>
+
+<main class="shell main">
+  <div class="steps">
+    <div class="step done">1 · Cart</div>
+    <div class="step active">2 · Address</div>
+    <div class="step">3 · Payment</div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Delivery details</div>
+    <h1>Where should we deliver?</h1>
+    <p>Save multiple shop, home or warehouse addresses and choose one for each order.</p>
+    <div class="hero-summary">
+      <span id="savedCount" class="hero-chip">0 saved addresses</span>
+      <span id="serviceText" class="hero-chip">Checking delivery area…</span>
+    </div>
+  </section>
+
+  <div id="loading" class="loading"><div class="spinner"></div>Loading your saved addresses…</div>
+
+  <div id="content" class="layout" hidden>
+    <div>
+      <div class="section-head">
+        <div><h2>Saved addresses</h2><p>Select an address for this order or add another one.</p></div>
+        <button id="addAddressBtn" class="add-btn">+ Add address</button>
+      </div>
+
+      <div id="addressList" class="address-list"></div>
+
+      <div id="emptyState" class="empty" hidden>
+        <div class="empty-icon">⌂</div>
+        <strong>No saved address yet</strong>
+        <p>Add your shop, home, warehouse or another delivery address. Your first saved address becomes the default automatically.</p>
+        <button id="emptyAddBtn">Add delivery address</button>
+      </div>
+    </div>
+
+    <aside class="side">
+      <section class="side-card">
+        <h3>Order snapshot</h3>
+        <p>Your products and prices are rechecked before payment.</p>
+        <div class="order-row"><span>Cart units</span><strong id="orderUnits">0</strong></div>
+        <div class="order-row"><span>MRP retail value</span><strong id="orderMrp">₹0</strong></div>
+        <div class="order-row"><span>Current payable</span><strong id="orderPayable">₹0</strong></div>
+        <div class="profit-box"><span>Potential retail profit</span><strong id="orderProfit">₹0</strong></div>
+      </section>
+
+      <section class="side-card" style="margin-top:11px">
+        <h3>Delivery PIN</h3>
+        <p id="pinHelp">Your selected address must be inside the serviceable delivery area.</p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<div id="checkoutBar" class="checkout" hidden>
+  <div class="checkout-copy">
+    <span>Deliver to</span>
+    <strong id="selectedLabel">Choose an address</strong>
+    <b id="selectedPin">No address selected</b>
+  </div>
+  <button id="continueBtn" disabled>Continue to payment →</button>
+</div>
+
+<div id="addressOverlay" class="overlay" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 id="formTitle">Add delivery address</h2>
+      <button id="closeSheet" class="close">×</button>
+    </div>
+
+    <div class="label-options" id="labelOptions">
+      <button class="label-option active" data-label="Shop">Shop</button>
+      <button class="label-option" data-label="Home">Home</button>
+      <button class="label-option" data-label="Warehouse">Warehouse</button>
+      <button class="label-option" data-label="Office">Office</button>
+      <button class="label-option" data-label="Other">Other</button>
+    </div>
+
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="field" data-field="contact_name">
+          <label>Receiver name *</label>
+          <input id="contactName" maxlength="120" autocomplete="name" placeholder="Full name">
+          <div class="field-error"></div>
+        </div>
+        <div class="field" data-field="phone">
+          <label>Mobile number *</label>
+          <input id="phone" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10-digit number">
+          <div class="field-error"></div>
+        </div>
+        <div class="field full">
+          <label>Business / shop name</label>
+          <input id="businessName" maxlength="180" placeholder="Optional">
+        </div>
+        <div class="field full" data-field="address_line1">
+          <label>House / shop no., building & street *</label>
+          <textarea id="address1" maxlength="250" placeholder="e.g. Shop 12, Market Road"></textarea>
+          <div class="field-error"></div>
+        </div>
+        <div class="field full">
+          <label>Area / locality</label>
+          <input id="address2" maxlength="180" placeholder="Area, colony, locality">
+        </div>
+        <div class="field full">
+          <label>Landmark</label>
+          <input id="landmark" maxlength="180" placeholder="Near bank, school, temple, etc.">
+        </div>
+        <div class="field" data-field="pincode">
+          <label>PIN code *</label>
+          <input id="pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" placeholder="6-digit PIN">
+          <div class="field-error"></div>
+          <div id="pinStatus" class="pin-status">Enter PIN code to check delivery.</div>
+        </div>
+        <div class="field" data-field="city">
+          <label>City / town *</label>
+          <input id="city" maxlength="100" autocomplete="address-level2" placeholder="City or town">
+          <div class="field-error"></div>
+        </div>
+        <div class="field">
+          <label>Taluka / tehsil</label>
+          <input id="taluka" maxlength="100" placeholder="Taluka / tehsil">
+        </div>
+        <div class="field" data-field="district">
+          <label>District *</label>
+          <input id="district" maxlength="100" placeholder="District">
+          <div class="field-error"></div>
+        </div>
+        <div class="field full" data-field="state">
+          <label>State *</label>
+          <input id="stateInput" maxlength="100" autocomplete="address-level1" value="Maharashtra" placeholder="State">
+          <div class="field-error"></div>
+        </div>
+      </div>
+
+      <label class="check-row">
+        <input id="makeDefault" type="checkbox">
+        <span><strong>Make this my default address</strong><span>New orders will preselect this address.</span></span>
+      </label>
+
+      <div class="form-actions">
+        <button id="cancelForm" class="cancel">Cancel</button>
+        <button id="saveAddress" class="save">Save address</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+(()=>{
+'use strict';
+
+const URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
+const KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
+
+const db=window.supabase.createClient(URL,KEY,{
+  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}
+});
+
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+const money=p=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(p||0)/100);
+
+const state={
+  profile:null,
+  settings:{allowed_pincodes:[],all_pincodes_allowed:true},
+  addresses:[],
+  selectedId:null,
+  editing:null,
+  label:'Shop',
+  saving:false,
+  cart:readCart(),
+  quote:null
+};
+
+function readCart(){
+  try{
+    const x=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');
+    return Array.isArray(x)?x.filter(i=>Number(i.product_id)>0&&Number(i.qty)>0):[];
+  }catch{return[]}
+}
+function toast(t){
+  const e=$('toast');e.textContent=t;e.classList.add('show');
+  clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2300);
+}
+function selectedAddress(){
+  return state.addresses.find(a=>Number(a.id)===Number(state.selectedId))||null;
+}
+function serviceablePin(pin){
+  pin=String(pin||'').replace(/\D/g,'');
+  if(pin.length!==6)return null;
+  if(state.settings.all_pincodes_allowed)return true;
+  return (state.settings.allowed_pincodes||[]).map(String).includes(pin);
+}
+function fullAddress(a){
+  const d=a.details||{};
+  return [d.address_line1,d.address_line2,d.landmark?`Near ${d.landmark}`:'',d.city,d.taluka,d.district,d.state,d.pincode].filter(Boolean).join(', ');
+}
+
+async function boot(){
+  const {data:{user},error:uerr}=await db.auth.getUser();
+  if(uerr||!user){location.replace('index.html');return}
+
+  const {data,error}=await db.rpc('retailer_addresses');
+  if(error)throw error;
+
+  if(data?.ok!==true){
+    if(data?.reason==='not_authenticated'){location.replace('index.html');return}
+    if(data?.reason==='not_retailer'){
+      await db.auth.signOut({scope:'local'});
+      location.replace('index.html');return;
+    }
+    if(data?.reason==='blocked')throw Error('Your retailer account is blocked.');
+    throw Error('Could not load saved addresses.');
+  }
+
+  state.profile=data.profile||{};
+  state.settings=data.settings||state.settings;
+  state.addresses=Array.isArray(data.addresses)?data.addresses:[];
+
+  const previous=Number(sessionStorage.getItem('oneness-checkout-address-id')||0);
+  const previousAddress=state.addresses.find(a=>Number(a.id)===previous&&a.serviceable!==false);
+  const defaultAddress=state.addresses.find(a=>a.is_default&&a.serviceable!==false);
+  const firstServiceable=state.addresses.find(a=>a.serviceable!==false);
+  state.selectedId=(previousAddress||defaultAddress||firstServiceable)?.id||null;
+
+  await loadCartQuote();
+  render();
+}
+
+async function loadAddresses(){
+  const {data,error}=await db.rpc('retailer_addresses');
+  if(error)throw error;
+  if(data?.ok!==true)throw Error('Could not refresh addresses.');
+  state.profile=data.profile||state.profile;
+  state.settings=data.settings||state.settings;
+  state.addresses=Array.isArray(data.addresses)?data.addresses:[];
+  if(state.selectedId&&!state.addresses.some(a=>Number(a.id)===Number(state.selectedId)))state.selectedId=null;
+  if(!state.selectedId){
+    state.selectedId=state.addresses.find(a=>a.is_default&&a.serviceable!==false)?.id
+      ||state.addresses.find(a=>a.serviceable!==false)?.id||null;
+  }
+}
+
+async function loadCartQuote(){
+  if(!state.cart.length)return;
+  try{
+    const items=state.cart.map(x=>({product_id:Number(x.product_id),qty:Number(x.qty)}));
+    const {data,error}=await db.rpc('retailer_cart_quote',{p_items:items,p_coupon_code:null});
+    if(!error&&data?.ok===true)state.quote=data;
+  }catch(err){console.warn('Quote unavailable',err)}
+}
+
+function render(){
+  $('loading').hidden=true;
+  $('content').hidden=false;
+  $('checkoutBar').hidden=false;
+
+  $('savedCount').textContent=`${state.addresses.length} saved address${state.addresses.length===1?'':'es'}`;
+  $('serviceText').textContent=state.settings.all_pincodes_allowed?'Delivery available to all configured areas':`${state.settings.allowed_pincodes.length} serviceable PIN code${state.settings.allowed_pincodes.length===1?'':'s'}`;
+  $('pinHelp').textContent=state.settings.all_pincodes_allowed
+    ?'No PIN restriction is configured right now. Any valid 6-digit PIN can be selected.'
+    :'Only addresses whose PIN is in the configured delivery list can be selected.';
+
+  renderAddresses();
+  renderOrderSnapshot();
+  renderSticky();
+}
+
+function renderAddresses(){
+  $('emptyState').hidden=state.addresses.length>0;
+  $('addressList').hidden=state.addresses.length===0;
+
+  if(!state.addresses.length){
+    $('addressList').innerHTML='';
+    return;
+  }
+
+  $('addressList').innerHTML=state.addresses.map(a=>{
+    const d=a.details||{};
+    const selected=Number(a.id)===Number(state.selectedId);
+    const serviceable=a.serviceable!==false;
+
+    return `<article class="address-card ${selected?'selected':''} ${serviceable?'':'unserviceable'}" data-select="${a.id}">
+      <div class="address-top">
+        <div class="radio"></div>
+        <div class="address-main">
+          <div class="label-row">
+            <span class="label">${esc(a.label||'Address')}</span>
+            ${a.is_default?'<span class="default-badge">DEFAULT</span>':''}
+            ${serviceable?'<span class="service-badge">DELIVERABLE</span>':'<span class="bad-badge">NOT SERVICEABLE</span>'}
+          </div>
+          <div class="receiver">${esc(d.contact_name||'')}</div>
+          ${d.business_name?`<div class="business">${esc(d.business_name)}</div>`:''}
+          <div class="address-text">${esc(fullAddress(a))}</div>
+          <div class="phone">+91 ${esc(d.phone||'')}</div>
+
+          <div class="actions">
+            <button data-edit="${a.id}">Edit</button>
+            ${a.is_default?'':`<button class="default-action" data-default="${a.id}">Make default</button>`}
+            <button class="delete" data-delete="${a.id}">Delete</button>
+            ${serviceable?`<button class="select-action" data-use="${a.id}">${selected?'Selected':'Deliver here'}</button>`:''}
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+
+  for(const card of $('addressList').querySelectorAll('[data-select]')){
+    card.onclick=e=>{
+      if(e.target.closest('button'))return;
+      const id=Number(card.dataset.select);
+      const a=state.addresses.find(x=>Number(x.id)===id);
+      if(a?.serviceable===false)return toast('This PIN code is currently not serviceable.');
+      selectAddress(id);
+    };
+  }
+  for(const b of $('addressList').querySelectorAll('[data-use]'))b.onclick=()=>selectAddress(Number(b.dataset.use));
+  for(const b of $('addressList').querySelectorAll('[data-edit]'))b.onclick=()=>openForm(Number(b.dataset.edit));
+  for(const b of $('addressList').querySelectorAll('[data-default]'))b.onclick=()=>makeDefault(Number(b.dataset.default));
+  for(const b of $('addressList').querySelectorAll('[data-delete]'))b.onclick=()=>deleteAddress(Number(b.dataset.delete));
+}
+
+function renderOrderSnapshot(){
+  const t=state.quote?.totals||{};
+  const units=state.cart.reduce((n,x)=>n+Number(x.qty||0),0);
+  const profit=Math.max(0,Number(t.mrp_paise||0)-Number(t.payable_paise||0));
+
+  $('orderUnits').textContent=units;
+  $('orderMrp').textContent=state.quote?money(t.mrp_paise):'—';
+  $('orderPayable').textContent=state.quote?money(t.payable_paise):'—';
+  $('orderProfit').textContent=state.quote?money(profit):'—';
+}
+
+function renderSticky(){
+  const a=selectedAddress();
+  const d=a?.details||{};
+  const hasCart=state.cart.length>0;
+  const serviceable=a&&a.serviceable!==false;
+
+  $('selectedLabel').textContent=a?`${a.label||'Address'} · ${d.contact_name||''}`:'Choose an address';
+  $('selectedPin').textContent=a?`${d.city||''} · ${d.pincode||''}`:'No address selected';
+
+  $('continueBtn').disabled=!(a&&serviceable&&hasCart);
+
+  if(!hasCart)$('continueBtn').textContent='Cart is empty';
+  else if(!a)$('continueBtn').textContent='Select an address';
+  else if(!serviceable)$('continueBtn').textContent='PIN not serviceable';
+  else $('continueBtn').textContent='Continue to payment →';
+}
+
+function selectAddress(id){
+  const a=state.addresses.find(x=>Number(x.id)===Number(id));
+  if(!a)return;
+  if(a.serviceable===false)return toast('This PIN code is currently not serviceable.');
+  state.selectedId=id;
+  sessionStorage.setItem('oneness-checkout-address-id',String(id));
+  renderAddresses();
+  renderSticky();
+}
+
+function clearFieldErrors(){
+  for(const field of document.querySelectorAll('.field.error')){
+    field.classList.remove('error');
+    const err=field.querySelector('.field-error');if(err)err.textContent='';
+  }
+}
+function showFieldError(field,message){
+  const wrap=document.querySelector(`[data-field="${field}"]`);
+  if(!wrap)return;
+  wrap.classList.add('error');
+  const e=wrap.querySelector('.field-error');if(e)e.textContent=message;
+  wrap.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function setLabel(label){
+  state.label=label||'Shop';
+  for(const b of $('labelOptions').querySelectorAll('[data-label]'))b.classList.toggle('active',b.dataset.label===state.label);
+}
+
+function openForm(id=null){
+  state.editing=id?state.addresses.find(a=>Number(a.id)===Number(id)):null;
+  clearFieldErrors();
+
+  const a=state.editing;
+  const d=a?.details||{};
+  $('formTitle').textContent=a?'Edit address':'Add delivery address';
+  setLabel(a?.label||'Shop');
+
+  $('contactName').value=d.contact_name||state.profile?.name||'';
+  $('phone').value=d.phone||state.profile?.phone||'';
+  $('businessName').value=d.business_name||state.profile?.business_name||'';
+  $('address1').value=d.address_line1||'';
+  $('address2').value=d.address_line2||'';
+  $('landmark').value=d.landmark||'';
+  $('pincode').value=d.pincode||'';
+  $('city').value=d.city||'';
+  $('taluka').value=d.taluka||'';
+  $('district').value=d.district||'';
+  $('stateInput').value=d.state||'Maharashtra';
+  $('makeDefault').checked=a?.is_default||state.addresses.length===0;
+  updatePinStatus();
+  $('addressOverlay').hidden=false;
+  document.body.style.overflow='hidden';
+}
+
+function closeForm(){
+  if(state.saving)return;
+  $('addressOverlay').hidden=true;
+  document.body.style.overflow='';
+  state.editing=null;
+}
+
+function detailsFromForm(){
+  return {
+    contact_name:$('contactName').value.trim(),
+    phone:$('phone').value.replace(/\D/g,'').slice(0,10),
+    business_name:$('businessName').value.trim(),
+    address_line1:$('address1').value.trim(),
+    address_line2:$('address2').value.trim(),
+    landmark:$('landmark').value.trim(),
+    pincode:$('pincode').value.replace(/\D/g,'').slice(0,6),
+    city:$('city').value.trim(),
+    taluka:$('taluka').value.trim(),
+    district:$('district').value.trim(),
+    state:$('stateInput').value.trim()
+  };
+}
+
+function updatePinStatus(){
+  const pin=$('pincode').value.replace(/\D/g,'').slice(0,6);
+  $('pincode').value=pin;
+  const e=$('pinStatus');
+
+  if(pin.length<6){
+    e.className='pin-status';
+    e.textContent='Enter PIN code to check delivery.';
+    return;
+  }
+
+  const ok=serviceablePin(pin);
+  e.className='pin-status '+(ok?'ok':'bad');
+  e.textContent=ok?'✓ Delivery is available to this PIN code.':'This PIN code is not currently serviceable.';
+}
+
+async function saveAddress(){
+  if(state.saving)return;
+  clearFieldErrors();
+  const details=detailsFromForm();
+
+  const localErrors=[
+    ['contact_name',details.contact_name.length<2,'Enter the receiver name.'],
+    ['phone',!/^\d{10}$/.test(details.phone),'Enter a valid 10-digit mobile number.'],
+    ['address_line1',details.address_line1.length<5,'Enter house/shop number and street.'],
+    ['pincode',!/^\d{6}$/.test(details.pincode),'Enter a valid 6-digit PIN code.'],
+    ['city',details.city.length<2,'Enter city or town.'],
+    ['district',details.district.length<2,'Enter district.'],
+    ['state',details.state.length<2,'Enter state.']
+  ];
+  const bad=localErrors.find(x=>x[1]);
+  if(bad){showFieldError(bad[0],bad[2]);return}
+
+  state.saving=true;
+  $('saveAddress').disabled=true;
+  $('saveAddress').textContent='Saving…';
+
+  try{
+    const {data,error}=await db.rpc('retailer_address_put',{
+      p_id:state.editing?.id||null,
+      p_label:state.label,
+      p_details:details,
+      p_is_default:$('makeDefault').checked,
+      p_expected_version:state.editing?.version||null
+    });
+    if(error)throw error;
+    if(data?.ok!==true){
+      if(data?.reason==='validation'){
+        showFieldError(data.field,data.message||'Check this field.');
+        return;
+      }
+      if(data?.reason==='version_conflict'){
+        throw Error('This address changed in another session. Refresh and try again.');
+      }
+      throw Error(data?.message||'Could not save address.');
+    }
+
+    const savedId=Number(data.address?.id);
+    await loadAddresses();
+
+    const saved=state.addresses.find(a=>Number(a.id)===savedId);
+    if(saved?.serviceable!==false)selectAddress(savedId);
+
+    closeForm();
+    render();
+    toast(state.editing?'Address updated.':'Address saved.');
+  }catch(err){
+    console.error(err);
+    toast(err?.message||'Could not save address.');
+  }finally{
+    state.saving=false;
+    $('saveAddress').disabled=false;
+    $('saveAddress').textContent='Save address';
+  }
+}
+
+async function makeDefault(id){
+  const a=state.addresses.find(x=>Number(x.id)===id);if(!a)return;
+  try{
+    const {data,error}=await db.rpc('retailer_address_set_default',{
+      p_id:id,p_expected_version:a.version
+    });
+    if(error)throw error;
+    if(data?.ok!==true)throw Error(data?.reason==='version_conflict'?'Address changed. Refresh and try again.':'Could not change default address.');
+    await loadAddresses();
+    render();
+    toast('Default address updated.');
+  }catch(err){console.error(err);toast(err?.message||'Could not change default address.')}
+}
+
+async function deleteAddress(id){
+  const a=state.addresses.find(x=>Number(x.id)===id);if(!a)return;
+  const name=a.label||'this address';
+  if(!confirm(`Delete ${name}?`))return;
+
+  try{
+    const {data,error}=await db.rpc('retailer_address_delete',{
+      p_id:id,p_expected_version:a.version
+    });
+    if(error)throw error;
+    if(data?.ok!==true)throw Error(data?.reason==='version_conflict'?'Address changed. Refresh and try again.':'Could not delete address.');
+
+    if(Number(state.selectedId)===id){
+      state.selectedId=null;
+      sessionStorage.removeItem('oneness-checkout-address-id');
+    }
+
+    await loadAddresses();
+    if(state.selectedId)sessionStorage.setItem('oneness-checkout-address-id',String(state.selectedId));
+    render();
+    toast('Address deleted.');
+  }catch(err){console.error(err);toast(err?.message||'Could not delete address.')}
+}
+
+$('addAddressBtn').onclick=()=>openForm();
+$('emptyAddBtn').onclick=()=>openForm();
+$('closeSheet').onclick=closeForm;
+$('cancelForm').onclick=closeForm;
+$('saveAddress').onclick=saveAddress;
+$('pincode').oninput=updatePinStatus;
+
+for(const b of $('labelOptions').querySelectorAll('[data-label]')){
+  b.onclick=()=>setLabel(b.dataset.label);
+}
+
+$('addressOverlay').onclick=e=>{
+  if(e.target===$('addressOverlay'))closeForm();
+};
+
+$('continueBtn').onclick=()=>{
+  const a=selectedAddress();
+  if(!a||a.serviceable===false||!state.cart.length)return;
+  sessionStorage.setItem('oneness-checkout-address-id',String(a.id));
+  sessionStorage.setItem('oneness-checkout-address',JSON.stringify({
+    id:a.id,label:a.label,details:a.details,version:a.version
+  }));
+  location.href='payment.html';
+};
+
+$('backBtn').onclick=()=>{
+  if(history.length>1)history.back();
+  else location.href='cart.html';
+};
+
+boot().catch(err=>{
+  console.error(err);
+  $('loading').innerHTML=`<div style="color:#b34235"><strong>Could not load addresses</strong><br>${esc(err?.message||'Unexpected error')}<br><button onclick="location.reload()" style="margin-top:10px;border:0;background:#14251f;color:#fff;border-radius:9px;padding:8px 11px">Retry</button></div>`;
+});
+})();
+</script>
+<script src="retailer-ui.js"></script>
+</body>
+</html>
