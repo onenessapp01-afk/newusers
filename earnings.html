@@ -95,6 +95,487 @@ body{font-family:"Segoe UI",Inter,system-ui,sans-serif!important}.shell{width:mi
 
 .savings-split{background:#fff0c9!important}
 
+
+
+/* ==========================================================
+   EARNINGS RESPONSIVE ALIGNMENT FIX
+   Prevents body-level horizontal scrolling on mobile/desktop.
+   ========================================================== */
+html,body{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+body{
+  position:relative;
+}
+*,*::before,*::after{
+  min-width:0;
+}
+img,svg,canvas{
+  max-width:100%;
+}
+.app,.shell,.topbar,.topbar-inner,.main,#content,
+.layout,.left,.right,.card,.hero,.quick-grid,
+.order-list,.product-list,.category-list,.recommend-list{
+  width:100%;
+  max-width:100%;
+  min-width:0!important;
+}
+.shell{
+  width:min(1280px,calc(100% - 32px))!important;
+}
+.main{
+  margin:0 auto!important;
+}
+
+/* Header stays inside the page width. */
+.topbar-inner{
+  width:100%!important;
+  max-width:1280px!important;
+  margin:0 auto!important;
+}
+.brand,.brand-copy,.header-actions,.desktop-nav{
+  min-width:0!important;
+}
+.desktop-nav{
+  flex-wrap:wrap;
+}
+.header-actions{
+  justify-content:flex-end;
+}
+
+/* Filters no longer create an independent horizontal scroll area. */
+.filters{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:6px!important;
+  overflow:visible!important;
+}
+.filter{
+  width:100%!important;
+  min-width:0!important;
+  padding:7px 5px!important;
+  text-align:center!important;
+  white-space:nowrap;
+}
+
+/* Numbers must never force cards wider than the viewport. */
+.hero h1,.quick strong,.flow-box strong,.split strong,
+.order-metric b,.product-row strong,.profit-right strong,
+.cart-stat strong,.category-top strong,.gain{
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  font-variant-numeric:tabular-nums;
+}
+.hero-grid,.quick-grid,.split-grid,.order-grid,.cart-grid{
+  min-width:0!important;
+}
+.hero-stat,.quick,.split,.order-metric,.cart-stat{
+  min-width:0!important;
+  overflow:hidden;
+}
+
+/* Flow is constrained to the card width. */
+.flow{
+  width:100%!important;
+  max-width:100%!important;
+  grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr) 14px minmax(0,1fr)!important;
+  overflow:hidden!important;
+}
+.flow-box{
+  min-width:0!important;
+}
+.arrow{
+  min-width:0!important;
+}
+
+/* Fixed-width chart: all 12 months stay inside the card. */
+.chart{
+  width:100%!important;
+  max-width:100%!important;
+  height:170px!important;
+  display:grid!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:3px!important;
+  padding:12px 0 0!important;
+  overflow:hidden!important;
+}
+.bar-wrap{
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  gap:4px!important;
+  overflow:hidden!important;
+}
+.bar{
+  width:min(20px,72%)!important;
+  max-width:100%!important;
+}
+.bar-value{
+  width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align:center;
+  font-size:5.5px!important;
+  white-space:nowrap!important;
+}
+.bar-label{
+  width:100%;
+  overflow:hidden;
+  text-overflow:clip;
+  text-align:center;
+  font-size:5.5px!important;
+  white-space:nowrap!important;
+}
+
+/* Dynamic lists cannot stretch the document. */
+.order,.product-row,.category-row,.rec{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden;
+}
+.order-top{
+  min-width:0!important;
+}
+.order-top>div{
+  min-width:0!important;
+}
+.status{
+  flex:0 0 auto;
+}
+.product-row{
+  grid-template-columns:minmax(0,1fr) minmax(66px,auto)!important;
+}
+.product-row>div:first-child,
+.rec button{
+  min-width:0!important;
+  overflow:hidden;
+}
+.product-row span,.rec span,.rec strong{
+  overflow-wrap:anywhere;
+}
+.profit-right{
+  min-width:0!important;
+  max-width:96px!important;
+}
+.category-top{
+  min-width:0!important;
+}
+.category-top strong:first-child{
+  min-width:0;
+  max-width:68%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.category-top strong:last-child{
+  flex:0 0 auto;
+  text-align:right;
+}
+.rec{
+  grid-template-columns:48px minmax(0,1fr) minmax(58px,auto)!important;
+  gap:7px!important;
+}
+.rec img,.rec-img{
+  width:48px!important;
+  height:48px!important;
+}
+.gain{
+  min-width:0!important;
+  max-width:82px!important;
+  text-align:right!important;
+}
+
+/* Desktop alignment */
+@media(min-width:940px){
+  .app{
+    padding-bottom:38px!important;
+  }
+  .main{
+    padding:18px 0 42px!important;
+  }
+  .hero{
+    width:100%!important;
+  }
+  .quick-grid{
+    width:100%!important;
+  }
+  .layout{
+    width:100%!important;
+    grid-template-columns:minmax(0,1.48fr) minmax(300px,.62fr)!important;
+    gap:12px!important;
+    align-items:start!important;
+  }
+  .left,.right{
+    width:100%!important;
+  }
+  .right{
+    position:sticky!important;
+    top:82px!important;
+  }
+  .card{
+    width:100%!important;
+  }
+}
+
+/* Tablet */
+@media(min-width:600px) and (max-width:939px){
+  .shell{
+    width:min(100% - 20px,900px)!important;
+  }
+  .main{
+    padding:10px 0 76px!important;
+  }
+  .filters{
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  }
+  .layout{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Mobile: no sideways page movement, no nested horizontal scrollers. */
+@media(max-width:599px){
+  .shell{
+    width:100%!important;
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  .topbar-inner{
+    width:100%!important;
+    padding:7px 9px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  .brand{
+    max-width:100%!important;
+    overflow:hidden;
+  }
+  .brand-copy{
+    min-width:0!important;
+  }
+  .brand-copy strong{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .cart-btn{
+    flex:0 0 auto;
+    padding:8px!important;
+    white-space:nowrap;
+  }
+
+  .main{
+    width:100%!important;
+    padding:8px 8px calc(68px + env(safe-area-inset-bottom))!important;
+    overflow:hidden!important;
+  }
+
+  .filters{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    padding:0 0 7px!important;
+  }
+  .filter{
+    padding:6px 3px!important;
+    font-size:6.3px!important;
+  }
+
+  .hero{
+    padding:11px!important;
+    border-radius:11px!important;
+  }
+  .hero h1{
+    font-size:clamp(25px,9vw,31px)!important;
+    line-height:1!important;
+  }
+  .formula{
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+  .hero-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .hero-stat{
+    padding:6px 4px!important;
+  }
+  .hero-stat strong{
+    font-size:8px!important;
+    line-height:1.2;
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  .quick{
+    padding:8px!important;
+  }
+  .quick strong{
+    font-size:10.5px!important;
+  }
+
+  .layout{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:7px!important;
+    width:100%!important;
+  }
+  .left,.right{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .right{
+    position:static!important;
+  }
+  .card{
+    width:100%!important;
+    padding:9px!important;
+    overflow:hidden!important;
+  }
+
+  .flow{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .flow .arrow{
+    display:none!important;
+  }
+  .flow-box{
+    padding:7px 3px!important;
+  }
+  .flow-box strong{
+    font-size:8.5px!important;
+  }
+
+  .chart{
+    height:138px!important;
+    grid-template-columns:repeat(12,minmax(0,1fr))!important;
+    gap:2px!important;
+    padding-top:7px!important;
+  }
+  .bar{
+    width:min(12px,70%)!important;
+  }
+  .bar-value{
+    display:none!important;
+  }
+  .bar-label{
+    font-size:4.8px!important;
+  }
+
+  .split-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  .split{
+    min-width:0!important;
+    padding:8px!important;
+  }
+  .split strong{
+    font-size:13px!important;
+  }
+
+  .order-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .order-metric{
+    min-width:0!important;
+    padding:6px 4px!important;
+  }
+  .order-metric b{
+    font-size:7px!important;
+  }
+
+  .product-row{
+    grid-template-columns:minmax(0,1fr) 72px!important;
+    gap:5px!important;
+    padding:8px!important;
+  }
+  .profit-right{
+    max-width:72px!important;
+  }
+
+  .rec{
+    grid-template-columns:42px minmax(0,1fr) 58px!important;
+    gap:6px!important;
+    padding:6px!important;
+  }
+  .rec img,.rec-img{
+    width:42px!important;
+    height:42px!important;
+  }
+  .rec strong{
+    font-size:7.4px!important;
+  }
+  .rec span{
+    font-size:5.7px!important;
+    line-height:1.35!important;
+  }
+  .gain{
+    max-width:58px!important;
+    font-size:6.7px!important;
+  }
+
+  .cart-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .cart-stat{
+    padding:6px 4px!important;
+  }
+
+  .bottom-nav{
+    width:100%!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+  }
+  .nav-item{
+    min-width:0!important;
+  }
+}
+
+/* Very narrow phones */
+@media(max-width:360px){
+  .main{
+    padding-left:6px!important;
+    padding-right:6px!important;
+  }
+  .filters{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .hero-grid{
+    grid-template-columns:1fr!important;
+  }
+  .hero-stat{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .split-grid{
+    grid-template-columns:1fr!important;
+  }
+  .rec{
+    grid-template-columns:40px minmax(0,1fr)!important;
+  }
+  .rec .gain{
+    grid-column:2;
+    text-align:left!important;
+    max-width:none!important;
+  }
+}
+
 </style>
 </head>
 <body data-page="earnings">
@@ -394,17 +875,26 @@ function renderTrend(){
   const rows=state.data?.trend||[];
   const max=Math.max(1,...rows.map(x=>Number(x.profit_paise||0)));
 
+  const compact=p=>{
+    const n=Number(p||0)/100;
+    if(n>=10000000)return `₹${(n/10000000).toFixed(n>=100000000?0:1)}Cr`;
+    if(n>=100000)return `₹${(n/100000).toFixed(n>=1000000?0:1)}L`;
+    if(n>=1000)return `₹${(n/1000).toFixed(n>=10000?0:1)}K`;
+    return money(p);
+  };
+
   $('chart').innerHTML=rows.map(x=>{
     const v=Number(x.profit_paise||0);
-    const h=v?Math.max(5,Math.round(v/max*145)):3;
-    return `<div class="bar-wrap" title="${esc(x.month)} · ${money(v)}">
-      <div class="bar-value">${v?money(v):''}</div>
+    const h=v?Math.max(5,Math.round(v/max*128)):3;
+    const month=String(x.month||'');
+    const short=month.split(/\s+/)[0].slice(0,3);
+    return `<div class="bar-wrap" title="${esc(month)} · ${money(v)}">
+      <div class="bar-value">${v?compact(v):''}</div>
       <div class="bar" style="height:${h}px"></div>
-      <div class="bar-label">${esc(x.month.replace(' ','\\n'))}</div>
+      <div class="bar-label">${esc(short)}</div>
     </div>`;
   }).join('');
 }
-
 function renderOrders(){
   const rows=state.data?.orders||[];
   if(!rows.length){
