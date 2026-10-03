@@ -14,10 +14,13 @@ const DICT={
  hi:{
   'Home':'होम','Shop':'शॉप','Orders':'ऑर्डर','Cart':'कार्ट','Account':'अकाउंट','Earnings':'कमाई',
   'Products':'प्रोडक्ट','Product details':'प्रोडक्ट विवरण','My Cart':'मेरा कार्ट','Delivery address':'डिलीवरी पता',
-  'Payment':'भुगतान','Retailer home':'रिटेलर होम','Browse wholesale products and potential margins.':'होलसेल प्रोडक्ट और संभावित मार्जिन देखें।',
-  'Potential retail profit · this month':'संभावित रिटेल लाभ · इस महीने','Wholesale':'होलसेल','MRP value':'MRP वैल्यू',
-  'Potential margin':'संभावित मार्जिन','Potential profit from this cart':'इस कार्ट का संभावित लाभ','You pay':'आपका भुगतान',
-  'Potential retail profit':'संभावित रिटेल लाभ','Your products':'आपके प्रोडक्ट','Coupon':'कूपन','Order summary':'ऑर्डर सारांश',
+  'Payment':'भुगतान','Retailer home':'रिटेलर होम','Browse wholesale products and potential margins.':'होलसेल कैटलॉग, कीमत और ऑर्डर विकल्प देखें।',
+  'Wholesale catalogue, prices and order options.':'होलसेल कैटलॉग, कीमत और ऑर्डर विकल्प।',
+  'This month · Earn opportunity':'इस महीने · कमाई का अवसर','Purchased':'खरीद','Retail value':'रिटेल वैल्यू',
+  'Buy at':'खरीदें','Sell at':'बेचें','Earn':'कमाएँ','Earn at MRP':'MRP पर कमाएँ',
+  'Potential retail profit · this month':'इस महीने · कमाई का अवसर','Wholesale':'होलसेल','MRP value':'रिटेल वैल्यू',
+  'Potential margin':'कमाई','Potential profit from this cart':'इस कार्ट पर कमाई का अवसर','You pay':'आपका भुगतान',
+  'Potential retail profit':'कमाई का अवसर','Your products':'आपके प्रोडक्ट','Coupon':'कूपन','Order summary':'ऑर्डर सारांश',
   'Final payable':'अंतिम भुगतान','Continue to address →':'पते पर आगे बढ़ें →','Where should we deliver?':'डिलीवरी कहाँ करनी है?',
   'Saved addresses':'सेव किए पते','+ Add address':'+ पता जोड़ें','3 · Payment':'3 · भुगतान','2 · Address':'2 · पता','1 · Cart':'1 · कार्ट',
   'Select quantity':'मात्रा चुनें','Stock':'स्टॉक','Minimum qty':'न्यूनतम मात्रा','Quantity step':'मात्रा स्टेप',
@@ -27,16 +30,20 @@ const DICT={
   'Edit profile':'प्रोफ़ाइल बदलें','Shop products':'प्रोडक्ट खरीदें','Change password':'पासवर्ड बदलें',
   'Login':'लॉगिन','Create account':'अकाउंट बनाएँ','Email address':'ईमेल पता','Password':'पासवर्ड',
   'Welcome back':'वापसी पर स्वागत है','Full name':'पूरा नाम','Mobile number':'मोबाइल नंबर','Business / shop name':'बिज़नेस / दुकान का नाम',
-  'Browse products':'प्रोडक्ट देखें','Potential':'संभावित','margin':'मार्जिन','Currently unavailable':'अभी उपलब्ध नहीं',
+  'Browse products':'प्रोडक्ट देखें','Potential':'कमाई','margin':'कमाई','Currently unavailable':'अभी उपलब्ध नहीं',
+  'Earn / unit':'कमाएँ / यूनिट','Order total':'ऑर्डर कुल','Retail value minus your purchase value':'रिटेल वैल्यू और आपकी खरीद कीमत का अंतर',
   'Apply':'लागू करें','Optional':'वैकल्पिक','Retry':'फिर कोशिश करें','Back':'वापस','Continue':'आगे बढ़ें'
  },
  mr:{
   'Home':'होम','Shop':'शॉप','Orders':'ऑर्डर्स','Cart':'कार्ट','Account':'अकाउंट','Earnings':'कमाई',
   'Products':'उत्पादने','Product details':'उत्पादन तपशील','My Cart':'माझे कार्ट','Delivery address':'डिलिव्हरी पत्ता',
-  'Payment':'पेमेंट','Retailer home':'रिटेलर होम','Browse wholesale products and potential margins.':'होलसेल उत्पादने आणि संभाव्य मार्जिन पहा.',
-  'Potential retail profit · this month':'संभाव्य रिटेल नफा · या महिन्यात','Wholesale':'होलसेल','MRP value':'MRP मूल्य',
-  'Potential margin':'संभाव्य मार्जिन','Potential profit from this cart':'या कार्टचा संभाव्य नफा','You pay':'तुमचे पेमेंट',
-  'Potential retail profit':'संभाव्य रिटेल नफा','Your products':'तुमची उत्पादने','Coupon':'कूपन','Order summary':'ऑर्डर सारांश',
+  'Payment':'पेमेंट','Retailer home':'रिटेलर होम','Browse wholesale products and potential margins.':'होलसेल कॅटलॉग, किंमत आणि ऑर्डर पर्याय पहा.',
+  'Wholesale catalogue, prices and order options.':'होलसेल कॅटलॉग, किंमत आणि ऑर्डर पर्याय.',
+  'This month · Earn opportunity':'या महिन्यात · कमाईची संधी','Purchased':'खरेदी','Retail value':'रिटेल मूल्य',
+  'Buy at':'खरेदी','Sell at':'विक्री','Earn':'कमवा','Earn at MRP':'MRP वर कमवा',
+  'Potential retail profit · this month':'या महिन्यात · कमाईची संधी','Wholesale':'होलसेल','MRP value':'रिटेल मूल्य',
+  'Potential margin':'कमाई','Potential profit from this cart':'या कार्टवरील कमाईची संधी','You pay':'तुमचे पेमेंट',
+  'Potential retail profit':'कमाईची संधी','Your products':'तुमची उत्पादने','Coupon':'कूपन','Order summary':'ऑर्डर सारांश',
   'Final payable':'अंतिम देय','Continue to address →':'पत्त्याकडे पुढे जा →','Where should we deliver?':'डिलिव्हरी कुठे करायची?',
   'Saved addresses':'जतन केलेले पत्ते','+ Add address':'+ पत्ता जोडा','3 · Payment':'3 · पेमेंट','2 · Address':'2 · पत्ता','1 · Cart':'1 · कार्ट',
   'Select quantity':'प्रमाण निवडा','Stock':'स्टॉक','Minimum qty':'किमान प्रमाण','Quantity step':'प्रमाण स्टेप',
@@ -46,7 +53,8 @@ const DICT={
   'Shop products':'उत्पादने खरेदी करा','Change password':'पासवर्ड बदला',
   'Login':'लॉगिन','Create account':'अकाउंट तयार करा','Email address':'ईमेल पत्ता','Password':'पासवर्ड',
   'Welcome back':'पुन्हा स्वागत आहे','Full name':'पूर्ण नाव','Mobile number':'मोबाइल नंबर','Business / shop name':'व्यवसाय / दुकानाचे नाव',
-  'Browse products':'उत्पादने पहा','Potential':'संभाव्य','margin':'मार्जिन','Currently unavailable':'सध्या उपलब्ध नाही',
+  'Browse products':'उत्पादने पहा','Potential':'कमाई','margin':'कमाई','Currently unavailable':'सध्या उपलब्ध नाही',
+  'Earn / unit':'कमवा / युनिट','Order total':'ऑर्डर एकूण','Retail value minus your purchase value':'रिटेल मूल्य आणि तुमची खरेदी किंमत यातील फरक',
   'Apply':'लागू करा','Optional':'ऐच्छिक','Retry':'पुन्हा प्रयत्न करा','Back':'मागे','Continue':'पुढे जा'
  }
 };
@@ -62,7 +70,8 @@ function trText(s){
   if((m=trimmed.match(/^Good afternoon,\s*(.+)$/i)))return s.replace(trimmed,(lang==='hi'?'नमस्कार, ':'नमस्कार, ')+m[1]);
   if((m=trimmed.match(/^Good evening,\s*(.+)$/i)))return s.replace(trimmed,(lang==='hi'?'शुभ संध्या, ':'शुभ संध्याकाळ, ')+m[1]);
   if((m=trimmed.match(/^(\d+) products?$/i)))return s.replace(trimmed,`${m[1]} ${lang==='hi'?'प्रोडक्ट':'उत्पादने'}`);
-  if((m=trimmed.match(/^Potential \+(.+)$/i)))return s.replace(trimmed,`${lang==='hi'?'संभावित':'संभाव्य'} +${m[1]}`);
+  if((m=trimmed.match(/^Potential \+(.+)$/i)))return s.replace(trimmed,`${lang==='hi'?'कमाएँ':'कमवा'} ${m[1]}`);
+  if((m=trimmed.match(/^Earn\s+(.+)$/i)))return s.replace(trimmed,`${lang==='hi'?'कमाएँ':'कमवा'} ${m[1]}`);
   return s;
 }
 function translateNode(node){
@@ -125,6 +134,9 @@ function ensureBranding(){
   document.querySelectorAll('.logo').forEach(el=>{
     if(!el.querySelector('img'))el.innerHTML=`<img class="or-brand-logo" src="${LOGO}" alt="ONeness Group">`;
   });
+  document.querySelectorAll('.brand-logo').forEach(img=>{
+    if(!img.getAttribute('src'))img.src=LOGO;
+  });
   document.querySelectorAll('.brand-mark').forEach(el=>{
     el.innerHTML=`<img class="or-brand-logo" src="${LOGO}" alt="ONeness Group">`;
   });
@@ -140,7 +152,7 @@ function ensureBranding(){
 function injectDesktopNav(){
   if(page==='account')return;
   const bar=document.querySelector('.topbar-inner');
-  if(!bar||bar.querySelector('.or-desktop-nav'))return;
+  if(!bar||bar.querySelector('.or-desktop-nav')||bar.querySelector('.desktop-nav'))return;
   const right=bar.lastElementChild;
   if(!right)return;
   const nav=document.createElement('nav');
@@ -148,7 +160,7 @@ function injectDesktopNav(){
   const active=page;
   nav.innerHTML=`
     <a class="${active==='home'?'active':''}" href="retailer-dashboard.html">Home</a>
-    <a class="${active==='product'?'active':''}" href="retailer-dashboard.html#products">Shop</a>
+    <a class="${active==='product'?'active':''}" href="retailer-dashboard.html#productsSection">Shop</a>
     <a class="${active==='earnings'?'active':''}" href="earnings.html">Earnings</a>
     <a class="${active==='cart'?'active':''}" href="cart.html">Cart</a>
     <a href="index.html">Account</a>`;
@@ -179,18 +191,6 @@ function addAccountLanguageControl(){
     b.textContent=languageName();b.onclick=openLanguageDialog;
     authCard.insertBefore(b,authCard.querySelector('#authContent'));
   }
-}
-
-function injectStoreIntro(){
-  if(page!=='home'||document.querySelector('.or-store-intro'))return;
-  const business=document.querySelector('.business-card');
-  if(!business)return;
-  const hero=document.createElement('section');
-  hero.className='or-store-intro';
-  hero.innerHTML=`<div class="or-store-intro-copy"><small>ONeness retailer store</small><h2>Wholesale shopping built around clarity.</h2><p>Compare wholesale price, MRP and potential retail margin before adding products to your order.</p></div><a href="#products">Browse products →</a>`;
-  business.parentNode.insertBefore(hero,business);
-  const productSection=document.querySelector('.products')?.closest('section');
-  if(productSection&&!productSection.id)productSection.id='products';
 }
 
 function languageDialog(){
@@ -243,7 +243,8 @@ function showFirstLanguageGate(){
 }
 
 function splashSeenKey(poster){
-  return `oneness-splash:${poster.id}`;
+  const revision=String(poster?.updated_at||poster?.created_at||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,40);
+  return `oneness-splash:${poster.id}:${revision}`;
 }
 function isSplashSeen(poster){
   const freq=poster.display_frequency||'once_per_session';
@@ -282,8 +283,30 @@ async function maybeSplash(){
     showSplash(rows);
   }catch{}
 }
-function showSplash(rows){
+function preloadSplashImage(url,timeout=4500){
+  return new Promise(resolve=>{
+    if(!url){resolve(false);return}
+    const image=new Image();
+    let finished=false;
+    const done=value=>{if(finished)return;finished=true;resolve(value)};
+    image.onload=()=>done(true);
+    image.onerror=()=>done(false);
+    image.src=url;
+    setTimeout(()=>done(false),timeout);
+  });
+}
+async function showSplash(rows){
+  let queue=Array.isArray(rows)?rows.slice():[];
   let i=0;
+  if(!queue.length)return;
+
+  // Do not show a blank overlay while the first poster downloads.
+  while(queue.length && !(await preloadSplashImage(queue[0].image_url))){
+    markSplashSeen(queue[0]);
+    queue.shift();
+  }
+  if(!queue.length)return;
+
   const overlay=document.createElement('section');
   overlay.className='or-splash';
   overlay.innerHTML=`<div class="or-splash-shell">
@@ -292,35 +315,69 @@ function showSplash(rows){
     <div class="or-splash-dots"></div>
   </div>`;
   document.body.append(overlay);
+
   const img=overlay.querySelector('img'),title=overlay.querySelector('.or-splash-copy b'),
         sub=overlay.querySelector('.or-splash-copy span'),actions=overlay.querySelector('.or-splash-actions'),
         dots=overlay.querySelector('.or-splash-dots');
-  const close=()=>{rows.forEach(markSplashSeen);overlay.remove();};
-  const draw=()=>{
-    const p=rows[i];
-    img.src=p.image_url;img.alt=p.alt_text||p.title||'ONeness';
+
+  const close=()=>{
+    queue.forEach(markSplashSeen);
+    overlay.remove();
+  };
+
+  const draw=async()=>{
+    const p=queue[i];
+    if(!p)return close();
+
+    if(i>0 && !(await preloadSplashImage(p.image_url))){
+      markSplashSeen(p);
+      if(i<queue.length-1){i++;return draw()}
+      return close();
+    }
+
+    img.src=p.image_url;
+    img.alt=p.alt_text||p.title||'ONeness';
     title.textContent=p.title||'ONeness';
     sub.textContent=p.caption||'';
     actions.innerHTML='';
+
     if(p.dismissible!==false){
-      const skip=document.createElement('button');skip.textContent='Skip';skip.onclick=close;actions.append(skip);
+      const skip=document.createElement('button');
+      skip.type='button';
+      skip.textContent='Skip';
+      skip.onclick=close;
+      actions.append(skip);
     }
     if(p.button_url){
-      const a=document.createElement('a');a.href=p.button_url;a.textContent=p.button_label||'Open';actions.append(a);
+      const a=document.createElement('a');
+      a.href=p.button_url;
+      a.textContent=p.button_label||'Open';
+      actions.append(a);
     }
-    const next=document.createElement('button');next.className='primary-splash';
-    next.textContent=i===rows.length-1?'Continue':'Next';
-    next.onclick=()=>{markSplashSeen(p);if(i<rows.length-1){i++;draw()}else close()};
+
+    const next=document.createElement('button');
+    next.type='button';
+    next.className='primary-splash';
+    next.textContent=i===queue.length-1?'Continue':'Next';
+    next.onclick=()=>{
+      markSplashSeen(p);
+      if(i<queue.length-1){i++;draw()}
+      else close();
+    };
     actions.append(next);
-    dots.innerHTML=rows.map((_,n)=>`<span class="or-splash-dot ${n===i?'active':''}"></span>`).join('');
+
+    dots.innerHTML=queue.map((_,n)=>`<span class="or-splash-dot ${n===i?'active':''}"></span>`).join('');
+
+    // Warm the next image in the background.
+    if(i<queue.length-1)preloadSplashImage(queue[i+1].image_url).catch(()=>{});
   };
+
   draw();
 }
 
 function install(){
   ensureBranding();
   injectDesktopNav();
-  injectStoreIntro();
   addAccountLanguageControl();
   languageDialog();
   showFirstLanguageGate();
@@ -328,6 +385,15 @@ function install(){
   else applyLanguage();
   setTimeout(()=>maybeSplash(),900);
 }
+
+window.ONenessRetailUI={
+  applyLanguage,
+  setLanguage,
+  openLanguageDialog,
+  maybeSplash,
+  languageName,
+  logo:LOGO
+};
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});
 else install();
