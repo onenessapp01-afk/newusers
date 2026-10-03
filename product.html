@@ -137,6 +137,415 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
 .section-card{padding:14px!important;margin-top:10px!important}.info-grid{gap:6px!important;margin-top:8px!important}.info{padding:9px!important;border-radius:8px!important;background:#faf6ef!important}.info span{font-size:6.5px!important;color:#8a7b70!important}.info strong{font-size:8.5px!important;color:#493d36!important}.description-full{font-size:9px!important;color:#665b54!important;line-height:1.6!important;margin-top:8px!important}.similar{gap:8px!important;margin-top:8px!important}.sim-card{flex:0 0 190px!important;border-color:var(--line2)!important;border-radius:10px!important}.sim-pic{position:relative;height:145px!important;background:#fff!important}.sim-pic img{object-fit:contain!important;padding:6px!important}.sim-earn{position:absolute;left:6px;top:6px;z-index:2;padding:4px 6px;border-radius:6px;background:#efc759;color:#43270c;font-size:6.5px;font-weight:950}.sim-body{padding:8px!important}.sim-body strong{font-size:9px!important;color:#392c26!important}.sim-body span{font-size:6.5px!important;color:#8a7b70!important}.sim-prices{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px}.sim-prices div{padding:5px;border-radius:6px;background:#fff7e6}.sim-prices div:last-child{background:#f5e8ea}.sim-prices small{display:block;color:#8e806f;font-size:5px;font-weight:800}.sim-prices b{display:block;margin-top:2px;color:var(--wine);font-size:9px}.toast{bottom:22px!important;background:var(--wine-dark)!important;color:#fff2d1!important}
 @media(max-width:919px){.app{padding-bottom:88px!important}.topbar-inner{min-height:54px!important;padding:7px 8px!important;grid-template-columns:auto minmax(0,1fr) auto!important;gap:7px!important}.back{width:35px!important;height:35px!important}.brand{justify-content:center!important}.brand-logo{width:38px;height:27px}.brand-copy,.desktop-nav,.language-wrap,.desktop-profile{display:none!important}.header-actions{justify-content:flex-end}.cart-btn{width:35px!important;height:35px!important}.main{padding:7px 8px 17px!important}.breadcrumb{display:none!important}.product-layout{grid-template-columns:1fr!important;gap:7px!important}.gallery-card,.detail-card,.section-card{border-radius:11px!important}.gallery-card,.detail-card{position:static!important}.gallery-main{height:330px!important;min-height:330px!important}.gallery-main img{padding:7px!important}.gallery-earn{left:7px;top:7px;min-height:25px;padding:4px 7px;font-size:7px}.gallery-nav{width:30px;height:30px;font-size:17px}.gallery-nav.prev{left:6px}.gallery-nav.next{right:6px}.image-count{right:7px!important;bottom:7px!important;padding:4px 6px!important;font-size:6px!important}.gallery-dots{bottom:7px}.thumbs{padding:6px!important;gap:5px!important}.thumb{flex-basis:52px!important;width:52px!important;height:52px!important;border-radius:7px!important}.detail-card{padding:11px!important}.category{font-size:6.5px!important}.title{font-size:22px!important;margin:4px 0 5px!important}.desc{font-size:8.5px!important;line-height:1.45!important;display:-webkit-box!important;-webkit-line-clamp:3!important;-webkit-box-orient:vertical!important;overflow:hidden!important}.price-block{margin-top:9px!important;padding:8px!important}.price-card{padding:7px!important}.price-card span{font-size:6px!important}.price-card strong{font-size:17px!important}.earn-row{padding:6px 7px!important}.earn-row span{font-size:7px!important}.earn-row strong{font-size:11px!important}.stock-row{margin-top:7px!important;gap:4px!important}.stock-box{padding:6px!important}.stock-box span{font-size:5.8px!important}.stock-box strong{font-size:8px!important}.qty-panel{margin-top:7px!important;padding:8px!important}.qty-head strong{font-size:9px!important}.qty-head span{font-size:6.5px!important}.qty-control{height:40px!important;margin-top:6px!important}.unlock{font-size:6.5px!important;padding:7px!important}.total-card{padding:8px!important}.total-grid strong{font-size:10px!important}.bulk-section{margin-top:8px!important}.bulk-section p{display:none!important}.slab{padding:6px!important}.action-bar{position:fixed!important;z-index:80!important;left:0!important;right:0!important;bottom:0!important;transform:none!important;width:100%!important;margin:0!important;padding:7px 8px calc(7px + env(safe-area-inset-bottom))!important;border-top:1px solid #e1d6c4!important;background:rgba(255,255,255,.98)!important;backdrop-filter:blur(14px)!important;grid-template-columns:1fr 1.2fr!important}.secondary,.primary{height:42px!important;font-size:10px!important}.section-card{padding:10px!important;margin-top:7px!important}.info-grid{grid-template-columns:1fr 1fr!important;gap:4px!important}.info{padding:7px!important}.description-full{font-size:8px!important;line-height:1.5!important}.similar{gap:6px!important}.sim-card{flex-basis:145px!important}.sim-pic{height:112px!important}.sim-body strong{font-size:8.5px!important}.toast{bottom:76px!important}}
 
+
+
+/* ==========================================================
+   QUANTITY BLOCK SELECTOR · CLEAN PRODUCT PURCHASE UI
+   ========================================================== */
+.qty-panel{
+  overflow:hidden!important;
+  background:#fffdf9!important;
+  border:1px solid #e1d4ba!important;
+  box-shadow:0 8px 24px rgba(71,36,20,.035)!important;
+}
+.qty-head{
+  align-items:flex-start!important;
+}
+.qty-head>div{
+  min-width:0;
+  display:grid;
+  gap:2px
+}
+.qty-head>div>strong{
+  color:#4b3027!important;
+  font-size:12px!important
+}
+.qty-head>div>small{
+  color:#8c7d70;
+  font-size:7px;
+  line-height:1.35
+}
+.qty-head>span{
+  flex:0 0 auto;
+  max-width:45%;
+  text-align:right
+}
+
+/* direct-select quantity cards */
+.bulk-section{
+  margin-top:10px!important
+}
+.bulk-table{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+  margin-top:0!important
+}
+.slab{
+  position:relative!important;
+  display:block!important;
+  min-width:0!important;
+  padding:10px!important;
+  border:1px solid #e3d8c6!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background .16s ease!important
+}
+.slab:hover{
+  transform:translateY(-2px)!important;
+  border-color:#caaa61!important;
+  box-shadow:0 8px 18px rgba(78,45,22,.07)!important
+}
+.slab:active{
+  transform:scale(.985)!important
+}
+.slab.active{
+  border:2px solid #c7962d!important;
+  background:linear-gradient(145deg,#fff9e8,#fff1c5)!important;
+  box-shadow:0 8px 20px rgba(177,126,27,.10)!important
+}
+.slab.disabled{
+  opacity:.44!important;
+  cursor:not-allowed!important;
+  background:#f7f4ef!important
+}
+.slab.disabled:hover{
+  transform:none!important;
+  box-shadow:none!important
+}
+.slab.active:after{
+  content:"✓";
+  position:absolute;
+  top:7px;
+  right:7px;
+  width:19px;
+  height:19px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#68141d;
+  color:#fff1cf;
+  font-size:10px;
+  font-weight:950;
+  animation:qtyCheck .24s ease
+}
+@keyframes qtyCheck{
+  from{transform:scale(.55);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.slab-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:7px;
+  padding-right:22px
+}
+.slab-label{
+  color:#7b642e;
+  font-size:6px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.06em
+}
+.slab-qty{
+  display:block;
+  margin-top:2px;
+  color:#3c2d26;
+  font-size:15px;
+  font-weight:950;
+  line-height:1
+}
+.slab-best{
+  display:inline-flex;
+  padding:3px 5px;
+  border-radius:999px;
+  background:#68141d;
+  color:#fff1cf;
+  font-size:5.5px;
+  font-weight:900;
+  white-space:nowrap
+}
+.slab-price-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  margin-top:9px
+}
+.slab-metric{
+  min-width:0;
+  padding:6px;
+  border-radius:7px;
+  background:#faf6ee
+}
+.slab.active .slab-metric{
+  background:rgba(255,255,255,.67)
+}
+.slab-metric span{
+  display:block!important;
+  color:#918273!important;
+  font-size:5.5px!important;
+  font-weight:750
+}
+.slab-metric strong{
+  display:block!important;
+  margin-top:2px;
+  color:#5a342a!important;
+  font-size:9px!important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.slab-earn{
+  margin-top:5px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  padding:6px 7px;
+  border-radius:7px;
+  background:#fff0c9
+}
+.slab-earn span{
+  color:#805917!important;
+  font-size:6px!important;
+  font-weight:850!important
+}
+.slab-earn strong{
+  color:#60400c!important;
+  font-size:10px!important;
+  font-weight:950!important
+}
+
+/* Custom +/- remains available, but secondary to direct quantity selection. */
+.custom-qty-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+  padding-top:9px;
+  border-top:1px dashed #e4d7c0
+}
+.custom-qty-row>span{
+  color:#75685e;
+  font-size:7px;
+  font-weight:800
+}
+.custom-qty-row .qty-control{
+  width:138px!important;
+  height:36px!important;
+  margin:0!important;
+  grid-template-columns:37px minmax(0,1fr) 37px!important;
+  border-radius:9px!important
+}
+.custom-qty-row .qty-control button{
+  font-size:16px!important
+}
+.custom-qty-row .qty-control strong{
+  font-size:11px!important
+}
+
+/* selected order summary */
+.total-card{
+  position:relative;
+  overflow:hidden;
+  margin-top:10px!important;
+  padding:12px!important;
+  background:
+    radial-gradient(circle at 96% 0,rgba(238,202,110,.14),transparent 30%),
+    linear-gradient(140deg,#430a11,#68141d)!important
+}
+.total-card:after{
+  content:"∞";
+  position:absolute;
+  right:-9px;
+  top:-27px;
+  color:rgba(255,224,154,.055);
+  font:700 110px/1 Georgia,serif;
+  pointer-events:none
+}
+.summary-product{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:2px 8px;
+  padding-bottom:9px;
+  margin-bottom:9px;
+  border-bottom:1px solid rgba(255,255,255,.10)
+}
+.summary-product>span{
+  grid-column:1/-1;
+  color:#d8c6a4;
+  font-size:6px;
+  text-transform:uppercase;
+  letter-spacing:.08em
+}
+.summary-product>strong{
+  min-width:0;
+  color:#fff4db;
+  font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.summary-product>small{
+  align-self:center;
+  color:#ffe19a;
+  font-size:7px;
+  font-weight:850
+}
+.total-grid{
+  position:relative;
+  z-index:1
+}
+.total-grid>div{
+  padding:8px;
+  border-radius:8px;
+  background:rgba(255,255,255,.065)
+}
+.total-grid small{
+  display:block;
+  margin-top:2px;
+  color:#bda985;
+  font-size:5.5px
+}
+.total-profit{
+  position:relative;
+  z-index:1;
+  align-items:center!important;
+  margin-top:9px!important;
+  padding:10px 0 0!important
+}
+.total-profit>div{
+  display:grid;
+  gap:2px
+}
+.total-profit>div>span{
+  color:#ffe19a!important;
+  font-size:9px!important;
+  font-weight:900!important
+}
+.total-profit>div>small{
+  color:#cbb999;
+  font-size:6px
+}
+.total-profit b{
+  color:#ffe19a!important;
+  font-size:19px!important;
+  font-weight:950!important;
+  letter-spacing:-.4px
+}
+
+/* subtle animation when quantity changes */
+.qty-panel.qty-updated .total-card{
+  animation:qtySummaryPulse .30s ease
+}
+@keyframes qtySummaryPulse{
+  0%{transform:scale(.988);filter:brightness(.96)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+
+@media(min-width:1180px){
+  .bulk-table{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important
+  }
+}
+
+@media(max-width:919px){
+  .qty-panel{
+    padding:10px!important;
+    margin-top:8px!important;
+    border-radius:12px!important
+  }
+  .qty-head>div>strong{
+    font-size:10px!important
+  }
+  .qty-head>div>small{
+    font-size:6px!important
+  }
+  .qty-head>span{
+    font-size:6px!important
+  }
+  .bulk-table{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important
+  }
+  .slab{
+    padding:8px!important;
+    border-radius:9px!important
+  }
+  .slab.active:after{
+    top:5px;right:5px;width:17px;height:17px;font-size:8px
+  }
+  .slab-qty{
+    font-size:13px
+  }
+  .slab-label{
+    font-size:5.5px
+  }
+  .slab-price-grid{
+    margin-top:7px;
+    gap:3px
+  }
+  .slab-metric{
+    padding:5px
+  }
+  .slab-metric strong{
+    font-size:8px!important
+  }
+  .slab-earn{
+    margin-top:4px;
+    padding:5px
+  }
+  .slab-earn span{
+    font-size:5.5px!important
+  }
+  .slab-earn strong{
+    font-size:8.5px!important
+  }
+  .custom-qty-row{
+    margin-top:8px;
+    padding-top:7px
+  }
+  .custom-qty-row .qty-control{
+    width:126px!important;
+    height:34px!important
+  }
+  .total-card{
+    padding:10px!important
+  }
+  .summary-product{
+    padding-bottom:7px;
+    margin-bottom:7px
+  }
+  .summary-product>strong{
+    font-size:9px
+  }
+  .total-grid>div{
+    padding:7px
+  }
+  .total-profit b{
+    font-size:17px!important
+  }
+}
+
+/* very narrow phones */
+@media(max-width:380px){
+  .bulk-table{
+    grid-template-columns:1fr!important
+  }
+  .slab-price-grid{
+    grid-template-columns:1fr 1fr
+  }
+}
+
 </style>
 </head>
 <body data-page="product">
@@ -212,32 +621,55 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
 
         <div class="qty-panel">
           <div class="qty-head">
-            <strong data-i18n="selectQuantity">Select quantity</strong>
+            <div>
+              <strong data-i18n="chooseQuantity">Choose quantity</strong>
+              <small data-i18n="tapQuantityBlock">Tap a block to select quantity instantly</small>
+            </div>
             <span id="qtyHint">Minimum quantity applies</span>
           </div>
-          <div class="qty-control">
-            <button id="minusBtn">−</button>
-            <strong id="qtyValue">1</strong>
-            <button id="plusBtn">+</button>
+
+          <div id="bulkSection" class="bulk-section">
+            <div id="bulkTable" class="bulk-table"></div>
           </div>
+
+          <div class="custom-qty-row">
+            <span data-i18n="customQuantity">Custom quantity</span>
+            <div class="qty-control">
+              <button id="minusBtn" type="button" aria-label="Decrease quantity">−</button>
+              <strong id="qtyValue">1</strong>
+              <button id="plusBtn" type="button" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
           <div id="unlockBox" class="unlock" hidden></div>
 
           <div class="total-card">
-            <div class="total-grid">
-              <div><span data-i18n="buyAt">Buy at</span><strong id="currentUnitPrice">₹0</strong></div>
-              <div><span data-i18n="orderTotal">Order total</span><strong id="orderTotal">₹0</strong></div>
+            <div class="summary-product">
+              <span data-i18n="selectedOrder">Selected order</span>
+              <strong id="summaryProductName">Product</strong>
+              <small id="summaryQty">1 unit</small>
             </div>
+
+            <div class="total-grid">
+              <div>
+                <span data-i18n="buyAt">Buy at</span>
+                <strong id="currentUnitPrice">₹0</strong>
+                <small data-i18n="perUnit">per unit</small>
+              </div>
+              <div>
+                <span data-i18n="orderTotal">Order total</span>
+                <strong id="orderTotal">₹0</strong>
+              </div>
+            </div>
+
             <div class="total-profit">
-              <span data-i18n="earnOnOrder">Earn at MRP</span>
+              <div>
+                <span id="earnSummaryLabel">Earn</span>
+                <small data-i18n="ifSoldAtMrp">if sold at MRP</small>
+              </div>
               <b id="orderProfit">₹0</b>
             </div>
           </div>
-        </div>
-
-        <div id="bulkSection" class="bulk-section" hidden>
-          <h3 data-i18n="quantityPricing">Quantity pricing</h3>
-          <p data-i18n="quantityPricingSub">Your buy price changes automatically when you reach a quantity slab.</p>
-          <div id="bulkTable" class="bulk-table"></div>
         </div>
         <div class="action-bar">
           <button id="addCartBtn" class="secondary" data-i18n="addToCart">Add to cart</button>
@@ -443,6 +875,41 @@ function unavailable(){
   return stock()<minQty();
 }
 
+function normalizeQty(value){
+  const min=minQty(),step=stepQty(),max=stock();
+  let qty=Math.max(min,Number(value||min));
+  if(max>0)qty=Math.min(max,qty);
+  // Keep arbitrary slab quantities exactly selectable; otherwise respect step.
+  const isSlab=[min,...rules().map(r=>Number(r.min_qty||0))].includes(qty);
+  if(!isSlab){
+    qty=min+Math.round((qty-min)/step)*step;
+    qty=Math.max(min,qty);
+    if(max>0)qty=Math.min(max,qty);
+  }
+  return qty;
+}
+
+function selectQuantity(qty,{scrollSummary=false}={}){
+  if(unavailable())return;
+  const requested=Number(qty||0);
+  if(requested>stock()){
+    toast(tr('stockLimit'));
+    return;
+  }
+  state.qty=normalizeQty(requested);
+  renderPricing();
+  const panel=document.querySelector('.qty-panel');
+  if(panel){
+    panel.classList.remove('qty-updated');
+    void panel.offsetWidth;
+    panel.classList.add('qty-updated');
+    setTimeout(()=>panel.classList.remove('qty-updated'),340);
+  }
+  if(scrollSummary && innerWidth<520){
+    document.querySelector('.total-card')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+}
+
 async function load(){
   const id=productId();
   if(!id){
@@ -512,6 +979,7 @@ function render(){
   $('infoPrice').textContent=money(p.price_paise);
   $('infoMrp').textContent=money(p.mrp_paise);
   $('descriptionFull').textContent=description||tr('noDescription');
+  $('summaryProductName').textContent=title||'Product';
 
   renderGallery();
   renderPricing();
@@ -586,7 +1054,10 @@ function renderPricing(){
   $('orderTotal').textContent=money(total);
   $('orderProfit').textContent=money(earn);
   $('profitChip').textContent=`${money(earnPerUnit())} / ${p.unit||'unit'}`;
-  $('qtyHint').textContent=`${tr('min')} ${minQty()} · ${tr('step')} ${stepQty()} · ${tr('stock')} ${stock()}`;
+  $('summaryQty').textContent=`${state.qty} ${p.unit||'unit'}${state.qty===1?'':'s'}`;
+  $('earnSummaryLabel').textContent=tr('earn');
+
+  $('qtyHint').textContent=`${tr('min')} ${minQty()} · ${tr('stock')} ${stock()}`;
 
   const next=nextSlab();
   const box=$('unlockBox');
@@ -599,30 +1070,75 @@ function renderPricing(){
     box.hidden=rules().length===0;
     if(rules().length)box.innerHTML=`<strong>${tr('bestPrice')}</strong>`;
   }
+
   renderBulk();
 }
 function renderBulk(){
   const rs=rules();
+  const p=state.product;
   const section=$('bulkSection');
-  if(!rs.length){section.hidden=true;return}
+
+  // Always show at least the minimum/base quantity as a selectable card.
+  const options=[{
+    min_qty:minQty(),
+    price_paise:Number(p.price_paise||0),
+    label:tr('base'),
+    is_best:rs.length===0
+  },...rs.map((r,i)=>({
+    ...r,
+    label:i===rs.length-1?tr('bestSlab'):tr('slab'),
+    is_best:i===rs.length-1
+  }))];
+
+  // Deduplicate equal quantities while preserving the last configured price.
+  const map=new Map();
+  for(const option of options)map.set(Number(option.min_qty||minQty()),option);
+  const rows=[...map.values()].sort((a,b)=>Number(a.min_qty)-Number(b.min_qty));
+
   section.hidden=false;
 
-  const base=[{
-    min_qty:minQty(),
-    price_paise:Number(state.product.price_paise||0),
-    label:tr('base')
-  },...rs.map((r,i)=>({...r,label:i===rs.length-1?tr('bestSlab'):tr('slab')}))];
+  $('bulkTable').innerHTML=rows.map(r=>{
+    const qty=Number(r.min_qty||minQty());
+    const unit=Number(r.price_paise||p.price_paise||0);
+    const orderTotal=unit*qty;
+    const earnTotal=Math.max(0,Number(p.mrp_paise||0)-unit)*qty;
+    const active=state.qty===qty;
+    const disabled=qty>stock();
 
-  $('bulkTable').innerHTML=base.map(r=>{
-    const active=state.qty>=Number(r.min_qty||0)&&currentUnitPrice()===Number(r.price_paise||0);
-    const earn=Math.max(0,Number(state.product.mrp_paise||0)-Number(r.price_paise||0));
     return `
-      <div class="slab ${active?'active':''}">
-        <div><span>${tr('quantity')}</span><strong>${Number(r.min_qty||0)}+</strong></div>
-        <div><span>${tr('unitPrice')}</span><strong>${money(r.price_paise)}</strong></div>
-        <div><span>${tr('earnUnit')}</span><strong class="best">${money(earn)}</strong></div>
-      </div>`;
+      <button type="button"
+        class="slab ${active?'active':''} ${disabled?'disabled':''}"
+        data-select-qty="${qty}"
+        ${disabled?'disabled':''}>
+        <div class="slab-top">
+          <div>
+            <span class="slab-label">${esc(r.label)}</span>
+            <strong class="slab-qty">${qty} ${esc(p.unit||'unit')}${qty===1?'':'s'}</strong>
+          </div>
+          ${r.is_best&&!disabled?`<span class="slab-best">${tr('bestSlab')}</span>`:''}
+        </div>
+
+        <div class="slab-price-grid">
+          <div class="slab-metric">
+            <span>${tr('buyAt')}</span>
+            <strong>${money(unit)}</strong>
+          </div>
+          <div class="slab-metric">
+            <span>${tr('orderTotal')}</span>
+            <strong>${money(orderTotal)}</strong>
+          </div>
+        </div>
+
+        <div class="slab-earn">
+          <span>${tr('earn')}</span>
+          <strong>${money(earnTotal)}</strong>
+        </div>
+      </button>`;
   }).join('');
+
+  for(const button of $('bulkTable').querySelectorAll('[data-select-qty]')){
+    button.onclick=()=>selectQuantity(Number(button.dataset.selectQty),{scrollSummary:false});
+  }
 }
 function renderSimilar(){
   const sec=$('similarSection');
@@ -673,18 +1189,13 @@ function changeQty(direction){
   const max=stock();
   let next=state.qty+(direction*step);
 
-  if(direction<0&&next<min){
-    next=min;
-  }
+  if(direction<0&&next<min)next=min;
   if(direction>0&&next>max){
     next=max;
     toast(tr('stockLimit'));
   }
-
-  state.qty=next;
-  renderPricing();
+  selectQuantity(next);
 }
-
 function addToCart(){
   if(unavailable())return;
 
