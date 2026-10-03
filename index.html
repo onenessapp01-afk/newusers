@@ -264,8 +264,13 @@ a{text-decoration:none;color:inherit}
   <main class="shell account-main">
     <section class="profile-hero">
       <div class="profile-main">
-        <div class="avatar" id="avatarLetter">R</div>
-        <div>
+        <div class="avatar profile-avatar" id="avatarBox">
+          <span id="avatarLetter">R</span>
+          <img id="avatarImage" alt="Retailer profile photo" hidden>
+          <button type="button" id="avatarUploadBtn" class="avatar-upload-btn" aria-label="Add or change profile photo" title="Add or change profile photo">⌁</button>
+          <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        </div>
+        <div class="profile-copy">
           <h1 id="accountName">Retailer</h1>
           <p id="accountBusiness">Retailer account</p>
           <span class="status" id="accountStatus">● Active retailer</span>
@@ -320,6 +325,13 @@ a{text-decoration:none;color:inherit}
       <div class="section-head"><h2>Edit retailer profile</h2><button class="text-btn" id="closeEdit">Close</button></div>
       <div class="card">
         <form class="edit-form" id="editForm">
+          <div class="profile-photo-editor">
+            <div class="profile-photo-preview">
+              <span id="editAvatarLetter">R</span>
+              <img id="editAvatarImage" alt="Profile photo preview" hidden>
+            </div>
+            <div><strong>Profile photo</strong><span>JPG, PNG or WebP. Your photo will be optimized automatically.</span><button type="button" class="secondary profile-photo-change" id="editAvatarBtn">Add / change photo</button></div>
+          </div>
           <label class="label">Full name<input class="input" name="name" maxlength="120" required></label>
           <label class="label">Business / shop name<input class="input" name="business_name" maxlength="180" required></label>
           <label class="label">Mobile number<input class="input" name="phone" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required></label>
@@ -545,7 +557,8 @@ async function login(e){
     if(!data.user)throw Error('Could not confirm this account.');
     const p=await fetchAccount();
     if(p.role&&p.role!=='retailer')throw Error('This is not a retailer account.');
-    renderAccount(p);
+    sessionStorage.setItem('oneness-login-success','1');
+    location.replace('retailer-dashboard.html');
   }catch(err){message(err.code==='not_retailer'||err.code==='NOT_RETAILER'||err.message.includes('admin portal')?'This email belongs to the ONeness admin portal. Retailer accounts must use a separate retailer login.':friendly(err),true)}
   finally{setBusy(false)}
 }
@@ -632,7 +645,9 @@ async function verifyOtp(e){
     if(purpose==='recovery'){recoverySession=true;renderReset()}
     else{
       const p=await fetchAccount();
-      renderAccount(p);toast('Email verified. Your retailer account is active.');
+      if(p.role&&p.role!=='retailer')throw Error('This is not a retailer account.');
+      sessionStorage.setItem('oneness-login-success','1');
+      location.replace('retailer-dashboard.html');
     }
   }catch(err){
     message(err?.code==='otp_expired'?'That OTP is invalid, expired, or from an older email. Tap Resend OTP and use only the newest code.':friendly(err),true);
@@ -672,7 +687,10 @@ function renderAccount(p){
   account=p;showAccountView();stopTimer();
   const name=p.name||'Retailer',business=p.business_name||'Retailer business';
   $('accountName').textContent=name;$('accountBusiness').textContent=business;
-  $('avatarLetter').textContent=(name.trim()[0]||'R').toUpperCase();
+  const initial=(name.trim()[0]||'R').toUpperCase();
+  $('avatarLetter').textContent=initial;
+  $('editAvatarLetter').textContent=initial;
+  setAvatarPreview(p.avatar_url||'');
   $('accountEmail').textContent=p.email||'—';$('accountPhone').textContent=p.phone||'—';
   $('accountVerified').textContent=p.email_confirmed?'Verified ✓':'Verification required';
   $('accountCod').textContent=p.cod_allowed?'Available':'Not enabled';
@@ -744,11 +762,253 @@ function receiptMarkup(d,standalone=false){
   const o=d.order||{},c=d.customer||{},items=d.items||[],rows=items.map(i=>`<tr><td>${esc(i.title||'Product')}</td><td>${Number(i.qty||0)}</td><td>${money(i.unit_price_paise)}</td><td>${money(Number(i.qty||0)*Number(i.unit_price_paise||0))}</td></tr>`).join('');
   const inner=`<div class="receipt-paper"><div class="receipt-brand"><div><h2>ONeness</h2><p>Wholesale retailer order receipt</p></div><div class="receipt-no"><strong>#ON${o.id}</strong>${esc(orderDate(o.created_at))}<br>${esc(orderStatusLabel(o.status))}</div></div><div class="receipt-customer"><div><strong>Billed to</strong>${esc(c.business_name||c.name||'Retailer')}<br>${esc(c.name||'')}<br>${esc(c.phone||'')}<br>${esc(c.email||'')}</div><div><strong>Delivered to</strong>${esc(d.address_label||'Address')}<br>${esc(fullAddress(d.address))}</div></div><table class="receipt-items"><thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="receipt-total"><div class="fin-row"><span>Subtotal</span><strong>${money(d.subtotal_paise)}</strong></div><div class="fin-row"><span>Coupon</span><strong>− ${money(o.discount_paise)}</strong></div><div class="fin-row"><span>Delivery</span><strong>${Number(o.shipping_paise)?money(o.shipping_paise):'Free'}</strong></div><div class="fin-row total"><span>Total</span><strong>${money(o.total_paise)}</strong></div><div class="fin-row" style="border:0"><span>Payment</span><strong>${esc((o.payment_method||'—').toUpperCase())} · ${esc(paymentLabel(o.payment_status))}</strong></div></div><div class="receipt-foot">This is an ONeness order receipt generated from the order snapshot. It is not labelled as a GST tax invoice because GST/tax invoice fields are not configured in the current system.</div></div>`;
   if(!standalone)return inner;
-  return `<!doctype html><html><head><meta charset="UTF-8"><title>ONeness Receipt #ON${o.id}</title><style>body{font-family:Arial,sans-serif;color:#14251f;margin:24px}.receipt-paper{max-width:760px;margin:auto;border:1px solid #ddd;padding:22px}.receipt-brand{display:flex;justify-content:space-between;border-bottom:2px solid #17634c;padding-bottom:12px}.receipt-brand h2{margin:0;color:#17634c}.receipt-no{text-align:right}.receipt-customer{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0;font-size:13px;line-height:1.6}.receipt-items{width:100%;border-collapse:collapse}.receipt-items th,.receipt-items td{padding:9px;border-bottom:1px solid #eee;text-align:left}.receipt-items th:last-child,.receipt-items td:last-child{text-align:right}.receipt-total{margin-left:auto;width:320px;max-width:100%;padding-top:12px}.fin-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #ddd}.fin-row.total{font-size:18px;font-weight:bold}.receipt-foot{font-size:11px;color:#66736c;margin-top:22px;padding-top:12px;border-top:1px solid #ddd}@media print{body{margin:0}.receipt-paper{border:0}}</style></head><body>${inner}</body></html>`;
+  return `<!doctype html><html><head><meta charset="UTF-8"><title>ONeness Receipt #ON${o.id}</title><style>body{font-family:Arial,sans-serif;color:#14251f;margin:24px}.receipt-paper{max-width:760px;margin:auto;border:1px solid #ddd;padding:22px}.receipt-brand{display:flex;justify-content:space-between;border-bottom:2px solid #17634c;padding-bottom:12px}.receipt-brand h2{margin:0;color:#17634c}.receipt-no{text-align:right}.receipt-customer{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0;font-size:13px;line-height:1.6}.receipt-items{width:100%;border-collapse:collapse}.receipt-items th,.receipt-items td{padding:9px;border-bottom:1px solid #eee;text-align:left}.receipt-items th:last-child,.receipt-items td:last-child{text-align:right}.receipt-total{margin-left:auto;width:320px;max-width:100%;padding-top:12px}.fin-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #ddd}.fin-row.total{font-size:18px;font-weight:bold}.receipt-foot{font-size:11px;color:#66736c;margin-top:22px;padding-top:12px;border-top:1px solid #ddd}@media print{body{margin:0}.receipt-paper{border:0}}
+/* ==========================================================
+   RETAILER PROFILE PHOTO + HIGH-VISIBILITY IDENTITY
+   ========================================================== */
+.profile-main{
+  align-items:center!important
+}
+.profile-avatar{
+  position:relative!important;
+  flex:0 0 auto!important;
+  overflow:visible!important;
+  width:66px!important;
+  height:66px!important;
+  border-radius:20px!important;
+  background:linear-gradient(145deg,#f3d985,#fff1bd)!important;
+  color:#4c2419!important;
+  border:2px solid rgba(255,229,164,.75)!important;
+  box-shadow:0 8px 24px rgba(35,8,12,.18)!important
+}
+.profile-avatar>span{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  border-radius:18px;
+  font-size:24px;
+  font-weight:950
+}
+.profile-avatar>img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:18px;
+  background:#f4ead4
+}
+.avatar-upload-btn{
+  position:absolute;
+  right:-5px;
+  bottom:-5px;
+  z-index:3;
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:2px solid #fff3d1;
+  border-radius:50%;
+  background:#68141d;
+  color:#fff3d1;
+  font-size:13px;
+  font-weight:950;
+  box-shadow:0 5px 15px rgba(38,8,12,.24)
+}
+.avatar-upload-btn:disabled{opacity:.6;cursor:wait}
+.profile-copy{min-width:0}
+.profile-main .profile-copy h1,
+#accountName{
+  color:#fff2c9!important;
+  text-shadow:0 1px 2px rgba(30,5,10,.28)!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  letter-spacing:-.55px!important
+}
+#accountBusiness{
+  color:#f0ddb4!important;
+  font-size:11px!important;
+  font-weight:650!important
+}
+#accountStatus{
+  color:#fff7e6!important;
+  background:rgba(255,255,255,.13)!important;
+  border:1px solid rgba(255,235,188,.14)!important
+}
+.profile-photo-editor{
+  display:grid;
+  grid-template-columns:74px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#faf8f3
+}
+.profile-photo-preview{
+  position:relative;
+  width:74px;
+  height:74px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border-radius:18px;
+  background:linear-gradient(145deg,#f2d77f,#fff0bd);
+  color:#4c2419;
+  font-size:24px;
+  font-weight:950;
+  border:1px solid #ddc483
+}
+.profile-photo-preview img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.profile-photo-editor strong{
+  display:block;
+  color:#4c2419;
+  font-size:12px
+}
+.profile-photo-editor span{
+  display:block;
+  margin-top:3px;
+  color:#7d7167;
+  font-size:9px;
+  line-height:1.4
+}
+.profile-photo-change{
+  width:auto!important;
+  min-width:132px!important;
+  height:34px!important;
+  margin-top:8px!important;
+  padding:5px 9px!important;
+  color:#68141d!important;
+  border-color:#d9c499!important;
+  background:#fff8e8!important
+}
+.avatar-uploading{
+  position:fixed;
+  z-index:95;
+  left:50%;
+  bottom:94px;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 12px;
+  border-radius:999px;
+  background:#430a11;
+  color:#fff2cf;
+  box-shadow:0 10px 30px rgba(33,8,12,.24);
+  font-size:10px;
+  font-weight:800
+}
+.avatar-uploading .mini-spin{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);border-top-color:#fff2cf;
+  animation:spin .7s linear infinite
+}
+@media(max-width:620px){
+  .profile-avatar{width:58px!important;height:58px!important;border-radius:17px!important}
+  .profile-avatar>img,.profile-avatar>span{border-radius:15px!important}
+  .profile-main .profile-copy h1,#accountName{font-size:21px!important}
+  #accountBusiness{font-size:10px!important}
+  .profile-photo-editor{grid-template-columns:60px minmax(0,1fr);gap:9px;padding:9px}
+  .profile-photo-preview{width:60px;height:60px;border-radius:15px}
+}
+
+</style></head><body>${inner}</body></html>`;
 }
 function openReceipt(d){currentOrderDetail=d;$('receiptBody').innerHTML=`<div class="receipt-wrap">${receiptMarkup(d,false)}</div>`;$('receiptDialog').showModal()}
 function downloadCurrentReceipt(){if(!currentOrderDetail)return;const html=receiptMarkup(currentOrderDetail,true),id=currentOrderDetail.order?.id||'order',blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`ONeness-Receipt-ON${id}.html`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function printCurrentReceipt(){if(!currentOrderDetail)return;const w=window.open('','_blank');if(!w){toast('Allow pop-ups to print or save the receipt.');return}w.document.open();w.document.write(receiptMarkup(currentOrderDetail,true));w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
+
+
+function setAvatarPreview(url=''){
+  const show=Boolean(url);
+  const main=$('avatarImage'),edit=$('editAvatarImage');
+  for(const img of [main,edit]){
+    if(!img)continue;
+    if(show){
+      img.src=url;
+      img.hidden=false;
+      img.onerror=()=>{img.hidden=true};
+    }else{
+      img.removeAttribute('src');
+      img.hidden=true;
+    }
+  }
+  if($('avatarLetter'))$('avatarLetter').style.visibility=show?'hidden':'visible';
+  if($('editAvatarLetter'))$('editAvatarLetter').style.visibility=show?'hidden':'visible';
+}
+function avatarBusy(show,text='Updating profile photo…'){
+  let el=document.getElementById('avatarUploading');
+  if(!show){el?.remove();return}
+  if(!el){
+    el=document.createElement('div');
+    el.id='avatarUploading';
+    el.className='avatar-uploading';
+    el.innerHTML='<span class="mini-spin"></span><span></span>';
+    document.body.append(el);
+  }
+  el.lastElementChild.textContent=text;
+}
+async function optimizeAvatar(file){
+  if(!file)throw Error('Choose a profile photo.');
+  if(!/^image\/(jpeg|png|webp)$/i.test(file.type))throw Error('Use a JPG, PNG or WebP photo.');
+  if(file.size>8*1024*1024)throw Error('Choose a photo smaller than 8 MB.');
+
+  const bitmap=await createImageBitmap(file);
+  const side=Math.min(bitmap.width,bitmap.height);
+  const sx=Math.max(0,(bitmap.width-side)/2),sy=Math.max(0,(bitmap.height-side)/2);
+  const size=512;
+  const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;
+  const ctx=canvas.getContext('2d',{alpha:false});
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,size,size);
+  ctx.drawImage(bitmap,sx,sy,side,side,0,0,size,size);
+  bitmap.close?.();
+
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.84));
+  if(!blob)throw Error('Could not optimize this photo.');
+  const base64=await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result||'').split(',')[1]||'');
+    reader.onerror=()=>reject(Error('Could not read the selected photo.'));
+    reader.readAsDataURL(blob);
+  });
+  return {base64,name:'retailer-profile.jpg'};
+}
+async function uploadRetailerAvatar(file){
+  if(!account)throw Error('Please login again.');
+  const btns=[$('avatarUploadBtn'),$('editAvatarBtn')].filter(Boolean);
+  btns.forEach(b=>b.disabled=true);
+  avatarBusy(true);
+  try{
+    const image=await optimizeAvatar(file);
+    const {data,error}=await db.functions.invoke('retailer-avatar-upload',{body:image});
+    if(error){
+      let msg=error.message||'Profile photo upload failed.';
+      try{const body=await error.context?.json?.();msg=body?.error?.message||msg}catch{}
+      throw Error(msg);
+    }
+    if(data?.ok!==true||!data?.data?.avatar_url)throw Error(data?.error?.message||'Profile photo upload was not confirmed.');
+    account={...account,avatar_url:data.data.avatar_url};
+    setAvatarPreview(account.avatar_url);
+    toast('Profile photo updated.');
+  }finally{
+    avatarBusy(false);
+    btns.forEach(b=>b.disabled=false);
+    if($('avatarFile'))$('avatarFile').value='';
+  }
+}
+function chooseAvatar(){
+  if(!account)return;
+  $('avatarFile').click();
+}
 
 async function saveProfile(e){
   e.preventDefault();if(busy)return;
@@ -759,16 +1019,24 @@ async function saveProfile(e){
   try{
     const {data,error}=await db.rpc('retailer_profile_update',{p_name:f.name.trim(),p_phone:f.phone,p_business_name:f.business_name.trim()});
     if(error)throw error;
-    account={...account,...data,email_confirmed:account.email_confirmed};renderAccount(account);$('editSection').hidden=true;toast('Profile updated successfully.');
+    account={...account,...data,email_confirmed:account.email_confirmed,avatar_url:data?.avatar_url??account.avatar_url};renderAccount(account);$('editSection').hidden=true;toast('Profile updated successfully.');
   }catch(err){msg.textContent=friendly(err);msg.className='notice error';msg.hidden=false}
   finally{busy=false;$('saveProfile').disabled=false}
 }
 async function logout(){
   $('logoutBtn').disabled=true;
   try{await db.auth.signOut({scope:'local'})}catch{}
-  clearOtp();account=null;orders=[];ordersLoaded=false;currentOrderDetail=null;renderLogin();toast('Signed out.');
+  clearOtp();account=null;orders=[];ordersLoaded=false;currentOrderDetail=null;sessionStorage.removeItem('oneness-login-success');renderLogin();toast('Signed out.');
 }
 function openEdit(){$('editSection').hidden=false;$('editSection').scrollIntoView({behavior:'smooth',block:'start'})}
+
+$('avatarUploadBtn').onclick=chooseAvatar;
+$('editAvatarBtn').onclick=chooseAvatar;
+$('avatarFile').onchange=async()=>{
+  const file=$('avatarFile').files?.[0];
+  if(!file)return;
+  try{await uploadRetailerAvatar(file)}catch(err){toast(friendly(err))}
+};
 
 $('editForm').onsubmit=saveProfile;
 $('logoutBtn').onclick=logout;
