@@ -214,7 +214,229 @@ a{text-decoration:none;color:inherit}
   .toast{bottom:108px}
 }
 </style>
+
 <link rel="stylesheet" href="retailer-ui.css">
+<style id="retailer-profile-layout-fix">
+/* Account profile identity fix — loaded after shared UI on purpose. */
+body[data-page="account"] .profile-hero{
+  position:relative!important;
+  overflow:hidden!important;
+}
+body[data-page="account"] .profile-main{
+  position:relative!important;
+  z-index:3!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  min-width:0!important;
+}
+body[data-page="account"] #avatarBox.profile-avatar{
+  position:relative!important;
+  flex:0 0 68px!important;
+  width:68px!important;
+  height:68px!important;
+  min-width:68px!important;
+  min-height:68px!important;
+  max-width:68px!important;
+  max-height:68px!important;
+  border-radius:20px!important;
+  overflow:visible!important;
+  background:linear-gradient(145deg,#f2d77f,#fff1bd)!important;
+  border:2px solid rgba(255,230,165,.86)!important;
+  box-shadow:0 8px 22px rgba(35,8,12,.18)!important;
+  isolation:isolate!important;
+}
+body[data-page="account"] #avatarBox #avatarLetter{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:100%!important;
+  border-radius:18px!important;
+  color:#4c2419!important;
+  font-size:24px!important;
+  font-weight:950!important;
+  line-height:1!important;
+}
+body[data-page="account"] #avatarBox #avatarImage{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:18px!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  background:#f5ead5!important;
+}
+body[data-page="account"] #avatarBox #avatarImage[hidden]{
+  display:none!important;
+}
+body[data-page="account"] #avatarUploadBtn{
+  position:absolute!important;
+  right:-5px!important;
+  bottom:-5px!important;
+  z-index:5!important;
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  min-height:28px!important;
+  max-width:28px!important;
+  max-height:28px!important;
+  padding:0!important;
+  margin:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:2px solid #fff1ce!important;
+  border-radius:50%!important;
+  background:#68141d!important;
+  color:#fff1ce!important;
+  box-shadow:0 4px 12px rgba(45,8,13,.26)!important;
+  font-size:13px!important;
+  line-height:1!important;
+}
+body[data-page="account"] .profile-copy{
+  position:relative!important;
+  z-index:3!important;
+  min-width:0!important;
+  flex:1 1 auto!important;
+  overflow:hidden!important;
+}
+body[data-page="account"] .profile-copy #accountName{
+  display:block!important;
+  margin:0!important;
+  color:#fff4d8!important;
+  -webkit-text-fill-color:#fff4d8!important;
+  text-shadow:0 2px 5px rgba(34,5,10,.30)!important;
+  font-family:"Segoe UI",Inter,system-ui,sans-serif!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  letter-spacing:-.55px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body[data-page="account"] .profile-copy #accountBusiness{
+  display:block!important;
+  margin:4px 0 0!important;
+  color:#f0d9aa!important;
+  -webkit-text-fill-color:#f0d9aa!important;
+  font-size:11px!important;
+  font-weight:650!important;
+  line-height:1.25!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body[data-page="account"] .profile-copy #accountStatus{
+  display:inline-flex!important;
+  align-items:center!important;
+  margin-top:8px!important;
+  color:#fff8e8!important;
+  -webkit-text-fill-color:#fff8e8!important;
+  background:rgba(255,255,255,.14)!important;
+  border:1px solid rgba(255,237,193,.18)!important;
+  font-size:9px!important;
+  font-weight:850!important;
+}
+body[data-page="account"] .hero-info{
+  position:relative!important;
+  z-index:2!important;
+}
+body[data-page="account"] .hero-info strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body[data-page="account"] .hero-info span{
+  color:#e8d7b9!important;
+  -webkit-text-fill-color:#e8d7b9!important;
+}
+
+/* Profile editor preview must also stay contained. */
+body[data-page="account"] .profile-photo-preview{
+  position:relative!important;
+  overflow:hidden!important;
+}
+body[data-page="account"] .profile-photo-preview #editAvatarImage{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:inherit!important;
+}
+body[data-page="account"] .profile-photo-preview #editAvatarImage[hidden]{
+  display:none!important;
+}
+
+@media(max-width:620px){
+  body[data-page="account"] .profile-hero{
+    padding:16px!important;
+    border-radius:18px!important;
+  }
+  body[data-page="account"] .profile-main{
+    gap:11px!important;
+  }
+  body[data-page="account"] #avatarBox.profile-avatar{
+    flex-basis:58px!important;
+    width:58px!important;
+    height:58px!important;
+    min-width:58px!important;
+    min-height:58px!important;
+    max-width:58px!important;
+    max-height:58px!important;
+    border-radius:17px!important;
+  }
+  body[data-page="account"] #avatarBox #avatarImage,
+  body[data-page="account"] #avatarBox #avatarLetter{
+    border-radius:15px!important;
+  }
+  body[data-page="account"] #avatarBox #avatarLetter{
+    font-size:21px!important;
+  }
+  body[data-page="account"] .profile-copy #accountName{
+    font-size:20px!important;
+    line-height:1.08!important;
+  }
+  body[data-page="account"] .profile-copy #accountBusiness{
+    font-size:9.5px!important;
+  }
+  body[data-page="account"] .profile-copy #accountStatus{
+    margin-top:6px!important;
+    padding:4px 7px!important;
+    font-size:8px!important;
+  }
+  body[data-page="account"] .hero-info{
+    margin-top:14px!important;
+    gap:6px!important;
+  }
+  body[data-page="account"] .hero-info div{
+    min-width:0!important;
+    padding:9px!important;
+    border-radius:11px!important;
+  }
+  body[data-page="account"] .hero-info span{
+    font-size:7.5px!important;
+  }
+  body[data-page="account"] .hero-info strong{
+    font-size:10px!important;
+  }
+}
+</style>
 </head>
 <body data-page="account">
 
@@ -763,164 +985,6 @@ function receiptMarkup(d,standalone=false){
   const inner=`<div class="receipt-paper"><div class="receipt-brand"><div><h2>ONeness</h2><p>Wholesale retailer order receipt</p></div><div class="receipt-no"><strong>#ON${o.id}</strong>${esc(orderDate(o.created_at))}<br>${esc(orderStatusLabel(o.status))}</div></div><div class="receipt-customer"><div><strong>Billed to</strong>${esc(c.business_name||c.name||'Retailer')}<br>${esc(c.name||'')}<br>${esc(c.phone||'')}<br>${esc(c.email||'')}</div><div><strong>Delivered to</strong>${esc(d.address_label||'Address')}<br>${esc(fullAddress(d.address))}</div></div><table class="receipt-items"><thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="receipt-total"><div class="fin-row"><span>Subtotal</span><strong>${money(d.subtotal_paise)}</strong></div><div class="fin-row"><span>Coupon</span><strong>− ${money(o.discount_paise)}</strong></div><div class="fin-row"><span>Delivery</span><strong>${Number(o.shipping_paise)?money(o.shipping_paise):'Free'}</strong></div><div class="fin-row total"><span>Total</span><strong>${money(o.total_paise)}</strong></div><div class="fin-row" style="border:0"><span>Payment</span><strong>${esc((o.payment_method||'—').toUpperCase())} · ${esc(paymentLabel(o.payment_status))}</strong></div></div><div class="receipt-foot">This is an ONeness order receipt generated from the order snapshot. It is not labelled as a GST tax invoice because GST/tax invoice fields are not configured in the current system.</div></div>`;
   if(!standalone)return inner;
   return `<!doctype html><html><head><meta charset="UTF-8"><title>ONeness Receipt #ON${o.id}</title><style>body{font-family:Arial,sans-serif;color:#14251f;margin:24px}.receipt-paper{max-width:760px;margin:auto;border:1px solid #ddd;padding:22px}.receipt-brand{display:flex;justify-content:space-between;border-bottom:2px solid #17634c;padding-bottom:12px}.receipt-brand h2{margin:0;color:#17634c}.receipt-no{text-align:right}.receipt-customer{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0;font-size:13px;line-height:1.6}.receipt-items{width:100%;border-collapse:collapse}.receipt-items th,.receipt-items td{padding:9px;border-bottom:1px solid #eee;text-align:left}.receipt-items th:last-child,.receipt-items td:last-child{text-align:right}.receipt-total{margin-left:auto;width:320px;max-width:100%;padding-top:12px}.fin-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #ddd}.fin-row.total{font-size:18px;font-weight:bold}.receipt-foot{font-size:11px;color:#66736c;margin-top:22px;padding-top:12px;border-top:1px solid #ddd}@media print{body{margin:0}.receipt-paper{border:0}}
-/* ==========================================================
-   RETAILER PROFILE PHOTO + HIGH-VISIBILITY IDENTITY
-   ========================================================== */
-.profile-main{
-  align-items:center!important
-}
-.profile-avatar{
-  position:relative!important;
-  flex:0 0 auto!important;
-  overflow:visible!important;
-  width:66px!important;
-  height:66px!important;
-  border-radius:20px!important;
-  background:linear-gradient(145deg,#f3d985,#fff1bd)!important;
-  color:#4c2419!important;
-  border:2px solid rgba(255,229,164,.75)!important;
-  box-shadow:0 8px 24px rgba(35,8,12,.18)!important
-}
-.profile-avatar>span{
-  display:grid;
-  place-items:center;
-  width:100%;
-  height:100%;
-  border-radius:18px;
-  font-size:24px;
-  font-weight:950
-}
-.profile-avatar>img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:18px;
-  background:#f4ead4
-}
-.avatar-upload-btn{
-  position:absolute;
-  right:-5px;
-  bottom:-5px;
-  z-index:3;
-  width:27px;
-  height:27px;
-  display:grid;
-  place-items:center;
-  padding:0;
-  border:2px solid #fff3d1;
-  border-radius:50%;
-  background:#68141d;
-  color:#fff3d1;
-  font-size:13px;
-  font-weight:950;
-  box-shadow:0 5px 15px rgba(38,8,12,.24)
-}
-.avatar-upload-btn:disabled{opacity:.6;cursor:wait}
-.profile-copy{min-width:0}
-.profile-main .profile-copy h1,
-#accountName{
-  color:#fff2c9!important;
-  text-shadow:0 1px 2px rgba(30,5,10,.28)!important;
-  font-size:24px!important;
-  font-weight:900!important;
-  letter-spacing:-.55px!important
-}
-#accountBusiness{
-  color:#f0ddb4!important;
-  font-size:11px!important;
-  font-weight:650!important
-}
-#accountStatus{
-  color:#fff7e6!important;
-  background:rgba(255,255,255,.13)!important;
-  border:1px solid rgba(255,235,188,.14)!important
-}
-.profile-photo-editor{
-  display:grid;
-  grid-template-columns:74px minmax(0,1fr);
-  gap:12px;
-  align-items:center;
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#faf8f3
-}
-.profile-photo-preview{
-  position:relative;
-  width:74px;
-  height:74px;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  border-radius:18px;
-  background:linear-gradient(145deg,#f2d77f,#fff0bd);
-  color:#4c2419;
-  font-size:24px;
-  font-weight:950;
-  border:1px solid #ddc483
-}
-.profile-photo-preview img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-.profile-photo-editor strong{
-  display:block;
-  color:#4c2419;
-  font-size:12px
-}
-.profile-photo-editor span{
-  display:block;
-  margin-top:3px;
-  color:#7d7167;
-  font-size:9px;
-  line-height:1.4
-}
-.profile-photo-change{
-  width:auto!important;
-  min-width:132px!important;
-  height:34px!important;
-  margin-top:8px!important;
-  padding:5px 9px!important;
-  color:#68141d!important;
-  border-color:#d9c499!important;
-  background:#fff8e8!important
-}
-.avatar-uploading{
-  position:fixed;
-  z-index:95;
-  left:50%;
-  bottom:94px;
-  transform:translateX(-50%);
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 12px;
-  border-radius:999px;
-  background:#430a11;
-  color:#fff2cf;
-  box-shadow:0 10px 30px rgba(33,8,12,.24);
-  font-size:10px;
-  font-weight:800
-}
-.avatar-uploading .mini-spin{
-  width:14px;height:14px;border-radius:50%;
-  border:2px solid rgba(255,255,255,.3);border-top-color:#fff2cf;
-  animation:spin .7s linear infinite
-}
-@media(max-width:620px){
-  .profile-avatar{width:58px!important;height:58px!important;border-radius:17px!important}
-  .profile-avatar>img,.profile-avatar>span{border-radius:15px!important}
-  .profile-main .profile-copy h1,#accountName{font-size:21px!important}
-  #accountBusiness{font-size:10px!important}
-  .profile-photo-editor{grid-template-columns:60px minmax(0,1fr);gap:9px;padding:9px}
-  .profile-photo-preview{width:60px;height:60px;border-radius:15px}
-}
-
 </style></head><body>${inner}</body></html>`;
 }
 function openReceipt(d){currentOrderDetail=d;$('receiptBody').innerHTML=`<div class="receipt-wrap">${receiptMarkup(d,false)}</div>`;$('receiptDialog').showModal()}
@@ -931,6 +995,12 @@ function printCurrentReceipt(){if(!currentOrderDetail)return;const w=window.open
 function setAvatarPreview(url=''){
   const show=Boolean(url);
   const main=$('avatarImage'),edit=$('editAvatarImage');
+  const box=$('avatarBox');
+  if(box){
+    box.style.position='relative';
+    box.style.width=innerWidth<=620?'58px':'68px';
+    box.style.height=innerWidth<=620?'58px':'68px';
+  }
   for(const img of [main,edit]){
     if(!img)continue;
     if(show){
