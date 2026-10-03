@@ -1270,7 +1270,10 @@ document.addEventListener('click',e=>{
 });
 
 /* Admin-controlled splash posters */
-function splashSeenKey(p){return `oneness-splash:${p.id}`}
+function splashSeenKey(p){
+  const revision=String(p?.updated_at||p?.created_at||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,40);
+  return `oneness-splash:${p.id}:${revision}`;
+}
 function splashSeen(p){
  const key=splashSeenKey(p),f=p.display_frequency||'once_per_session';
  if(f==='always')return false;
