@@ -196,6 +196,588 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
   .on-splash-runtime-card{width:100%;max-width:none;border:0;border-radius:18px 18px 0 0}
 }
 
+
+
+/* ==========================================================
+   CLEAN CART · CART ITEMS ONLY
+   No recommendations / suggestion content.
+   ========================================================== */
+html,body{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+*,*::before,*::after{min-width:0}
+.shell{width:min(1280px,calc(100% - 32px))!important}
+.main{padding:18px 0 42px!important}
+.app{padding-bottom:94px!important}
+
+/* Compact cart summary instead of a large marketing hero */
+.cart-overview{
+  display:grid;
+  grid-template-columns:minmax(220px,.75fr) minmax(0,1.25fr);
+  gap:10px;
+  align-items:stretch;
+  margin-bottom:13px;
+}
+.overview-copy{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:124px;
+  padding:15px 17px;
+  border-radius:13px;
+  background:
+    radial-gradient(circle at 92% 5%,rgba(236,199,103,.16),transparent 28%),
+    linear-gradient(140deg,#430a11,#68141d);
+}
+.overview-copy:after{
+  content:"∞";
+  position:absolute;
+  right:-8px;
+  top:-35px;
+  color:rgba(255,226,155,.055);
+  font:700 130px/1 Georgia,serif;
+}
+.overview-copy>*{position:relative;z-index:1}
+.overview-copy .kicker{
+  color:#e2c88f!important;
+  font-size:7px!important;
+  letter-spacing:.08em!important;
+}
+.overview-copy strong{
+  display:block;
+  margin-top:6px;
+  color:#ffe19a;
+  font-size:31px;
+  line-height:1;
+  letter-spacing:-.7px;
+}
+.overview-copy small{
+  margin-top:4px;
+  color:#d8c59f;
+  font-size:7px;
+  font-weight:750;
+}
+.overview-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+}
+.overview-metrics>div{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:13px;
+  border:1px solid #e6dccd;
+  border-radius:12px;
+  background:#fff;
+}
+.overview-metrics span{
+  color:#85786e;
+  font-size:7px;
+  font-weight:750;
+}
+.overview-metrics strong{
+  display:block;
+  margin-top:4px;
+  color:#49332b;
+  font-size:17px;
+  line-height:1.05;
+  overflow-wrap:anywhere;
+}
+
+/* Main cart arrangement */
+.cart-layout{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.45fr) minmax(300px,.55fr)!important;
+  gap:13px!important;
+  align-items:start!important;
+  margin-top:0!important;
+}
+.left-col,.right-col{min-width:0!important}
+.right-col{
+  position:sticky!important;
+  top:86px!important;
+  display:grid;
+  gap:9px;
+}
+.section-head{
+  margin:0 0 8px!important;
+}
+.section-head h2{
+  color:#430a11!important;
+  font-size:18px!important;
+}
+.section-head p{
+  color:#84786f!important;
+  font-size:7px!important;
+}
+.count{
+  font-size:7.5px!important;
+}
+
+/* Cart item: one clean horizontal row */
+.items{gap:7px!important}
+.item{
+  position:relative!important;
+  width:100%!important;
+  padding:9px!important;
+  display:grid!important;
+  grid-template-columns:112px minmax(0,1fr)!important;
+  gap:11px!important;
+  border:1px solid #e5dccf!important;
+  border-radius:11px!important;
+  background:#fff!important;
+}
+.item-img{
+  width:112px!important;
+  height:112px!important;
+  border:1px solid #eee5d8!important;
+  border-radius:9px!important;
+  background:#fff!important;
+}
+.item-img img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:4px!important;
+}
+.item-top{
+  align-items:flex-start!important;
+}
+.item-name{
+  color:#382a24!important;
+  font-size:11.5px!important;
+  line-height:1.25!important;
+}
+.item-meta{
+  color:#8b7e73!important;
+  font-size:6.5px!important;
+}
+.remove{
+  flex:0 0 auto;
+  padding:3px 4px!important;
+  color:#9b4d48!important;
+  font-size:6.5px!important;
+}
+.price-line{
+  width:min(340px,100%);
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:4px!important;
+  margin-top:7px!important;
+}
+.cart-price-box{
+  padding:6px 7px!important;
+  border-radius:7px!important;
+}
+.cart-price-box span{
+  font-size:5.5px!important;
+}
+.cart-price-box strong{
+  font-size:10px!important;
+}
+.qty-quick{
+  margin-top:6px!important;
+  gap:3px!important;
+}
+.qty-chip{
+  min-height:25px!important;
+  padding:3px 6px!important;
+  border-radius:6px!important;
+  font-size:6px!important;
+}
+.item-bottom{
+  margin-top:6px!important;
+  align-items:center!important;
+}
+.stepper{
+  height:30px!important;
+  grid-template-columns:28px 38px 28px!important;
+  border-radius:7px!important;
+}
+.item-totals span{
+  font-size:5.8px!important;
+}
+.item-totals strong{
+  font-size:9px!important;
+}
+.slab-tip{
+  margin-top:5px!important;
+  padding:6px 7px!important;
+  border-radius:7px!important;
+  font-size:6px!important;
+}
+.slab-tip button{
+  min-height:23px!important;
+  margin-top:4px!important;
+  padding:3px 6px!important;
+  font-size:6px!important;
+}
+
+/* Summary */
+.summary,.coupon{
+  padding:12px!important;
+  border-radius:11px!important;
+}
+.compact-head{
+  margin-bottom:5px!important;
+}
+.summary-row{
+  padding:7px 0!important;
+  font-size:7.5px!important;
+}
+.payable{
+  margin-top:6px!important;
+  padding-top:9px!important;
+}
+.payable span{
+  font-size:6.5px!important;
+}
+.payable strong{
+  color:#430a11!important;
+  font-size:23px!important;
+}
+.margin-summary{
+  margin-top:8px!important;
+  padding:9px!important;
+  border-radius:8px!important;
+  background:#fff0c9!important;
+  border:1px solid #efd89b!important;
+}
+.margin-summary span{
+  color:#72501a!important;
+}
+.margin-summary strong{
+  color:#5a3609!important;
+  font-size:13px!important;
+}
+.minimum{
+  margin-top:8px!important;
+}
+.minimum-text{
+  font-size:6px!important;
+}
+.progress{
+  height:5px!important;
+}
+
+/* Coupon below order summary */
+.cart-coupon{
+  margin-top:0!important;
+}
+.coupon-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.coupon-head>div:first-child{
+  display:grid;
+  gap:1px;
+}
+.coupon-head strong{
+  color:#49352c;
+  font-size:10px;
+}
+.coupon-head span{
+  color:#8b7e73;
+  font-size:6px;
+}
+.coupon-message{
+  margin:0!important;
+  font-size:6px!important;
+}
+.coupon-row{
+  gap:5px!important;
+  margin-top:7px!important;
+}
+.coupon input{
+  height:35px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+}
+.coupon button{
+  border-radius:8px!important;
+  padding:0 11px!important;
+  background:#68141d!important;
+  color:#fff0cc!important;
+}
+
+/* Focused checkout */
+.checkout{
+  width:min(720px,calc(100% - 22px))!important;
+  bottom:10px!important;
+  padding:8px 9px!important;
+  border:1px solid #ded4c4!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.985)!important;
+  box-shadow:0 14px 40px rgba(59,25,17,.11)!important;
+}
+.checkout-copy span{
+  font-size:6px!important;
+}
+.checkout-copy strong{
+  color:#430a11!important;
+  font-size:17px!important;
+}
+.checkout-copy b{
+  color:#805516!important;
+  font-size:6.5px!important;
+}
+.checkout button{
+  height:42px!important;
+  border-radius:8px!important;
+  background:#68141d!important;
+  color:#fff1cf!important;
+  font-size:8px!important;
+}
+
+/* Empty cart */
+.empty{
+  max-width:480px;
+  margin:50px auto;
+  padding:28px!important;
+  border-color:#e5dccf!important;
+  border-radius:13px!important;
+}
+.empty button{
+  background:#68141d!important;
+  color:#fff1cf!important;
+}
+
+/* Recommendation/suggestion UI intentionally retired from cart. */
+.booster,.recommendations,.rec{display:none!important}
+
+/* Full poster stays visible in a true centered popup */
+.on-splash-runtime{
+  position:fixed!important;
+  inset:0!important;
+  z-index:25000!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:22px!important;
+  background:rgba(20,6,9,.80)!important;
+  backdrop-filter:blur(9px)!important;
+}
+.on-splash-runtime-card{
+  width:min(760px,92vw)!important;
+  max-width:92vw!important;
+  max-height:92dvh!important;
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr) auto auto!important;
+  overflow:hidden!important;
+  border:1px solid rgba(238,205,124,.30)!important;
+  border-radius:18px!important;
+  background:#081d34!important;
+  box-shadow:0 32px 110px rgba(0,0,0,.48)!important;
+}
+.on-splash-runtime-media{
+  min-height:0!important;
+  max-height:76dvh!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:9px!important;
+  background:#07192c!important;
+  overflow:hidden!important;
+}
+.on-splash-runtime-media img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:72dvh!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+  background:transparent!important;
+}
+.on-splash-runtime-bar{
+  padding:9px 11px!important;
+  border-top:1px solid rgba(255,255,255,.07)!important;
+}
+
+/* Mobile */
+@media(max-width:939px){
+  .shell{
+    width:100%!important;
+  }
+  .main{
+    width:100%!important;
+    padding:8px 8px 18px!important;
+  }
+  .app{
+    padding-bottom:84px!important;
+  }
+  .cart-overview{
+    grid-template-columns:1fr!important;
+    gap:5px!important;
+    margin-bottom:8px!important;
+  }
+  .overview-copy{
+    min-height:auto!important;
+    padding:10px 11px!important;
+    border-radius:10px!important;
+  }
+  .overview-copy strong{
+    margin-top:3px!important;
+    font-size:25px!important;
+  }
+  .overview-copy small{
+    font-size:6px!important;
+  }
+  .overview-metrics{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .overview-metrics>div{
+    padding:7px!important;
+    border-radius:8px!important;
+  }
+  .overview-metrics span{
+    font-size:5.5px!important;
+  }
+  .overview-metrics strong{
+    font-size:10px!important;
+  }
+
+  .cart-layout{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+  }
+  .right-col{
+    position:static!important;
+    gap:7px!important;
+  }
+  .section-head{
+    margin-bottom:5px!important;
+  }
+  .section-head h2{
+    font-size:14px!important;
+  }
+  .section-head p{
+    display:none!important;
+  }
+
+  .item{
+    grid-template-columns:82px minmax(0,1fr)!important;
+    gap:7px!important;
+    padding:7px!important;
+    border-radius:9px!important;
+  }
+  .item-img{
+    width:82px!important;
+    height:82px!important;
+    border-radius:7px!important;
+  }
+  .item-name{
+    font-size:9.5px!important;
+  }
+  .item-meta{
+    font-size:5.7px!important;
+  }
+  .price-line{
+    margin-top:4px!important;
+    gap:3px!important;
+  }
+  .cart-price-box{
+    padding:4px 5px!important;
+  }
+  .cart-price-box span{
+    font-size:4.8px!important;
+  }
+  .cart-price-box strong{
+    font-size:8px!important;
+  }
+  .qty-quick{
+    margin-top:4px!important;
+  }
+  .qty-chip{
+    min-height:22px!important;
+    padding:2px 4px!important;
+    font-size:5.4px!important;
+  }
+  .item-bottom{
+    margin-top:4px!important;
+  }
+  .stepper{
+    height:27px!important;
+    grid-template-columns:25px 33px 25px!important;
+  }
+  .item-totals span{
+    font-size:5px!important;
+  }
+  .item-totals strong{
+    font-size:7.5px!important;
+  }
+  .slab-tip{
+    grid-column:1/-1!important;
+    font-size:5.4px!important;
+    padding:5px!important;
+  }
+
+  .summary,.coupon{
+    padding:9px!important;
+    border-radius:9px!important;
+  }
+  .summary-row{
+    padding:6px 0!important;
+    font-size:7px!important;
+  }
+  .payable strong{
+    font-size:20px!important;
+  }
+
+  .checkout{
+    left:0!important;
+    right:0!important;
+    bottom:0!important;
+    transform:none!important;
+    width:100%!important;
+    border-radius:0!important;
+    border-left:0!important;
+    border-right:0!important;
+    border-bottom:0!important;
+    padding:7px 8px calc(7px + env(safe-area-inset-bottom))!important;
+  }
+
+  .on-splash-runtime{
+    padding:10px!important;
+  }
+  .on-splash-runtime-card{
+    width:min(96vw,560px)!important;
+    max-width:96vw!important;
+    max-height:90dvh!important;
+    border-radius:14px!important;
+  }
+  .on-splash-runtime-media{
+    max-height:74dvh!important;
+    padding:5px!important;
+  }
+  .on-splash-runtime-media img{
+    max-height:70dvh!important;
+  }
+}
+
+/* Very narrow phones */
+@media(max-width:380px){
+  .main{padding-left:6px!important;padding-right:6px!important}
+  .item{
+    grid-template-columns:72px minmax(0,1fr)!important;
+  }
+  .item-img{
+    width:72px!important;
+    height:76px!important;
+  }
+  .overview-metrics{
+    gap:3px!important;
+  }
+}
+
 </style>
 </head>
 <body data-page="cart">
@@ -243,75 +825,113 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
 
   <div id="emptyState" class="empty" hidden>
     <div class="empty-icon">🛒</div>
-    <strong>Your cart is empty</strong>
-    <p>Add wholesale products and review your buy price, retail value and earn amount before checkout.</p>
-    <button onclick="location.href='retailer-dashboard.html'">Browse products</button>
+    <strong data-i18n="emptyCart">Your cart is empty</strong>
+    <p data-i18n="emptyCartSub">Add products from the store to continue.</p>
+    <button type="button" id="emptyBrowseBtn" data-i18n="browseProducts">Browse products</button>
   </div>
 
   <div id="cartContent" hidden>
-    <section class="profit-hero">
-      <div class="hero-content">
-        <div class="kicker">Earn from this cart</div>
-        <div id="heroProfit" class="hero-profit">₹0</div>
-        <div id="heroFormula" class="hero-copy">Retail value ₹0 − final payable ₹0</div>
-        <div class="hero-grid">
-          <div class="hero-stat"><span>You pay</span><strong id="heroPay">₹0</strong></div>
-          <div class="hero-stat"><span>Retail value</span><strong id="heroMrp">₹0</strong></div>
-          <div class="hero-stat"><span data-i18n="units">Units</span><strong id="heroMargin">0</strong></div>
+    <section class="cart-overview">
+      <div class="overview-copy">
+        <span class="kicker" data-i18n="cartSummary">Cart summary</span>
+        <strong id="heroProfit">₹0</strong>
+        <small data-i18n="earnAtMrp">Earn at MRP</small>
+      </div>
+
+      <div class="overview-metrics">
+        <div>
+          <span data-i18n="youPay">You pay</span>
+          <strong id="heroPay">₹0</strong>
         </div>
-        <div class="hero-note">Earn amount is the difference between listed retail value and your final payable.</div>
+        <div>
+          <span data-i18n="retailValue">Retail value</span>
+          <strong id="heroMrp">₹0</strong>
+        </div>
+        <div>
+          <span data-i18n="units">Units</span>
+          <strong id="heroMargin">0</strong>
+        </div>
       </div>
     </section>
 
-    <div class="layout" style="margin-top:14px">
-      <div class="left-col">
-        <section>
-          <div class="section-head">
-            <div><h2>Your products</h2><p>Live prices and stock are checked before checkout.</p></div>
-            <div id="itemCount" class="count">0 items</div>
+    <div class="layout cart-layout">
+      <section class="left-col">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="yourProducts">Your products</h2>
+            <p data-i18n="liveChecked">Live price and stock checked before checkout.</p>
           </div>
-          <div id="items" class="items"></div>
-        </section>
+          <div id="itemCount" class="count">0 items</div>
+        </div>
 
-        <section id="boosterSection" class="card booster" style="margin-top:14px" hidden>
-          <div class="booster-title">
-            <div><h2>Add more earning opportunity</h2><p>Add another product that can increase the earn amount.</p></div>
-            <span class="booster-badge">Earn more</span>
-          </div>
-          <div id="recommendations" class="recommendations"></div>
-        </section>
-      </div>
+        <div id="items" class="items"></div>
+      </section>
 
       <aside class="right-col">
-        <section class="card coupon">
-          <div class="section-head" style="margin:0"><div><h2>Coupon</h2><p>Apply an eligible retailer offer.</p></div></div>
-          <div class="coupon-row">
-            <input id="couponInput" maxlength="40" placeholder="Enter code">
-            <button id="applyCoupon">Apply</button>
+        <section class="card summary">
+          <div class="section-head compact-head">
+            <div>
+              <h2 data-i18n="orderSummary">Order summary</h2>
+              <p data-i18n="summarySub">Current cart total.</p>
+            </div>
           </div>
-          <div id="couponMessage" class="coupon-message">Optional</div>
-        </section>
 
-        <section class="card summary" style="margin-top:12px">
-          <div class="section-head" style="margin:0 0 5px"><div><h2>Order summary</h2><p>Calculated from current live catalogue pricing.</p></div></div>
-
-          <div class="summary-row"><span>Wholesale products</span><strong id="sumWholesale">₹0</strong></div>
-          <div class="summary-row"><span>MRP retail value</span><strong id="sumMrp">₹0</strong></div>
-          <div class="summary-row saving"><span>Bulk-price savings</span><strong id="sumBulk">₹0</strong></div>
-          <div class="summary-row saving"><span>Coupon savings</span><strong id="sumCoupon">₹0</strong></div>
-          <div class="summary-row"><span>Delivery</span><strong id="sumDelivery">₹0</strong></div>
+          <div class="summary-row">
+            <span data-i18n="wholesaleProducts">Wholesale products</span>
+            <strong id="sumWholesale">₹0</strong>
+          </div>
+          <div class="summary-row">
+            <span data-i18n="retailValue">Retail value</span>
+            <strong id="sumMrp">₹0</strong>
+          </div>
+          <div class="summary-row saving">
+            <span data-i18n="bulkSavings">Bulk savings</span>
+            <strong id="sumBulk">₹0</strong>
+          </div>
+          <div class="summary-row saving">
+            <span data-i18n="couponSavings">Coupon savings</span>
+            <strong id="sumCoupon">₹0</strong>
+          </div>
+          <div class="summary-row">
+            <span data-i18n="delivery">Delivery</span>
+            <strong id="sumDelivery">₹0</strong>
+          </div>
 
           <div class="payable">
-            <div><span>Final payable</span><strong id="sumPayable">₹0</strong></div>
+            <div>
+              <span data-i18n="finalPayable">Final payable</span>
+              <strong id="sumPayable">₹0</strong>
+            </div>
           </div>
 
           <div class="margin-summary">
-            <div><span data-i18n="earnAtMrp">Earn at MRP</span><strong id="sumProfit">₹0</strong></div>
+            <div>
+              <span data-i18n="earnAtMrp">Earn at MRP</span>
+              <strong id="sumProfit">₹0</strong>
+            </div>
           </div>
 
           <div id="minimumBox" class="minimum" hidden>
-            <div class="minimum-text"><span id="minimumText">Minimum order</span><b id="minimumValue">₹0</b></div>
+            <div class="minimum-text">
+              <span id="minimumText">Minimum order</span>
+              <b id="minimumValue">₹0</b>
+            </div>
             <div class="progress"><span id="minimumProgress"></span></div>
+          </div>
+        </section>
+
+        <section class="card coupon cart-coupon">
+          <div class="coupon-head">
+            <div>
+              <strong data-i18n="coupon">Coupon</strong>
+              <span data-i18n="couponSub">Have a code?</span>
+            </div>
+            <div id="couponMessage" class="coupon-message">Optional</div>
+          </div>
+
+          <div class="coupon-row">
+            <input id="couponInput" maxlength="40" placeholder="Enter code">
+            <button id="applyCoupon" type="button" data-i18n="apply">Apply</button>
           </div>
         </section>
       </aside>
@@ -321,11 +941,11 @@ html{background:var(--paper)!important}body{background:var(--paper)!important;co
 
 <div id="checkoutBar" class="checkout" hidden>
   <div class="checkout-copy">
-    <span>Final payable</span>
+    <span data-i18n="finalPayable">Final payable</span>
     <strong id="stickyPayable">₹0</strong>
     <b id="stickyProfit">Earn ₹0</b>
   </div>
-  <button id="continueBtn">Continue to address →</button>
+  <button id="continueBtn" type="button" data-i18n="continue">Continue to address →</button>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -362,9 +982,9 @@ const state={
 const LANG_KEY='oneness-retailer-language';
 let language=localStorage.getItem(LANG_KEY)||'en';
 const UI={
- en:{home:'Home',shop:'Shop',earnings:'Earnings',cart:'Cart',account:'Account',cartTitle:'My Cart',addProducts:'+ Products',units:'Units',buyAt:'Buy at',sellAt:'Sell at',earn:'Earn',earnAtMrp:'Earn at MRP',min:'Min',nextDeal:'Next deal',addStep:'+ step',remove:'Remove',wholesale:'Wholesale',orderTotal:'Order total',finalPayable:'Final payable',continue:'Continue to address →',fixCart:'Fix cart items first',minimumNotReached:'Minimum order not reached',loading:'Checking your cart…',free:'Free'},
- hi:{home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',cartTitle:'मेरा कार्ट',addProducts:'+ प्रोडक्ट',units:'यूनिट',buyAt:'खरीदें',sellAt:'बेचें',earn:'कमाएँ',earnAtMrp:'MRP पर कमाएँ',min:'न्यूनतम',nextDeal:'अगला ऑफर',addStep:'+ स्टेप',remove:'हटाएँ',wholesale:'होलसेल',orderTotal:'ऑर्डर कुल',finalPayable:'अंतिम भुगतान',continue:'पते पर आगे बढ़ें →',fixCart:'पहले कार्ट ठीक करें',minimumNotReached:'न्यूनतम ऑर्डर पूरा नहीं हुआ',loading:'कार्ट जाँची जा रही है…',free:'फ्री'},
- mr:{home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',cartTitle:'माझे कार्ट',addProducts:'+ उत्पादने',units:'युनिट',buyAt:'खरेदी',sellAt:'विक्री',earn:'कमवा',earnAtMrp:'MRP वर कमवा',min:'किमान',nextDeal:'पुढील ऑफर',addStep:'+ स्टेप',remove:'काढा',wholesale:'होलसेल',orderTotal:'ऑर्डर एकूण',finalPayable:'अंतिम देय',continue:'पत्त्याकडे पुढे जा →',fixCart:'आधी कार्ट दुरुस्त करा',minimumNotReached:'किमान ऑर्डर पूर्ण नाही',loading:'कार्ट तपासली जात आहे…',free:'मोफत'}
+ en:{home:'Home',shop:'Shop',earnings:'Earnings',cart:'Cart',account:'Account',cartTitle:'My Cart',addProducts:'+ Products',units:'Units',buyAt:'Buy at',sellAt:'Sell at',earn:'Earn',earnAtMrp:'Earn at MRP',min:'Min',nextDeal:'Next deal',addStep:'+ step',remove:'Remove',wholesale:'Wholesale',orderTotal:'Order total',finalPayable:'Final payable',continue:'Continue to address →',fixCart:'Fix cart items first',minimumNotReached:'Minimum order not reached',loading:'Checking your cart…',free:'Free',emptyCart:'Your cart is empty',emptyCartSub:'Add products from the store to continue.',browseProducts:'Browse products',cartSummary:'Cart summary',youPay:'You pay',retailValue:'Retail value',yourProducts:'Your products',liveChecked:'Live price and stock checked before checkout.',orderSummary:'Order summary',summarySub:'Current cart total.',wholesaleProducts:'Wholesale products',bulkSavings:'Bulk savings',couponSavings:'Coupon savings',delivery:'Delivery',coupon:'Coupon',couponSub:'Have a code?',apply:'Apply'},
+ hi:{home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',cartTitle:'मेरा कार्ट',addProducts:'+ प्रोडक्ट',units:'यूनिट',buyAt:'खरीदें',sellAt:'बेचें',earn:'कमाएँ',earnAtMrp:'MRP पर कमाएँ',min:'न्यूनतम',nextDeal:'अगला ऑफर',addStep:'+ स्टेप',remove:'हटाएँ',wholesale:'होलसेल',orderTotal:'ऑर्डर कुल',finalPayable:'अंतिम भुगतान',continue:'पते पर आगे बढ़ें →',fixCart:'पहले कार्ट ठीक करें',minimumNotReached:'न्यूनतम ऑर्डर पूरा नहीं हुआ',loading:'कार्ट जाँची जा रही है…',free:'फ्री',emptyCart:'आपका कार्ट खाली है',emptyCartSub:'आगे बढ़ने के लिए स्टोर से प्रोडक्ट जोड़ें।',browseProducts:'प्रोडक्ट देखें',cartSummary:'कार्ट सारांश',youPay:'आपका भुगतान',retailValue:'रिटेल वैल्यू',yourProducts:'आपके प्रोडक्ट',liveChecked:'चेकआउट से पहले कीमत और स्टॉक जाँचा जाता है।',orderSummary:'ऑर्डर सारांश',summarySub:'वर्तमान कार्ट कुल।',wholesaleProducts:'होलसेल प्रोडक्ट',bulkSavings:'बल्क बचत',couponSavings:'कूपन बचत',delivery:'डिलीवरी',coupon:'कूपन',couponSub:'कोड है?',apply:'लागू करें'},
+ mr:{home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',cartTitle:'माझे कार्ट',addProducts:'+ उत्पादने',units:'युनिट',buyAt:'खरेदी',sellAt:'विक्री',earn:'कमवा',earnAtMrp:'MRP वर कमवा',min:'किमान',nextDeal:'पुढील ऑफर',addStep:'+ स्टेप',remove:'काढा',wholesale:'होलसेल',orderTotal:'ऑर्डर एकूण',finalPayable:'अंतिम देय',continue:'पत्त्याकडे पुढे जा →',fixCart:'आधी कार्ट दुरुस्त करा',minimumNotReached:'किमान ऑर्डर पूर्ण नाही',loading:'कार्ट तपासली जात आहे…',free:'मोफत',emptyCart:'तुमचे कार्ट रिकामे आहे',emptyCartSub:'पुढे जाण्यासाठी स्टोअरमधून उत्पादने जोडा.',browseProducts:'उत्पादने पहा',cartSummary:'कार्ट सारांश',youPay:'तुमचे देय',retailValue:'रिटेल मूल्य',yourProducts:'तुमची उत्पादने',liveChecked:'चेकआउटपूर्वी किंमत आणि स्टॉक तपासला जातो.',orderSummary:'ऑर्डर सारांश',summarySub:'सध्याचे कार्ट एकूण.',wholesaleProducts:'होलसेल उत्पादने',bulkSavings:'बल्क बचत',couponSavings:'कूपन बचत',delivery:'डिलिव्हरी',coupon:'कूपन',couponSub:'कोड आहे?',apply:'लागू करा'}
 };
 function tr(k){return UI[language]?.[k]||UI.en[k]||k}
 function langName(){return language==='hi'?'हिन्दी':language==='mr'?'मराठी':'English'}
@@ -503,7 +1123,6 @@ function render(){
 
   $('itemCount').textContent=`${cartUnits()} ${tr('units')}`;
   renderItems(q.items||[]);
-  renderRecommendations(q.recommendations||[]);
   renderSummary(q,finalEarn);
   renderCoupon(q.coupon);
   renderCheckout(q,finalEarn);
@@ -573,43 +1192,6 @@ function renderItems(items){
   for(const b of $('items').querySelectorAll('[data-quick]'))b.onclick=()=>setQty(Number(b.dataset.quick),Number(b.dataset.qty),true);
   for(const e of $('items').querySelectorAll('[data-open]'))e.onclick=()=>location.href='product.html?id='+encodeURIComponent(e.dataset.open);
 }
-function renderRecommendations(rows){
-  const section=$('boosterSection');
-
-  if(!rows.length){
-    section.hidden=true;
-    return;
-  }
-
-  section.hidden=false;
-
-  $('recommendations').innerHTML=rows.map(p=>{
-    const img=imageOf(p);
-    const qty=Math.max(1,Number(p.min_qty||1));
-    const addProfit=Number(p.potential_profit_per_unit_paise||0)*qty;
-    const title=localizedTitle(p)||p.title||'Product';
-
-    return `<article class="rec">
-      <div class="rec-img" data-rec-open="${p.id}">
-        ${img?`<img src="${esc(img)}" alt="${esc(title)}">`:'◇'}
-      </div>
-      <div class="rec-body">
-        <div class="rec-title">${esc(title)}</div>
-        <div class="rec-price">${money(p.price_paise)}</div>
-        <div class="rec-profit">${tr('min')} ${qty} → ${tr('earn')} ${money(addProfit)}</div>
-        <button data-rec-add="${p.id}" data-min="${qty}">${tr('addProducts')}</button>
-      </div>
-    </article>`;
-  }).join('');
-
-  for(const b of $('recommendations').querySelectorAll('[data-rec-add]')){
-    b.onclick=()=>addRecommended(Number(b.dataset.recAdd),Number(b.dataset.min));
-  }
-  for(const e of $('recommendations').querySelectorAll('[data-rec-open]')){
-    e.onclick=()=>location.href='product.html?id='+encodeURIComponent(e.dataset.recOpen);
-  }
-}
-
 function renderSummary(q,profit){
   const t=q.totals||{};
   const settings=q.settings||{};
@@ -713,19 +1295,7 @@ function changeQty(id,direction){
   queueQuote();
 }
 
-function addRecommended(id,minQty){
-  const existing=findCart(id);
-
-  if(existing){
-    existing.qty=Math.max(Number(existing.qty||0),minQty);
-  }else{
-    state.cart.push({product_id:id,qty:minQty});
-  }
-
-  saveCart();
-  toast('Earn more added.');
-  quoteCart(false);
-}
+$('emptyBrowseBtn').onclick=()=>location.href='retailer-dashboard.html';
 
 $('applyCoupon').onclick=()=>{
   state.coupon=$('couponInput').value.trim().toUpperCase();
