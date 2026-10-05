@@ -1375,6 +1375,304 @@ html,body{
   }
 }
 
+
+/* ==========================================================
+   ONENESS MARKETPLACE UI · CLEAN COMMERCE REDESIGN
+   Inspired by modern Indian marketplace information hierarchy:
+   search-first, category-first, image-first, minimal card chrome.
+   No static product/category/business data is introduced here.
+   ========================================================== */
+:root{
+  --market-bg:#ffffff;
+  --market-surface:#ffffff;
+  --market-soft:#f8f8f8;
+  --market-line:#e7e7e7;
+  --market-text:#353535;
+  --market-muted:#757575;
+  --market-accent:#68141d;
+  --market-accent-soft:#fbf2f3;
+  --market-chocolate:#53151b;
+}
+html,body{background:var(--market-bg)!important;color:var(--market-text)!important}
+.shell{width:min(1320px,100%)!important}
+.app{background:#fff!important}
+
+/* Header: simple, search-led, low visual noise. */
+.topbar{
+  background:rgba(255,255,255,.98)!important;
+  border-bottom:1px solid var(--market-line)!important;
+  box-shadow:none!important;
+}
+.topbar-inner{
+  min-height:74px!important;
+  padding:10px 18px!important;
+  grid-template-columns:180px minmax(360px,1fr) auto!important;
+  gap:22px!important;
+}
+.brand{min-width:0!important}
+.logo{width:52px!important;height:38px!important}
+.logo img{width:52px!important;height:38px!important;object-fit:contain!important}
+.brand-copy strong{font-size:15px!important;color:#3d2426!important}
+.brand-copy span{font-size:8px!important;color:#8a7778!important}
+.search input{
+  height:48px!important;
+  border:1px solid #cfcfcf!important;
+  border-radius:8px!important;
+  padding:0 108px 0 43px!important;
+  background:#fff!important;
+  color:#333!important;
+  font-size:13px!important;
+  box-shadow:none!important;
+}
+.search input:focus{border-color:var(--market-accent)!important;box-shadow:0 0 0 2px rgba(104,20,29,.07)!important}
+.search-icon{left:15px!important;color:#6f6f6f!important}
+.search-go{height:38px!important;top:5px!important;right:5px!important;min-width:72px!important;border-radius:6px!important;background:var(--market-accent)!important;color:#fff!important;font-size:10px!important}
+.clear{right:83px!important;top:8px!important;background:#f5f5f5!important}
+.search-results{border-radius:8px!important;border-color:var(--market-line)!important;box-shadow:0 12px 28px rgba(0,0,0,.10)!important}
+.header-actions{gap:3px!important}
+.desktop-nav a{height:42px!important;padding:0 10px!important;border-radius:6px!important;color:#555!important;font-size:10px!important;background:transparent!important}
+.desktop-nav a:hover,.desktop-nav a.active{color:var(--market-accent)!important;background:var(--market-accent-soft)!important}
+.lang-btn,.desktop-profile,.icon-btn{border-color:var(--market-line)!important;background:#fff!important;box-shadow:none!important}
+.icon-btn:hover{background:var(--market-accent-soft)!important}
+
+/* Main spacing is intentionally flatter and calmer. */
+.main{padding:18px 18px 48px!important}
+.welcome{margin:0 0 12px!important;align-items:center!important}
+.eyebrow{display:none!important}
+.welcome h1{margin:0 0 3px!important;font-size:25px!important;letter-spacing:-.55px!important;color:#322a2a!important}
+.welcome p{font-size:11px!important;color:var(--market-muted)!important}
+
+/* Dynamic categories become a clean marketplace navigation strip. */
+.market-category-bar{
+  margin:0 -18px 16px!important;
+  padding:0 18px!important;
+  border-top:1px solid #f1f1f1;
+  border-bottom:1px solid var(--market-line);
+  background:#fff;
+}
+.market-category-bar .categories{
+  margin:0!important;
+  padding:0!important;
+  min-height:48px;
+  display:flex!important;
+  align-items:stretch!important;
+  gap:24px!important;
+  overflow-x:auto!important;
+}
+.market-category-bar .category{
+  position:relative!important;
+  height:48px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#555!important;
+  font-size:11px!important;
+  font-weight:650!important;
+  box-shadow:none!important;
+  white-space:nowrap!important;
+}
+.market-category-bar .category:hover{color:var(--market-accent)!important}
+.market-category-bar .category.active{color:var(--market-accent)!important;font-weight:850!important}
+.market-category-bar .category.active:after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--market-accent)
+}
+
+/* One compact dynamic business block; hidden light overview remains hidden. */
+.dashboard-layout{display:block!important}
+.performance-rail{position:static!important;display:block!important;margin:0 0 22px!important}
+.earnings-overview,.rail-earnings-link{display:none!important}
+.business-card{
+  display:grid!important;
+  grid-template-columns:minmax(180px,.8fr) minmax(360px,1.2fr)!important;
+  align-items:center!important;
+  gap:24px!important;
+  width:100%!important;
+  padding:18px 20px!important;
+  border:0!important;
+  border-radius:12px!important;
+  background:linear-gradient(110deg,#461016,#5b151c 52%,#701c25)!important;
+  box-shadow:none!important;
+}
+.business-card:after{font-size:130px!important;right:18px!important;top:-28px!important;opacity:.7}
+.business-top span{font-size:9px!important;color:#ead8b1!important}
+.big-profit{font-size:35px!important;margin:6px 0 3px!important;color:#ffe3a8!important}
+.business-top p{font-size:8.5px!important;color:#d8c4bd!important}
+.business-stats{margin:0!important;gap:8px!important}
+.stat{padding:10px 12px!important;border-radius:8px!important;background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.08)!important}
+.stat span{font-size:7px!important;color:#d8c5c2!important}
+.stat strong{font-size:12px!important;color:#fff!important}
+.business-note{display:none!important}
+
+/* Catalogue heading mirrors clean marketplace lists. */
+.catalogue-panel{margin:0!important}
+.section-head{margin:0 0 14px!important;align-items:center!important}
+.section-head h2{font-size:22px!important;font-weight:700!important;color:#333!important;letter-spacing:-.3px!important}
+.section-head p{margin-top:3px!important;font-size:10px!important;color:#777!important}
+.product-count{background:transparent!important;padding:0!important;border-radius:0!important;color:#858585!important;font-size:9px!important}
+
+/* Image-led grid like a marketplace, not an admin catalogue. */
+.products{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:18px 14px!important;
+}
+.product-card{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  border:1px solid var(--market-line)!important;
+  border-radius:9px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+.product-card:hover{border-color:#d4d4d4!important;box-shadow:0 5px 18px rgba(0,0,0,.07)!important;transform:none!important}
+.product-image{
+  position:relative!important;
+  width:100%!important;
+  height:270px!important;
+  min-height:270px!important;
+  border:0!important;
+  border-bottom:1px solid #f0f0f0!important;
+  border-radius:0!important;
+  background:#fafafa!important;
+  overflow:hidden!important;
+}
+.product-image img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:4px!important;
+  background:#fff!important;
+}
+.product-copy{display:flex!important;flex-direction:column!important;align-content:initial!important;flex:1!important;padding:11px 11px 12px!important}
+.product-category{font-size:7px!important;color:#929292!important;letter-spacing:.04em!important}
+.product-name{
+  min-height:38px!important;
+  margin:4px 0 7px!important;
+  padding:0!important;
+  color:#3f3f3f!important;
+  font-size:13px!important;
+  line-height:1.4!important;
+  font-weight:600!important;
+  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important
+}
+.product-desc{display:none!important}
+.price-row{
+  display:flex!important;
+  align-items:flex-end!important;
+  flex-wrap:wrap!important;
+  width:100%!important;
+  gap:7px!important;
+  margin:0!important;
+}
+.price-box,.price-box.sell{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:4px!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+.price-box small{font-size:7px!important;color:#808080!important;text-transform:none!important;font-weight:650!important}
+.price-box strong{font-size:17px!important;line-height:1.05!important;color:#292929!important;font-weight:850!important}
+.price-box.sell{margin-left:1px!important}
+.price-box.sell small{font-size:6.5px!important;color:#9a9a9a!important}
+.price-box.sell strong{font-size:10px!important;color:#8a8a8a!important;font-weight:650!important;text-decoration:line-through!important}
+.profit-row{display:none!important}
+.meta{
+  margin-top:9px!important;
+  padding:0!important;
+  color:#737373!important;
+  font-size:8px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.open-arrow{display:none!important}
+
+/* Earn tab stays prominent but compact and product-focused. */
+.earn-sticker{
+  left:8px!important;top:8px!important;
+  min-height:31px!important;
+  padding:5px 9px!important;
+  gap:5px!important;
+  border:0!important;
+  border-radius:7px!important;
+  background:rgba(83,21,27,.96)!important;
+  color:#fff!important;
+  box-shadow:0 3px 10px rgba(67,10,17,.15)!important;
+}
+.earn-sticker::before{display:none!important}
+.earn-sticker .earn-word{font-size:7px!important;color:#f0d9c0!important;font-weight:750!important}
+.earn-sticker strong{font-size:10px!important;color:#ffe2a0!important;font-weight:900!important}
+
+/* Slider controls remain functional but visually quiet. */
+.product-card .slide-btn{opacity:0!important;width:28px!important;height:28px!important;background:rgba(255,255,255,.94)!important;border-color:#e7e7e7!important}
+.product-card:hover .slide-btn{opacity:1!important}
+.slider-dots{bottom:6px!important;background:rgba(255,255,255,.82)!important}
+
+@media(max-width:1180px){
+  .topbar-inner{grid-template-columns:140px minmax(300px,1fr) auto!important;gap:14px!important}
+  .brand-copy{display:none!important}
+  .products{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .product-image{height:245px!important;min-height:245px!important}
+}
+
+@media(max-width:919px){
+  .app{padding-bottom:calc(66px + env(safe-area-inset-bottom))!important}
+  .topbar-inner{
+    min-height:105px!important;
+    padding:8px 10px 10px!important;
+    grid-template-columns:auto 1fr auto!important;
+    grid-template-rows:40px 46px!important;
+    gap:6px 8px!important;
+  }
+  .brand{grid-column:1!important;grid-row:1!important}.logo,.logo img{width:43px!important;height:31px!important}
+  .header-actions{grid-column:2/4!important;grid-row:1!important;justify-self:end!important}
+  .search{grid-column:1/-1!important;grid-row:2!important}
+  .search input{height:44px!important;padding:0 43px 0 39px!important;font-size:12px!important;border-radius:8px!important}
+  .search-go{display:none!important}.clear{right:6px!important;top:6px!important}
+  .main{padding:10px 9px 22px!important}
+  .welcome{margin-bottom:8px!important}.welcome h1{font-size:20px!important}.welcome p{font-size:9px!important}
+  .market-category-bar{margin:0 -9px 11px!important;padding:0 9px!important}
+  .market-category-bar .categories{min-height:42px!important;gap:18px!important}
+  .market-category-bar .category{height:42px!important;font-size:10px!important}
+  .performance-rail{margin-bottom:14px!important}
+  .business-card{display:block!important;padding:12px 13px!important;border-radius:10px!important}
+  .big-profit{font-size:27px!important}.business-top p{display:none!important}.business-stats{margin-top:9px!important;gap:5px!important}.stat{padding:7px!important}.stat strong{font-size:10px!important}
+  .section-head{margin-bottom:9px!important}.section-head h2{font-size:17px!important}.section-head p{display:none!important}
+  .products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 8px!important}
+  .product-card{display:flex!important;min-height:0!important;border-radius:8px!important}
+  .product-image{width:100%!important;height:190px!important;min-height:190px!important;border-right:0!important;border-bottom:1px solid #f0f0f0!important;border-radius:0!important}
+  .product-image img{padding:2px!important}
+  .product-copy{padding:8px 8px 10px!important}
+  .product-category{font-size:6px!important}
+  .product-name{min-height:34px!important;margin:3px 0 6px!important;font-size:11px!important;line-height:1.35!important}
+  .price-row{gap:5px!important}
+  .price-box strong{font-size:14px!important}.price-box small{font-size:6px!important}.price-box.sell strong{font-size:8.5px!important}.price-box.sell small{font-size:5.5px!important}
+  .meta{margin-top:6px!important;font-size:6.5px!important}
+  .earn-sticker{left:5px!important;top:5px!important;min-height:27px!important;padding:4px 7px!important;border-radius:6px!important}.earn-sticker .earn-word{font-size:6px!important}.earn-sticker strong{font-size:8.5px!important}
+  .product-card .slide-btn{opacity:.88!important;width:23px!important;height:23px!important;font-size:13px!important}
+  .bottom-nav{height:calc(62px + env(safe-area-inset-bottom))!important;background:rgba(255,255,255,.98)!important;border-top:1px solid var(--market-line)!important}
+  .nav.active{background:var(--market-accent-soft)!important;color:var(--market-accent)!important}
+}
+
+@media(max-width:390px){
+  .product-image{height:172px!important;min-height:172px!important}
+  .product-copy{padding:7px!important}
+  .product-name{font-size:10.5px!important}
+  .price-box strong{font-size:13px!important}
+}
+
 </style>
 </head>
 <body data-page="home">
@@ -1438,6 +1736,12 @@ html,body{
     <a id="accountLink" class="account-link" href="index.html">Account →</a>
   </section>
 
+  <div class="market-category-bar">
+    <div id="categories" class="categories">
+      <button class="category active" data-category="">All</button>
+    </div>
+  </div>
+
   <div class="dashboard-layout">
     <aside class="performance-rail">
       <section class="business-card">
@@ -1486,10 +1790,6 @@ html,body{
     </aside>
 
     <section class="catalogue-panel">
-      <div id="categories" class="categories">
-        <button class="category active" data-category="">All</button>
-      </div>
-
       <section id="productsSection">
         <div class="section-head">
           <div>
@@ -1761,7 +2061,7 @@ function productCard(p,index=0){
             <strong>${money(p.price_paise)}</strong>
           </div>
           <div class="price-box sell">
-            <small>${tr('sellAt')}</small>
+            <small>MRP</small>
             <strong>${money(p.mrp_paise)}</strong>
           </div>
         </div>
