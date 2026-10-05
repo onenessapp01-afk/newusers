@@ -407,6 +407,46 @@ img{display:block;max-width:100%}
   .product-image{width:132px!important;min-height:152px!important}
 }
 
+
+/* ===== v4 correction: KEEP first earnings card, REMOVE second card ===== */
+.business-card{display:grid!important}
+.income-data-holder,.compact-income-card.income-data-holder{display:none!important}
+.performance-rail{grid-template-columns:minmax(0,1fr) 180px!important;align-items:stretch!important}
+.business-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:2}
+.business-title-row>span{min-width:0}
+.business-income-select{
+  flex:0 0 auto;height:34px;max-width:145px;padding:0 31px 0 10px;border:1px solid rgba(255,255,255,.18);
+  border-radius:9px;background:rgba(255,255,255,.10);color:#fff6e6;font-size:9px;font-weight:850;outline:none;
+  appearance:none;background-image:linear-gradient(45deg,transparent 50%,#f6dda9 50%),linear-gradient(135deg,#f6dda9 50%,transparent 50%);
+  background-position:calc(100% - 15px) calc(50% - 2px),calc(100% - 10px) calc(50% - 2px);
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.business-income-select option{color:#3f332d;background:#fff}
+.product-image{height:340px!important}
+.product-image img{padding:5px!important}
+@media(max-width:1320px){
+  .product-image{height:315px!important}
+}
+@media(max-width:1080px){
+  .performance-rail{grid-template-columns:1fr!important}
+}
+@media(max-width:919px){
+  .business-card{display:block!important;padding:13px!important}
+  .business-title-row{gap:8px!important}
+  .business-income-select{height:31px;max-width:132px;font-size:8px;padding-left:9px}
+  .product-card{grid-template-columns:180px minmax(0,1fr)!important;min-height:190px!important}
+  .product-image{width:180px!important;min-height:190px!important;height:100%!important}
+  .product-image img{padding:4px!important}
+}
+@media(max-width:420px){
+  .product-card{grid-template-columns:168px minmax(0,1fr)!important;min-height:180px!important}
+  .product-image{width:168px!important;min-height:180px!important}
+}
+@media(max-width:360px){
+  .product-card{grid-template-columns:158px minmax(0,1fr)!important;min-height:170px!important}
+  .product-image{width:158px!important;min-height:170px!important}
+}
+
 </style>
 </head>
 <body data-page="home">
@@ -474,7 +514,13 @@ img{display:block;max-width:100%}
     <aside class="performance-rail">
       <section class="business-card">
         <div class="business-top">
-          <span data-i18n="monthEarn">This month · Earn opportunity</span>
+          <div class="business-title-row">
+            <span id="businessIncomeLabel" data-i18n="monthEarn">This month · Earn opportunity</span>
+            <select id="incomeViewSelect" class="business-income-select" aria-label="Income view">
+              <option value="monthly" selected>Monthly income</option>
+              <option value="total">Total income</option>
+            </select>
+          </div>
           <div id="monthProfit" class="big-profit">₹0</div>
           <p id="profitFormula" data-i18n="monthEarnSub">Retail value minus your purchase value</p>
         </div>
@@ -486,35 +532,8 @@ img{display:block;max-width:100%}
         <div id="businessNote" class="business-note" data-i18n="earningNote">Calculated from your tracked orders and stored retail value.</div>
       </section>
 
-      <section class="earnings-overview compact-income-card">
-        <div class="overview-head compact-head">
-          <div>
-            <span class="overview-kicker" data-i18n="earningsOverview">Earnings overview</span>
-            <strong id="incomeViewHeading">Total income</strong>
-          </div>
-          <div class="overview-actions">
-            <select id="incomeViewSelect" class="income-select" aria-label="Income view">
-              <option value="total">Total income</option>
-              <option value="monthly" selected>Monthly income</option>
-            </select>
-            <a href="earnings.html" data-i18n="viewEarnings">View →</a>
-          </div>
-        </div>
-
-        <div class="overview-compact-body">
-          <div class="overview-primary compact-primary">
-            <span id="incomeViewSub">Total earn</span>
-            <strong id="incomeDisplayValue">₹0</strong>
-          </div>
-
-          <div class="overview-mini-stats">
-            <div><span id="incomeMiniLabel1">Purchased</span><strong id="incomeMiniValue1">₹0</strong></div>
-            <div><span id="incomeMiniLabel2">Retail value</span><strong id="incomeMiniValue2">₹0</strong></div>
-            <div><span id="incomeMiniLabel3">Tracked orders</span><strong id="incomeMiniValue3">0</strong></div>
-          </div>
-        </div>
-
-        <div class="overview-grid hidden-income-grid" hidden aria-hidden="true">
+      <section class="earnings-overview compact-income-card income-data-holder" hidden aria-hidden="true">
+        <div class="overview-grid hidden-income-grid">
           <div><span data-i18n="purchased">Purchased</span><strong id="allTimePurchase">₹0</strong></div>
           <div><span data-i18n="retailValue">Retail value</span><strong id="allTimeMrp">₹0</strong></div>
           <div><span data-i18n="lastMonth">Last month</span><strong id="lastMonthProfit">₹0</strong></div>
@@ -682,6 +701,7 @@ function applyLanguage(){
  renderCategories();
  renderProducts();
  renderBusinessSummary();
+ syncMainIncomeCard();
 }
 function setLanguage(next){
  language=['en','hi','mr'].includes(next)?next:'en';
@@ -929,44 +949,78 @@ function updateIncomeSelectorLabels(){
  if(!select)return;
  const monthly=select.querySelector('option[value="monthly"]');
  const total=select.querySelector('option[value="total"]');
- if(total)total.textContent=tr('totalIncome');
  if(monthly)monthly.textContent=tr('monthlyIncome');
+ if(total)total.textContent=tr('totalIncome');
 }
-function syncCompactIncomeCard(){
+function currentMonthSummary(){
+ const monthOrders=state.orders.filter(o=>!cancelled(o)&&inCurrentMonth(o));
+ const em=state.earnings?.this_month;
+ if(em){
+  return {
+   profit:money(Number(em.profit_paise||0)),
+   purchase:money(Number(em.purchase_paise||0)),
+   mrp:money(Number(em.mrp_paise||0)),
+   orders:String(monthOrders.length),
+   exact:true
+  };
+ }
+ const purchase=monthOrders.reduce((sum,o)=>sum+Number(o.total_paise||0),0);
+ const mrps=monthOrders.map(orderMrp);
+ const exact=monthOrders.length>0&&mrps.every(v=>v!==null);
+ const mrp=exact?mrps.reduce((sum,v)=>sum+v,0):null;
+ return {
+  profit:mrp===null?'—':money(Math.max(0,mrp-purchase)),
+  purchase:money(purchase),
+  mrp:mrp===null?'—':money(mrp),
+  orders:String(monthOrders.length),
+  exact
+ };
+}
+function allTimeSummary(){
+ const allOrders=state.orders.filter(o=>!cancelled(o));
+ const all=state.earnings?.all_time;
+ if(all){
+  return {
+   profit:money(Number(all.profit_paise||0)),
+   purchase:money(Number(all.purchase_paise||0)),
+   mrp:money(Number(all.mrp_paise||0)),
+   orders:String(all.tracked_orders??allOrders.length),
+   exact:true
+  };
+ }
+ const purchase=allOrders.reduce((sum,o)=>sum+Number(o.total_paise||0),0);
+ const mrps=allOrders.map(orderMrp);
+ const exact=allOrders.length>0&&mrps.every(v=>v!==null);
+ const mrp=exact?mrps.reduce((sum,v)=>sum+v,0):null;
+ return {
+  profit:mrp===null?'—':money(Math.max(0,mrp-purchase)),
+  purchase:money(purchase),
+  mrp:mrp===null?'—':money(mrp),
+  orders:String(allOrders.length),
+  exact
+ };
+}
+function syncMainIncomeCard(){
  const select=$('incomeViewSelect');
  if(!select)return;
  updateIncomeSelectorLabels();
- const mode=select.value||'total';
- if(mode==='monthly'){
-  $('incomeViewHeading').textContent=tr('monthlyIncome');
-  $('incomeViewSub').textContent=tr('monthEarn');
-  $('incomeDisplayValue').textContent=$('monthProfit').textContent;
-  $('incomeMiniLabel1').textContent=tr('purchased');
-  $('incomeMiniValue1').textContent=$('monthWholesale').textContent;
-  $('incomeMiniLabel2').textContent=tr('retailValue');
-  $('incomeMiniValue2').textContent=$('monthMrp').textContent;
-  $('incomeMiniLabel3').textContent=tr('orders');
-  $('incomeMiniValue3').textContent=$('monthMargin').textContent;
-  return;
- }
- $('incomeViewHeading').textContent=tr('totalIncome');
- $('incomeViewSub').textContent=tr('allTimeEarn');
- $('incomeDisplayValue').textContent=$('allTimeProfit').textContent;
- $('incomeMiniLabel1').textContent=tr('purchased');
- $('incomeMiniValue1').textContent=$('allTimePurchase').textContent;
- $('incomeMiniLabel2').textContent=tr('retailValue');
- $('incomeMiniValue2').textContent=$('allTimeMrp').textContent;
- $('incomeMiniLabel3').textContent=tr('trackedOrders');
- $('incomeMiniValue3').textContent=$('trackedOrders').textContent;
+ const total=select.value==='total';
+ const s=total?allTimeSummary():currentMonthSummary();
+ $('businessIncomeLabel').textContent=total?tr('totalIncome'):tr('monthEarn');
+ $('monthProfit').textContent=s.profit;
+ $('monthWholesale').textContent=s.purchase;
+ $('monthMrp').textContent=s.mrp;
+ $('monthMargin').textContent=s.orders;
+ $('profitFormula').textContent=s.exact?tr('monthEarnSub'):tr('noExact');
 }
 function setupIncomeView(){
  const select=$('incomeViewSelect');
  if(!select || select.dataset.ready==='1')return;
  select.dataset.ready='1';
  select.value='monthly';
- select.onchange=syncCompactIncomeCard;
+ select.onchange=syncMainIncomeCard;
  updateIncomeSelectorLabels();
- syncCompactIncomeCard();
+ syncMainIncomeCard();
 }
 
 function renderBusinessSummary(){
@@ -1019,7 +1073,7 @@ function renderBusinessSummary(){
   }
 
   $('lastMonthProfit').textContent=last?money(Number(last.profit_paise||0)):'—';
-  syncCompactIncomeCard();
+  syncMainIncomeCard();
 }
 function setupSearch(){
   const input=$('searchInput');
