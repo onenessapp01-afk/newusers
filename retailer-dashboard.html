@@ -1816,6 +1816,313 @@ html,body{background:var(--market-bg)!important;color:var(--market-text)!importa
   .earn-sticker strong{font-size:12px!important}
 }
 
+
+
+/* ==========================================================
+   FINAL ECOMMERCE LAYOUT · FIXED HEADER + SINGLE PRODUCT ROW
+   Definitive overrides. No data/functionality changes.
+   ========================================================== */
+:root{
+  --fixed-header-h:76px;
+  --sticky-category-h:50px;
+}
+
+/* A real fixed ecommerce header: logo | search | navigation/actions. */
+.topbar{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  z-index:5000!important;
+  background:rgba(255,255,255,.99)!important;
+  border-bottom:1px solid #e8e8e8!important;
+  box-shadow:0 2px 10px rgba(0,0,0,.035)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+  backdrop-filter:blur(12px)!important;
+}
+.topbar-inner{
+  min-height:var(--fixed-header-h)!important;
+  height:var(--fixed-header-h)!important;
+  width:min(1440px,100%)!important;
+  margin:0 auto!important;
+  padding:10px 22px!important;
+  grid-template-columns:190px minmax(360px,720px) minmax(420px,auto)!important;
+  gap:20px!important;
+  align-items:center!important;
+}
+.brand{align-self:center!important}
+.search{position:relative!important;align-self:center!important;z-index:5100!important}
+.search input{
+  height:48px!important;
+  font-size:14px!important;
+  border-radius:9px!important;
+  background:#fff!important;
+}
+.search-results{z-index:5200!important}
+.header-actions{
+  justify-self:end!important;
+  align-items:center!important;
+  flex-wrap:nowrap!important;
+  gap:5px!important;
+}
+.desktop-nav{display:flex!important;align-items:center!important;gap:2px!important;white-space:nowrap!important}
+.desktop-nav a{font-size:11px!important;height:40px!important;padding:0 10px!important}
+
+/* Reserve space for the fixed header. */
+.app{padding-top:var(--fixed-header-h)!important}
+.main{padding-top:16px!important}
+
+/* Page/category navigation remains available below the fixed header. */
+.market-category-bar{
+  position:sticky!important;
+  top:var(--fixed-header-h)!important;
+  z-index:3500!important;
+  margin:0 -18px 14px!important;
+  padding:0 18px!important;
+  background:rgba(255,255,255,.99)!important;
+  border-top:0!important;
+  border-bottom:1px solid #e8e8e8!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+}
+.market-category-bar .categories{min-height:var(--sticky-category-h)!important}
+.market-category-bar .category{height:var(--sticky-category-h)!important;font-size:12px!important}
+
+/* Keep the dynamic chocolate earnings card, but visually compact. */
+.performance-rail{margin:0 0 14px!important}
+.business-card{
+  grid-template-columns:minmax(220px,.72fr) minmax(420px,1.28fr)!important;
+  gap:22px!important;
+  padding:15px 18px!important;
+  border-radius:10px!important;
+}
+.big-profit{font-size:32px!important}
+.business-stats{gap:7px!important}
+.stat{padding:9px 11px!important}
+.stat span{font-size:8px!important}
+.stat strong{font-size:13px!important}
+.earnings-overview,.rail-earnings-link{display:none!important}
+
+/* Catalogue title sits directly above the list, no dead whitespace. */
+.section-head{
+  margin:0 0 7px!important;
+  padding:0!important;
+  align-items:flex-end!important;
+}
+.section-head h2{font-size:25px!important;line-height:1.08!important;margin:0!important}
+.section-head p{font-size:12px!important;margin:3px 0 0!important}
+.product-count{font-size:11px!important}
+
+/* Exactly ONE product per row on desktop/tablet/mobile. */
+.products{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:10px!important;
+  width:100%!important;
+}
+.product-card{
+  display:grid!important;
+  grid-template-columns:310px minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:0!important;
+  width:100%!important;
+  min-height:270px!important;
+  padding:0!important;
+  border:1px solid #e6e6e6!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+}
+.product-card:hover{
+  border-color:#d3d3d3!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.055)!important;
+}
+.product-image{
+  width:310px!important;
+  height:270px!important;
+  min-height:270px!important;
+  margin:0!important;
+  border:0!important;
+  border-right:1px solid #eeeeee!important;
+  border-bottom:0!important;
+  border-radius:0!important;
+  background:#fff!important;
+}
+.product-image img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:4px!important;
+  background:#fff!important;
+}
+.product-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:20px 54px 20px 22px!important;
+}
+.product-category{font-size:10px!important;line-height:1.2!important}
+.product-name{
+  min-height:0!important;
+  max-width:800px!important;
+  margin:5px 0 9px!important;
+  font-size:18px!important;
+  line-height:1.28!important;
+  font-weight:750!important;
+}
+.product-desc{
+  display:-webkit-box!important;
+  max-width:850px!important;
+  min-height:0!important;
+  margin:0 0 12px!important;
+  color:#777!important;
+  font-size:12px!important;
+  line-height:1.45!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
+}
+.price-row{
+  display:flex!important;
+  align-items:baseline!important;
+  width:auto!important;
+  gap:12px!important;
+  margin:0!important;
+}
+.price-box,.price-box.sell{display:flex!important;align-items:baseline!important;gap:5px!important}
+.price-box small{font-size:10px!important}
+.price-box strong{font-size:23px!important}
+.price-box.sell small{font-size:9px!important}
+.price-box.sell strong{font-size:14px!important}
+.meta{margin-top:11px!important;font-size:11px!important;line-height:1.3!important}
+.open-arrow{display:none!important}
+
+/* Large, unmistakable Earn / कमवा commercial cue. */
+.earn-sticker{
+  left:12px!important;
+  top:12px!important;
+  min-height:46px!important;
+  padding:9px 14px!important;
+  gap:8px!important;
+  border-radius:9px!important;
+  background:rgba(83,21,27,.98)!important;
+  box-shadow:0 5px 15px rgba(67,10,17,.20)!important;
+}
+.earn-sticker .earn-word{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  color:#f4dfc9!important;
+}
+.earn-sticker strong{
+  font-size:16px!important;
+  line-height:1!important;
+  font-weight:950!important;
+  color:#ffe39c!important;
+}
+.product-card .slide-btn{opacity:.72!important}
+.product-card:hover .slide-btn{opacity:1!important}
+
+@media(max-width:1250px) and (min-width:920px){
+  .topbar-inner{
+    grid-template-columns:120px minmax(300px,1fr) auto!important;
+    gap:12px!important;
+  }
+  .brand-copy{display:none!important}
+  .desktop-nav a{padding:0 7px!important;font-size:10px!important}
+  .language-wrap{display:none!important}
+  .product-card{grid-template-columns:270px minmax(0,1fr)!important;min-height:244px!important}
+  .product-image{width:270px!important;height:244px!important;min-height:244px!important}
+}
+
+@media(max-width:919px){
+  :root{--fixed-header-h:108px;--sticky-category-h:43px}
+  .topbar{
+    position:fixed!important;
+    top:0!important;left:0!important;right:0!important;
+    z-index:5000!important;
+  }
+  .topbar-inner{
+    width:100%!important;
+    height:var(--fixed-header-h)!important;
+    min-height:var(--fixed-header-h)!important;
+    padding:8px 10px 9px!important;
+    grid-template-columns:auto 1fr auto!important;
+    grid-template-rows:40px 48px!important;
+    gap:5px 8px!important;
+  }
+  .app{padding-top:var(--fixed-header-h)!important;padding-bottom:calc(66px + env(safe-area-inset-bottom))!important}
+  .main{padding:9px 9px 22px!important}
+  .brand{grid-column:1!important;grid-row:1!important}
+  .header-actions{grid-column:2/4!important;grid-row:1!important;justify-self:end!important}
+  .search{grid-column:1/-1!important;grid-row:2!important;width:100%!important}
+  .search input{height:44px!important;font-size:14px!important}
+  .market-category-bar{top:var(--fixed-header-h)!important;margin:0 -9px 10px!important;padding:0 9px!important}
+  .market-category-bar .categories{gap:20px!important}
+  .market-category-bar .category{font-size:10.5px!important}
+
+  .welcome{margin-bottom:7px!important}
+  .welcome h1{font-size:20px!important}
+  .business-card{display:block!important;padding:11px 12px!important;margin:0!important}
+  .big-profit{font-size:27px!important}
+  .business-stats{margin-top:8px!important}
+
+  .section-head{margin:0 0 6px!important}
+  .section-head h2{font-size:20px!important}
+  .section-head p{display:none!important}
+
+  .products{grid-template-columns:1fr!important;gap:8px!important}
+  .product-card{
+    display:grid!important;
+    grid-template-columns:148px minmax(0,1fr)!important;
+    min-height:154px!important;
+    border-radius:9px!important;
+  }
+  .product-image{
+    width:148px!important;
+    height:154px!important;
+    min-height:154px!important;
+    border-right:1px solid #eeeeee!important;
+    border-bottom:0!important;
+  }
+  .product-image img{padding:2px!important}
+  .product-copy{justify-content:center!important;padding:10px 10px 10px 12px!important}
+  .product-category{font-size:8px!important}
+  .product-name{margin:3px 0 6px!important;font-size:14px!important;line-height:1.25!important}
+  .product-desc{display:none!important}
+  .price-row{gap:7px!important}
+  .price-box small{font-size:7px!important}
+  .price-box strong{font-size:17px!important}
+  .price-box.sell small{font-size:6.5px!important}
+  .price-box.sell strong{font-size:10px!important}
+  .meta{margin-top:6px!important;font-size:8.5px!important}
+  .earn-sticker{
+    left:7px!important;top:7px!important;
+    min-height:38px!important;
+    padding:7px 10px!important;
+    gap:6px!important;
+    border-radius:8px!important;
+  }
+  .earn-sticker .earn-word{font-size:9px!important}
+  .earn-sticker strong{font-size:13.5px!important}
+  .slide-btn{width:24px!important;height:24px!important}
+}
+
+@media(max-width:390px){
+  .product-card{grid-template-columns:132px minmax(0,1fr)!important;min-height:146px!important}
+  .product-image{width:132px!important;height:146px!important;min-height:146px!important}
+  .product-copy{padding-left:9px!important;padding-right:8px!important}
+  .product-name{font-size:13px!important}
+  .price-box strong{font-size:16px!important}
+  .earn-sticker{padding:6px 8px!important}
+  .earn-sticker .earn-word{font-size:8.5px!important}
+  .earn-sticker strong{font-size:12.5px!important}
+}
+
 </style>
 </head>
 <body data-page="home">
