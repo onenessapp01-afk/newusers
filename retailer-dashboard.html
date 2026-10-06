@@ -4,591 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#68141d">
-<title>ONeness · Retailer Home</title>
+<title>ONeness · Retailer Store</title>
 <style>
 :root{
-  --bg:#f5f6f1;
+  --brand:#68141d;
+  --brand-dark:#430a11;
+  --brand-soft:#f8ecee;
+  --gold:#c99832;
+  --gold-soft:#fff7df;
+  --green:#157347;
+  --green-soft:#ebf8f1;
+  --amber:#9a6500;
+  --amber-soft:#fff5d9;
+  --red:#b42318;
+  --red-soft:#fff0ee;
+  --bg:#f6f7f9;
   --surface:#ffffff;
-  --ink:#14251f;
-  --muted:#7b8780;
-  --green:#17634c;
-  --green-dark:#104d3c;
-  --green-soft:#eaf3ec;
-  --lime:#dff2a8;
-  --orange:#efaa61;
-  --line:#e3e9e3;
-  --shadow:0 14px 40px rgba(20,55,43,.08);
-  --wine:#68141d;
-  --wine-dark:#430a11;
-  --gold:#c8942d;
-  --gold-soft:#fff0c7;
-  --paper:#f7f4ee;
-  --cream:#fffaf0;
-  --text:#2a211c;
-  --muted2:#746a62;
-  --line2:#e5dccf;
-  --navy:#081d34;
-  --market-bg:#ffffff;
-  --market-surface:#ffffff;
-  --market-soft:#f8f8f8;
-  --market-line:#e7e7e7;
-  --market-text:#353535;
-  --market-muted:#757575;
-  --market-accent:#68141d;
-  --market-accent-soft:#fbf2f3;
-  --fixed-header-h:76px;
-  --sticky-category-h:50px;
+  --surface-2:#fbfbfc;
+  --text:#1f2937;
+  --muted:#667085;
+  --muted-2:#98a2b3;
+  --line:#e5e7eb;
+  --line-strong:#d0d5dd;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.04);
+  --shadow-md:0 10px 30px rgba(16,24,40,.08);
+  --radius:12px;
+  --header-h:72px;
+  --category-h:50px;
 }
 *{box-sizing:border-box}
-html{background:var(--paper);scroll-behavior:smooth}
-body{
-  margin:0;
-  min-height:100vh;
-  background:var(--paper);
-  color:var(--text);
-  font-family:"Segoe UI",Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
-button,input{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-img{display:block;max-width:100%}
-[hidden]{display:none!important}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select{font:inherit} button{cursor:pointer} a{text-decoration:none;color:inherit} img{display:block;max-width:100%} [hidden]{display:none!important}
+.shell{width:min(1480px,100%);margin:0 auto;padding-left:24px;padding-right:24px}
 
-.shell{width:min(1320px,100%);margin:auto}
-.app{min-height:100vh;padding-bottom:94px;padding-top:var(--fixed-header-h)}
+/* loader */
+.page-loader{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#fff}
+.page-loader.hide{opacity:0;visibility:hidden;transition:.22s ease}
+.infinity-loader{text-align:center}.loader-brand{font-size:22px;font-weight:850;color:var(--brand-dark);letter-spacing:-.6px;margin-bottom:12px}
+.infinity-loader svg{width:116px;height:54px}.infinity-track{fill:none;stroke:#eadde0;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}.infinity-run{fill:none;stroke:var(--brand);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24 76;animation:infinityMove 1.15s linear infinite}@keyframes infinityMove{to{stroke-dashoffset:-100}}
+.loader-copy{margin-top:6px;color:var(--muted);font-size:12px;font-weight:650}
 
-/* Infinity loader */
-.page-loader{
-  position:fixed;inset:0;z-index:30000;display:grid;place-items:center;
-  background:linear-gradient(145deg,#fffaf0,#f3eadb)
-}
-.page-loader.hide{opacity:0;visibility:hidden;transition:opacity .24s ease,visibility .24s ease}
-.infinity-loader{text-align:center}
-.loader-brand{
-  color:var(--wine-dark);font:800 20px/1 "Segoe UI",sans-serif;letter-spacing:-.5px;margin-bottom:12px
-}
-.infinity-loader svg{width:116px;height:54px;overflow:visible}
-.infinity-track{fill:none;stroke:#e0d4bd;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
-.infinity-run{
-  fill:none;stroke:url(#none);stroke:var(--wine);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:24 76;animation:infinityMove 1.15s linear infinite
-}
-@keyframes infinityMove{to{stroke-dashoffset:-100}}
-.loader-copy{margin-top:7px;color:#8c7c6d;font-size:10px;font-weight:700}
+/* main header */
+.topbar{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.98);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.topbar-inner{height:var(--header-h);display:grid;grid-template-columns:190px minmax(360px,1fr) auto;gap:22px;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:52px;height:38px;display:grid;place-items:center;flex:0 0 auto}.logo img{width:100%;height:100%;object-fit:contain}.brand-copy{min-width:0}.brand-copy strong{display:block;color:var(--brand-dark);font-size:16px;line-height:1.05;font-weight:850;letter-spacing:-.35px}.brand-copy span{display:block;margin-top:4px;color:#92734c;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.search{position:relative;min-width:0}.search-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#7b8491;pointer-events:none}.search input{width:100%;height:48px;border:1px solid var(--line-strong);border-radius:10px;background:#fff;padding:0 98px 0 44px;color:var(--text);font-size:14px;outline:0;transition:.15s}.search input:focus{border-color:#a96f76;box-shadow:0 0 0 4px rgba(104,20,29,.08)}.search-go{position:absolute;right:5px;top:5px;height:38px;padding:0 16px;border:0;border-radius:8px;background:var(--brand);color:#fff;font-size:12px;font-weight:800}.clear{position:absolute;right:72px;top:8px;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:#7c8490;font-size:20px}.clear:hover{background:#f4f4f5}.search-results{position:absolute;left:0;right:0;top:54px;z-index:1200;max-height:420px;overflow:auto;padding:7px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-md)}.search-row{display:flex;gap:11px;align-items:center;padding:9px;border-radius:9px}.search-row:hover{background:#f8f9fb}.search-thumb{width:48px;height:48px;flex:0 0 48px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#fff}.search-row strong{display:block;font-size:12px;line-height:1.25;color:var(--text)}.search-row span{display:block;margin-top:3px;color:var(--muted);font-size:10px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;white-space:nowrap}.desktop-nav{display:flex;align-items:center;gap:2px}.desktop-nav a,.desktop-nav button{height:38px;display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;padding:0 10px;border-radius:8px;color:#4b5563;font-size:11px;font-weight:750}.desktop-nav a:hover,.desktop-nav button:hover,.desktop-nav a.active{background:#f6f2f3;color:var(--brand)}
+.language-wrap{position:relative}.lang-btn{height:38px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#4b5563;font-size:11px;font-weight:750}.language-menu{position:absolute;right:0;top:44px;z-index:1300;width:138px;padding:5px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow-md)}.language-menu button{width:100%;height:35px;border:0;border-radius:7px;background:#fff;text-align:left;padding:0 10px;color:#475467;font-size:11px;font-weight:700}.language-menu button:hover{background:#f8f3f4;color:var(--brand)}
+.desktop-profile{height:40px;display:flex;align-items:center;gap:8px;padding:4px 8px 4px 5px;border:1px solid var(--line);border-radius:10px;background:#fff}.desktop-avatar{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;overflow:hidden;background:var(--brand-soft);color:var(--brand);font-size:11px;font-weight:900}.desktop-avatar img{width:100%;height:100%;object-fit:cover}.desktop-profile-copy{display:grid;max-width:100px}.desktop-profile-copy strong{font-size:10px;overflow:hidden;text-overflow:ellipsis}.desktop-profile-copy small{margin-top:1px;color:var(--muted);font-size:8px}.icon-btn{position:relative;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--brand)}.icon-btn svg{width:19px;height:19px}.badge{position:absolute;right:-5px;top:-6px;min-width:19px;height:19px;padding:0 4px;border:2px solid #fff;border-radius:999px;display:grid;place-items:center;background:var(--brand);color:#fff;font-size:8px;font-weight:900}
 
-/* Fixed header */
-.topbar{
-  position:fixed;top:0;left:0;right:0;width:100%;z-index:5000;
-  background:rgba(255,255,255,.99);
-  border-bottom:1px solid #e8e8e8;
-  box-shadow:0 2px 10px rgba(0,0,0,.035);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-}
-.topbar-inner{
-  min-height:var(--fixed-header-h);height:var(--fixed-header-h);
-  width:min(1440px,100%);margin:0 auto;padding:10px 22px;
-  display:grid;
-  grid-template-columns:190px minmax(360px,720px) minmax(420px,auto);
-  gap:20px;align-items:center;
-}
-.brand{display:flex;align-items:center;gap:9px;min-width:0}
-.logo{
-  width:52px;height:38px;border-radius:0;background:transparent;overflow:visible;
-  display:grid;place-items:center;
-}
-.logo img{width:52px;height:38px;object-fit:contain}
-.brand-copy{display:block}
-.brand-copy strong{display:block;font-size:15px;font-weight:850;color:#3d2426}
-.brand-copy span{display:block;font-size:8px;color:#8a7778;margin-top:1px;text-transform:uppercase;letter-spacing:.08em}
+/* sticky category bar */
+.category-shell{position:sticky;top:var(--header-h);z-index:900;background:#fff;border-bottom:1px solid var(--line)}
+.category-inner{height:var(--category-h);display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none}.category-inner::-webkit-scrollbar{display:none}.category-label{flex:0 0 auto;margin-right:2px;color:#344054;font-size:11px;font-weight:850}.categories{display:flex;gap:7px;align-items:center}.category{height:32px;flex:0 0 auto;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#5d6572;font-size:10px;font-weight:750}.category:hover{border-color:#c9aeb2;color:var(--brand)}.category.active{border-color:var(--brand);background:var(--brand);color:#fff}
 
-.search{position:relative;width:100%;z-index:5100}
-.search input{
-  width:100%;height:48px;border:1px solid #cfcfcf;border-radius:9px;background:#fff;
-  padding:0 108px 0 43px;outline:none;color:#333;font-size:14px;box-shadow:none;
-}
-.search input:focus{border-color:var(--market-accent);box-shadow:0 0 0 2px rgba(104,20,29,.07)}
-.search-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#6f6f6f}
-.clear{
-  position:absolute;right:83px;top:8px;width:31px;height:31px;
-  border:0;border-radius:9px;background:#f5f5f5;color:#65736c;
-}
-.search-go{
-  position:absolute;right:5px;top:5px;height:38px;min-width:72px;border:0;border-radius:6px;
-  background:var(--market-accent);color:#fff;font-size:10px;font-weight:850
-}
-.search-results{
-  position:absolute;left:0;right:0;top:49px;z-index:5200;
-  background:#fff;border:1px solid var(--market-line);border-radius:8px;
-  box-shadow:0 12px 28px rgba(0,0,0,.10);padding:6px;max-height:340px;overflow:auto;
-}
-.search-row{
-  display:flex;align-items:center;gap:10px;padding:8px;border-radius:11px;
-}
-.search-row:hover{background:#fff7e7}
-.search-thumb{
-  width:43px;height:43px;border-radius:10px;background:#faf7f0;object-fit:contain;flex:0 0 43px;
-}
-.search-row strong{display:block;font-size:10px}
-.search-row span{display:block;font-size:8px;color:var(--muted);margin-top:3px}
+/* page */
+.main{padding-top:24px;padding-bottom:96px}.welcome{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:18px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}.welcome h1{margin:5px 0 3px;font-size:32px;line-height:1.05;letter-spacing:-1px;color:#1d2939}.welcome p{margin:0;color:var(--muted);font-size:12px}.account-link{display:none}
 
-.header-actions{display:flex;align-items:center;gap:5px;justify-self:end;flex-wrap:nowrap}
-.desktop-nav{display:flex;align-items:center;gap:1px;white-space:nowrap}
-.desktop-nav a{
-  height:40px;display:flex;align-items:center;padding:0 10px;border-radius:6px;
-  color:#555;font-size:11px;font-weight:800
-}
-.desktop-nav a:hover,.desktop-nav a.active{color:var(--market-accent);background:var(--market-accent-soft)}
-.language-wrap{position:relative}
-.lang-btn{
-  height:40px;padding:0 10px;border:1px solid var(--market-line);border-radius:6px;
-  background:#fff;color:var(--market-accent);font-size:10px;font-weight:850
-}
-.language-menu{
-  position:absolute;right:0;top:46px;z-index:110;width:128px;padding:5px;
-  border:1px solid var(--line2);border-radius:10px;background:white;
-  box-shadow:0 16px 40px rgba(48,20,14,.13)
-}
-.language-menu button{
-  width:100%;height:34px;border:0;border-radius:7px;background:white;text-align:left;
-  padding:0 9px;color:#544941;font-size:10px;font-weight:750
-}
-.language-menu button:hover{background:#fff5df;color:var(--wine)}
-.desktop-profile{
-  display:flex;align-items:center;gap:7px;min-height:40px;padding:4px 8px 4px 5px;
-  border:1px solid var(--market-line);border-radius:6px;background:white
-}
-.desktop-avatar{
-  width:30px;height:30px;border-radius:8px;display:grid;place-items:center;overflow:hidden;
-  background:#f1d889;color:#5a2d17;font-size:11px;font-weight:900
-}
-.desktop-avatar img{width:100%;height:100%;object-fit:cover}
-.desktop-profile-copy{display:grid;min-width:62px;max-width:105px}
-.desktop-profile-copy strong{font-size:9px;color:#4a2a23;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.desktop-profile-copy small{font-size:7px;color:#91847a;margin-top:2px}
-.icon-btn{
-  width:38px;height:38px;border:1px solid var(--market-line);border-radius:9px;
-  background:#fffaf0;color:var(--wine);display:grid;place-items:center;position:relative
-}
-.icon-btn:hover{background:var(--market-accent-soft)}
-.badge{
-  position:absolute;right:-4px;top:-5px;
-  min-width:18px;height:18px;padding:0 4px;border-radius:999px;
-  background:var(--wine);border:2px solid #fff;
-  display:grid;place-items:center;font-size:8px;font-weight:900;color:#fff2d2
+/* summary */
+.business-summary{display:grid;grid-template-columns:minmax(250px,1.15fr) repeat(3,minmax(150px,.7fr));gap:12px;margin-bottom:18px}.summary-hero,.summary-stat{min-height:118px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow-sm)}.summary-hero{position:relative;overflow:hidden;padding:18px 20px;background:linear-gradient(135deg,var(--brand-dark),var(--brand) 72%,#852f38);color:#fff;border-color:transparent}.summary-hero:after{content:"∞";position:absolute;right:12px;top:-28px;color:rgba(255,226,158,.10);font:700 140px/1 Georgia,serif}.summary-kicker{position:relative;z-index:1;display:flex;align-items:center;gap:8px;font-size:9px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:#ead4d7}.summary-hero strong{position:relative;z-index:1;display:block;margin-top:7px;font-size:34px;line-height:1;color:#ffe3a3;letter-spacing:-1px}.summary-hero p{position:relative;z-index:1;margin:8px 0 0;max-width:340px;color:#dec3c6;font-size:10px;line-height:1.45}.summary-stat{padding:16px;display:flex;flex-direction:column;justify-content:space-between}.summary-stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.summary-stat .label{color:var(--muted);font-size:10px;font-weight:700}.summary-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#f6f7f9;color:#475467;font-size:14px}.summary-stat strong{font-size:22px;line-height:1;color:#1d2939;letter-spacing:-.5px}.summary-stat small{color:var(--muted);font-size:9px}.summary-stat.profit .summary-icon{background:var(--gold-soft);color:var(--amber)}.summary-stat.orders .summary-icon{background:var(--green-soft);color:var(--green)}
+.hidden-metrics{display:none!important}
+
+/* buy again */
+.buy-again{margin:0 0 20px}.section-title-row{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:10px}.section-title-row h2{margin:0;font-size:17px;letter-spacing:-.25px;color:#1f2937}.section-title-row p{margin:3px 0 0;color:var(--muted);font-size:10px}.section-link{border:0;background:transparent;color:var(--brand);font-size:10px;font-weight:850;padding:5px}.buy-again-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.reorder-card{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}.reorder-card img,.reorder-thumb{width:62px;height:62px;border:1px solid var(--line);border-radius:9px;background:#fff;object-fit:contain}.reorder-copy{min-width:0}.reorder-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}.reorder-copy span{display:block;margin-top:4px;color:var(--muted);font-size:9px}.reorder-add{height:31px;padding:0 10px;border:1px solid #d7bbc0;border-radius:8px;background:var(--brand-soft);color:var(--brand);font-size:9px;font-weight:850}
+
+/* catalogue */
+.catalogue-panel{min-width:0}.catalogue-toolbar{position:sticky;top:calc(var(--header-h) + var(--category-h));z-index:700;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 10px;background:linear-gradient(var(--bg) 80%,rgba(246,247,249,0))}.catalogue-title h2{margin:0;font-size:22px;letter-spacing:-.5px}.catalogue-title p{margin:3px 0 0;color:var(--muted);font-size:10px}.toolbar-actions{display:flex;align-items:center;gap:7px}.product-count{color:var(--muted);font-size:10px;font-weight:750;margin-right:4px}.quick-toolbar-btn{display:none;height:36px;padding:0 10px;border:1px solid #d7bbc0;border-radius:9px;background:var(--brand-soft);color:var(--brand);font-size:9px;font-weight:850}.sort-select,.stock-toggle{height:36px;border:1px solid var(--line-strong);border-radius:9px;background:#fff;color:#475467;font-size:10px;font-weight:700}.sort-select{padding:0 30px 0 10px}.stock-toggle{display:flex;align-items:center;gap:6px;padding:0 10px;cursor:pointer}.stock-toggle input{accent-color:var(--brand)}
+.products{display:grid;grid-template-columns:1fr;gap:10px}.product-card{position:relative;display:grid;grid-template-columns:210px minmax(0,1fr) 250px;gap:18px;align-items:stretch;min-width:0;min-height:212px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff;transition:.16s;box-shadow:var(--shadow-sm)}.product-card:hover{border-color:#d4c0c3;box-shadow:0 8px 24px rgba(16,24,40,.055)}.product-image{position:relative;width:210px;height:190px;align-self:center;display:grid;place-items:center;overflow:hidden;border:1px solid #edf0f2;border-radius:11px;background:#fff}.product-image img{width:100%;height:100%;object-fit:contain;padding:8px}.margin-badge{position:absolute;left:8px;top:8px;z-index:2;display:inline-flex;align-items:center;gap:5px;min-height:27px;padding:4px 8px;border-radius:7px;background:rgba(67,10,17,.95);color:#fff;font-size:8px;font-weight:800;box-shadow:0 3px 10px rgba(67,10,17,.15)}.margin-badge strong{color:#ffe3a3;font-size:9px}.image-count{position:absolute;right:7px;bottom:7px;padding:3px 6px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid var(--line);color:#667085;font-size:7px;font-weight:800}
+.product-main{min-width:0;padding:8px 0;display:flex;flex-direction:column;justify-content:center}.product-topline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.product-category{color:#875e63;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.stock-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:7px;font-weight:850}.stock-chip.low{background:var(--amber-soft);color:var(--amber)}.stock-chip.out{background:var(--red-soft);color:var(--red)}.product-name{margin:5px 0 4px;font-size:17px;line-height:1.3;font-weight:800;color:#202936}.product-desc{max-width:760px;color:var(--muted);font-size:10px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pricing-line{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin-top:12px}.price-block{min-width:116px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:#fbfbfc}.price-block.primary{border-color:#ead5d8;background:#fdf7f8}.price-block small{display:block;color:var(--muted);font-size:7px;font-weight:750;text-transform:uppercase;letter-spacing:.04em}.price-block strong{display:block;margin-top:3px;font-size:16px;line-height:1;color:#1d2939}.price-block.primary strong{color:var(--brand)}.price-block.margin strong{color:var(--green)}.product-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;color:#667085;font-size:9px}.product-meta b{color:#344054}.tier-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.tier-chip{padding:5px 7px;border:1px solid #eadfc6;border-radius:7px;background:#fffaf0;color:#715a2f;font-size:7px;font-weight:750}.tier-chip b{color:#513d18}
+.order-box{align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:14px;border-left:1px solid var(--line);min-width:0}.order-box-label{color:var(--muted);font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.line-total{margin-top:4px;font-size:18px;font-weight:850;color:#1d2939}.line-total small{display:block;margin-top:3px;font-size:8px;font-weight:650;color:var(--muted)}.qty-row{display:grid;grid-template-columns:36px minmax(50px,1fr) 36px;gap:5px;margin-top:11px}.qty-btn,.qty-input{height:36px;border:1px solid var(--line-strong);background:#fff;text-align:center}.qty-btn{border-radius:8px;font-size:16px;color:#475467;font-weight:700}.qty-btn:hover{background:#f7f7f8}.qty-input{width:100%;border-radius:8px;color:#1f2937;font-size:11px;font-weight:800;outline:0}.qty-input:focus{border-color:#a96f76;box-shadow:0 0 0 3px rgba(104,20,29,.07)}.card-actions{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:8px}.add-cart{height:39px;border:0;border-radius:9px;background:var(--brand);color:#fff;font-size:10px;font-weight:850}.add-cart:hover{background:#571018}.add-cart:disabled{background:#cfd3d8;color:#fff;cursor:not-allowed}.view-product{height:39px;min-width:42px;border:1px solid var(--line-strong);border-radius:9px;background:#fff;color:#475467;font-size:15px;font-weight:900}.view-product:hover{background:#f8f8f9}.order-hint{margin-top:7px;color:var(--muted);font-size:7.5px;line-height:1.35}.empty,.error{padding:34px;border:1px dashed var(--line-strong);border-radius:14px;background:#fff;text-align:center;color:var(--muted);font-size:11px}.empty strong,.error strong{display:block;margin-bottom:5px;color:#344054;font-size:14px}.retry{margin-top:12px;height:36px;padding:0 14px;border:0;border-radius:8px;background:var(--brand);color:#fff;font-size:10px;font-weight:800}
+
+/* Quick order */
+.modal-backdrop{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:20px;background:rgba(17,24,39,.56);backdrop-filter:blur(4px)}.quick-modal{width:min(860px,96vw);max-height:88vh;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;overflow:hidden;border-radius:16px;background:#fff;box-shadow:0 30px 90px rgba(16,24,40,.28)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 12px}.modal-head h3{margin:0;font-size:20px;letter-spacing:-.4px}.modal-head p{margin:3px 0 0;color:var(--muted);font-size:10px}.modal-close{width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#667085;font-size:20px}.quick-search-wrap{padding:0 20px 12px}.quick-search{width:100%;height:44px;border:1px solid var(--line-strong);border-radius:9px;padding:0 13px;outline:0;font-size:12px}.quick-search:focus{border-color:#a96f76;box-shadow:0 0 0 3px rgba(104,20,29,.07)}.quick-list{overflow:auto;padding:0 20px 8px}.quick-row{display:grid;grid-template-columns:58px minmax(0,1fr) 110px 130px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.quick-row:first-child{border-top:0}.quick-row img,.quick-thumb{width:58px;height:58px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#fff}.quick-copy{min-width:0}.quick-copy strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.quick-copy span{display:block;margin-top:3px;color:var(--muted);font-size:8px}.quick-price{text-align:right}.quick-price strong{display:block;font-size:12px;color:var(--brand)}.quick-price span{font-size:8px;color:var(--muted)}.quick-action{display:grid;grid-template-columns:52px 1fr;gap:5px}.quick-action input{width:100%;height:34px;border:1px solid var(--line-strong);border-radius:8px;text-align:center;font-size:10px;font-weight:800}.quick-action button{height:34px;border:0;border-radius:8px;background:var(--brand);color:#fff;font-size:9px;font-weight:850}.quick-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-top:1px solid var(--line);background:#fafafa}.quick-footer span{color:var(--muted);font-size:9px}.quick-footer a{height:38px;display:inline-flex;align-items:center;padding:0 15px;border-radius:9px;background:var(--brand);color:#fff;font-size:10px;font-weight:850}
+
+/* splash */
+.splash-overlay{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:22px;background:rgba(20,6,9,.78);backdrop-filter:blur(8px)}.splash-card{width:min(760px,92vw);max-height:92vh;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden;border:1px solid rgba(239,207,128,.28);border-radius:18px;background:#081d34;box-shadow:0 32px 110px rgba(0,0,0,.48)}.splash-media{min-height:0;max-height:76vh;display:grid;place-items:center;padding:10px;overflow:hidden}.splash-media img{width:auto;height:auto;max-width:100%;max-height:72vh;object-fit:contain}.splash-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid rgba(255,255,255,.08)}.splash-text strong{display:block;color:#ffe19b;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.splash-text span{display:block;margin-top:2px;color:#bec5c6;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.splash-actions{display:flex;gap:5px}.splash-actions button,.splash-actions a{min-height:32px;padding:5px 9px;border:1px solid rgba(255,230,171,.2);border-radius:7px;background:rgba(255,255,255,.07);color:#ffe7b0;font-size:8px;font-weight:850}.splash-actions .primary-splash{background:#d5a83f;border-color:#d5a83f;color:#2d1909}
+.toast{position:fixed;left:50%;bottom:28px;z-index:9000;max-width:88vw;padding:11px 14px;border-radius:10px;background:#17211d;color:#fff;font-size:10px;font-weight:700;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.bottom-nav{display:none}
+
+@media(max-width:1180px){
+  .topbar-inner{grid-template-columns:160px minmax(260px,1fr) auto;gap:12px}.desktop-profile{display:none}.desktop-nav a,.desktop-nav button{padding:0 7px;font-size:10px}.business-summary{grid-template-columns:1.2fr repeat(3,.7fr)}.product-card{grid-template-columns:180px minmax(0,1fr) 230px}.product-image{width:180px;height:176px}.buy-again-list{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
-/* Main layout */
-.main{padding:18px 18px 48px}
-
-.welcome{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin:0 0 12px;
-}
-.eyebrow{
-  font-size:9px;text-transform:uppercase;letter-spacing:1.6px;
-  font-weight:900;color:var(--green);display:none;
-}
-.welcome h1{margin:0 0 3px;font-size:25px;letter-spacing:-.55px;line-height:1.05;color:#322a2a}
-.welcome p{margin:0;color:var(--market-muted);font-size:11px}
-.account-link{
-  border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px;
-  font-size:9px;font-weight:850;white-space:nowrap;display:none;
-}
-
-/* Category bar */
-.market-category-bar{
-  position:sticky;top:var(--fixed-header-h);z-index:3500;
-  margin:0 -18px 14px;padding:0 18px;
-  background:rgba(255,255,255,.99);
-  border-top:0;border-bottom:1px solid #e8e8e8;
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-}
-.categories{
-  display:flex;align-items:stretch;gap:24px;overflow-x:auto;scrollbar-width:none;
-  min-height:var(--sticky-category-h);margin:0;padding:0
-}
-.categories::-webkit-scrollbar{display:none}
-.category{
-  position:relative;flex:0 0 auto;height:var(--sticky-category-h);
-  padding:0;border:0;border-radius:0;background:transparent;
-  color:#555;font-size:12px;font-weight:650;box-shadow:none;white-space:nowrap;
-  display:flex;align-items:center
-}
-.category:hover{color:var(--market-accent)}
-.category.active{color:var(--market-accent);font-weight:850}
-.category.active:after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px 3px 0 0;
-  background:var(--market-accent)
-}
-
-/* Dashboard layout */
-.dashboard-layout{display:block}
-
-/* Business card */
-.performance-rail{position:static;display:block;margin:0 0 22px}
-.business-card{
-  display:grid;
-  grid-template-columns:minmax(220px,.72fr) minmax(420px,1.28fr);
-  align-items:center;gap:22px;
-  width:100%;padding:15px 18px;border:0;border-radius:10px;
-  background:linear-gradient(110deg,#461016,#5b151c 52%,#701c25);
-  color:#fff;box-shadow:none;overflow:hidden;position:relative;
-}
-.business-card:after{
-  content:"∞";position:absolute;right:18px;top:-28px;
-  color:rgba(249,218,138,.07);font:700 130px/1 Georgia,serif;
-}
-.business-top{position:relative;z-index:2}
-.business-top span{font-size:9px;color:#ead8b1;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
-.big-profit{
-  font-size:32px;font-weight:950;letter-spacing:-1px;line-height:1;margin:6px 0 3px;
-  color:#ffe3a8;
-}
-.business-top p{margin:0;font-size:8.5px;color:#d8c4bd;line-height:1.45}
-.business-stats{
-  position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);
-  gap:7px;margin:0
-}
-.stat{
-  min-width:0;padding:9px 11px;border-radius:8px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)
-}
-.stat span{display:block;font-size:8px;color:#d8c5c2}
-.stat strong{
-  display:block;margin-top:3px;font-size:13px;color:#fff;
-  white-space:normal;overflow-wrap:anywhere
-}
-.business-note{display:none}
-
-/* Catalogue */
-.catalogue-panel{min-width:0;margin:0}
-.section-head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:10px;margin:0 0 7px;padding:0
-}
-.section-head h2{font-size:25px;letter-spacing:-.3px;margin:0;color:#333;font-weight:700;line-height:1.08}
-.section-head p{margin:3px 0 0;color:#777;font-size:12px}
-.product-count{color:#858585;font-size:11px;font-weight:750;white-space:nowrap}
-
-.products{
-  display:grid;grid-template-columns:minmax(0,1fr);gap:10px;width:100%
-}
-.product-card{
-  display:grid;grid-template-columns:310px minmax(0,1fr);
-  align-items:stretch;gap:0;width:100%;min-height:270px;
-  padding:0;border:1px solid #e6e6e6;border-radius:10px;
-  background:#fff;overflow:hidden;box-shadow:none;transition:.16s;cursor:pointer;
-  position:relative
-}
-.product-card:hover{
-  border-color:#d3d3d3;box-shadow:0 7px 22px rgba(0,0,0,.055);transform:translateY(-2px)
-}
-.product-image{
-  position:relative;width:310px;height:270px;min-height:270px;margin:0;
-  border:0;border-right:1px solid #eeeeee;border-radius:0;
-  background:#fff;overflow:hidden;
-}
-.product-image img{
-  width:100%;height:100%;object-fit:contain;object-position:center;
-  padding:4px;background:#fff
-}
-.image-slider-controls{position:absolute;inset:0;pointer-events:none}
-.slide-btn{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:28px;height:28px;
-  display:grid;place-items:center;border:1px solid rgba(118,91,43,.16);border-radius:50%;
-  background:rgba(255,252,245,.94);color:var(--wine);font-size:15px;font-weight:900;
-  opacity:0;pointer-events:auto;transition:.15s
-}
-.product-card:hover .slide-btn{opacity:1}
-.slide-btn.prev{left:7px}.slide-btn.next{right:7px}
-.slider-dots{
-  position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:3;
-  display:flex;gap:3px;padding:3px 5px;border-radius:999px;background:rgba(255,255,255,.82)
-}
-.slider-dot{width:4px;height:4px;border-radius:50%;background:#c9bda9}
-.slider-dot.active{width:11px;border-radius:999px;background:var(--wine)}
-
-.earn-sticker{
-  position:absolute;left:12px;top:12px;z-index:8;display:inline-flex;align-items:center;
-  gap:8px;min-height:46px;padding:9px 14px;border-radius:9px;
-  background:rgba(83,21,27,.98);color:#fff;
-  box-shadow:0 5px 15px rgba(67,10,17,.20);line-height:1;white-space:nowrap;
-}
-.earn-sticker .earn-word{font-size:11px;line-height:1;font-weight:900;color:#f4dfc9}
-.earn-sticker strong{font-size:16px;line-height:1;font-weight:950;color:#ffe39c}
-
-.product-copy{
-  display:flex;flex-direction:column;justify-content:center;
-  min-width:0;padding:20px 54px 20px 22px
-}
-.product-category{
-  color:#9b7a3c;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.04em;line-height:1.2
-}
-.product-name{
-  font-size:18px;font-weight:750;line-height:1.28;margin:5px 0 9px;color:#3f3f3f;
-  min-height:0;max-width:800px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
-}
-.product-desc{
-  color:#777;font-size:12px;line-height:1.45;max-width:850px;min-height:0;margin:0 0 12px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
-}
-.price-row{
-  display:flex;align-items:baseline;width:auto;gap:12px;margin:0;flex-wrap:wrap
-}
-.price-box{
-  display:flex;align-items:baseline;gap:5px;min-width:0;padding:0;border:0;background:transparent
-}
-.price-box small{font-size:10px;color:#808080;font-weight:700;text-transform:none}
-.price-box strong{font-size:23px;line-height:1.05;color:#292929;font-weight:850}
-.price-box.sell small{font-size:9px;color:#9a9a9a}
-.price-box.sell strong{font-size:14px;color:#8a8a8a;font-weight:650;text-decoration:line-through}
-.profit-row{display:none}
-.meta{margin-top:11px;color:#737373;font-size:11px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.open-arrow{display:none}
-
-/* Empty/error */
-.empty,.error{
-  grid-column:1/-1;padding:24px;border-radius:17px;
-  border:1px solid var(--line);background:#fff;text-align:center;color:var(--muted);font-size:9px
-}
-.empty strong,.error strong{display:block;color:var(--ink);font-size:12px;margin-bottom:5px}
-.retry{margin-top:10px;border:0;border-radius:10px;padding:9px 12px;background:var(--ink);color:#fff;font-size:9px;font-weight:850}
-
-/* Bottom nav */
-.bottom-nav{
-  position:fixed;z-index:90;left:0;right:0;bottom:0;width:100%;
-  height:calc(59px + env(safe-area-inset-bottom));
-  display:grid;grid-template-columns:repeat(4,1fr);
-  padding:4px 6px env(safe-area-inset-bottom);
-  border:0;border-top:1px solid #e3dacd;border-radius:0;
-  background:rgba(255,255,255,.985);-webkit-backdrop-filter:blur(17px);backdrop-filter:blur(17px)
-}
-.nav{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;color:#88938d;font-size:8px;font-weight:800;position:relative
-}
-.nav i{font-style:normal;font-size:17px}
-.nav.active{background:var(--market-accent-soft);color:var(--market-accent);border-radius:8px}
-
-/* Splash */
-.splash-overlay{
-  position:fixed;inset:0;z-index:25000;display:grid;place-items:center;padding:22px;
-  background:rgba(20,6,9,.78);backdrop-filter:blur(9px)
-}
-.splash-overlay[hidden]{display:none!important}
-.splash-card{
-  width:min(760px,92vw);max-width:92vw;max-height:92vh;
-  display:grid;grid-template-rows:minmax(0,1fr) auto;
-  overflow:hidden;border:1px solid rgba(239,207,128,.30);border-radius:18px;
-  background:#081d34;box-shadow:0 32px 110px rgba(0,0,0,.48)
-}
-.splash-media{
-  min-height:0;max-height:76vh;display:grid;place-items:center;padding:10px;
-  background:#07192c;overflow:hidden
-}
-.splash-media img{
-  display:block;width:auto;height:auto;max-width:100%;max-height:72vh;
-  object-fit:contain;object-position:center;margin:auto;background:transparent
-}
-.splash-bar{
-  min-height:54px;padding:9px 11px;border-top:1px solid rgba(255,255,255,.07);
-  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;
-  background:#081d34
-}
-.splash-text{min-width:0}
-.splash-text strong{display:block;color:#ffe19b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.splash-text span{display:block;margin-top:2px;color:#bec5c6;font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.splash-actions{display:flex;gap:5px}
-.splash-actions button,.splash-actions a{
-  min-height:32px;padding:5px 8px;border:1px solid rgba(255,230,171,.2);border-radius:7px;
-  background:rgba(255,255,255,.07);color:#ffe7b0;font-size:8px;font-weight:850
-}
-.splash-actions .primary-splash{background:#d5a83f;border-color:#d5a83f;color:#2d1909}
-
-/* Toast */
-.toast{
-  position:fixed;z-index:100;left:50%;bottom:91px;
-  transform:translate(-50%,15px);opacity:0;
-  max-width:88vw;padding:10px 13px;border-radius:12px;
-  background:#17382e;color:#fff;font-size:9px;transition:.2s
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* Desktop right side vertical ONeness */
-.desktop-side-brand{
-  position:fixed;right:18px;top:50%;transform:translateY(-50%) rotate(180deg);
-  writing-mode:vertical-rl;z-index:1;
-  font-size:74px;font-weight:950;letter-spacing:6px;
-  color:rgba(200,148,45,.12);pointer-events:none;user-select:none;
-  font-family:"Segoe UI",sans-serif;text-transform:uppercase;
-  line-height:1;transition:color .3s
-}
-.desktop-side-brand:hover{color:rgba(200,148,45,.18)}
-
-/* Mobile header */
 @media(max-width:919px){
-  :root{--fixed-header-h:108px;--sticky-category-h:43px}
-  .topbar-inner{
-    width:100%;height:var(--fixed-header-h);min-height:var(--fixed-header-h);
-    padding:8px 10px 9px;
-    grid-template-columns:auto 1fr auto;
-    grid-template-rows:40px 48px;
-    gap:5px 8px
-  }
-  .app{padding-top:var(--fixed-header-h);padding-bottom:calc(66px + env(safe-area-inset-bottom))}
-  .main{padding:9px 9px 22px}
-  .brand{grid-column:1;grid-row:1}
-  .logo,.logo img{width:43px;height:31px}
-  .header-actions{grid-column:2/4;grid-row:1;justify-self:end}
-  .search{grid-column:1/-1;grid-row:2;width:100%}
-  .search input{height:44px;font-size:14px;padding:0 43px 0 39px;border-radius:8px}
-  .search-go{display:none}
-  .clear{right:6px;top:6px}
-  .desktop-nav,.language-wrap,.desktop-profile{display:none}
-
-  .market-category-bar{top:var(--fixed-header-h);margin:0 -9px 10px;padding:0 9px}
-  .market-category-bar .categories{gap:20px}
-  .market-category-bar .category{font-size:10.5px}
-
-  .welcome{margin-bottom:7px}
-  .welcome h1{font-size:20px}
-  .welcome p{font-size:9px}
-  .eyebrow{display:none}
-
-  .business-card{display:block;padding:11px 12px;margin:0;border-radius:10px}
-  .big-profit{font-size:27px}
-  .business-top p{display:none}
-  .business-stats{margin-top:8px;gap:5px}
-  .stat{padding:7px}
-  .stat strong{font-size:10px}
-  .business-note{display:none}
-
-  .section-head{margin:0 0 6px}
-  .section-head h2{font-size:20px}
-  .section-head p{display:none}
-  .product-count{font-size:9.5px}
-
-  .products{grid-template-columns:1fr;gap:8px}
-  .product-card{display:grid;grid-template-columns:148px minmax(0,1fr);min-height:154px;border-radius:9px}
-  .product-image{
-    width:148px;height:154px;min-height:154px;
-    border-right:1px solid #eeeeee;border-bottom:0
-  }
-  .product-image img{padding:2px}
-  .product-copy{justify-content:center;padding:10px 10px 10px 12px}
-  .product-category{font-size:8px}
-  .product-name{margin:3px 0 6px;font-size:14px;line-height:1.25}
-  .product-desc{display:none}
-  .price-row{gap:7px}
-  .price-box small{font-size:7px}
-  .price-box strong{font-size:17px}
-  .price-box.sell small{font-size:6.5px}
-  .price-box.sell strong{font-size:10px}
-  .meta{margin-top:6px;font-size:8.5px}
-
-  .earn-sticker{
-    left:7px;top:7px;min-height:38px;padding:7px 10px;
-    gap:6px;border-radius:8px
-  }
-  .earn-sticker .earn-word{font-size:9px}
-  .earn-sticker strong{font-size:13.5px}
-  .slide-btn{width:24px;height:24px}
-  .product-card .slide-btn{opacity:.88}
-  .slider-dots{bottom:4px}
-
-  .desktop-side-brand{display:none}
-
-  .bottom-nav{
-    height:calc(62px + env(safe-area-inset-bottom));
-    background:rgba(255,255,255,.98);
-    border-top:1px solid var(--market-line)
-  }
-  .nav.active{background:var(--market-accent-soft);color:var(--market-accent)}
-
-  .splash-overlay{padding:10px}
-  .splash-card{width:min(96vw,560px);max-width:96vw;max-height:90dvh;border-radius:14px}
-  .splash-media{max-height:76dvh;padding:6px}
-  .splash-media img{max-height:72dvh}
+  :root{--header-h:112px;--category-h:45px}.shell{padding-left:12px;padding-right:12px}.topbar-inner{height:var(--header-h);padding-top:8px;padding-bottom:8px;grid-template-columns:auto 1fr auto;grid-template-rows:42px 48px;gap:6px 8px}.brand{grid-column:1;grid-row:1}.logo{width:40px;height:29px}.brand-copy{display:none}.search{grid-column:1/-1;grid-row:2}.search input{height:44px;padding-right:45px;font-size:14px}.search-go{display:none}.clear{right:6px;top:6px}.header-actions{grid-column:2/4;grid-row:1}.desktop-nav,.language-wrap,.desktop-profile{display:none}.icon-btn{margin-left:auto;width:38px;height:38px}.category-inner{height:var(--category-h)}.category-label{display:none}.category{height:30px;padding:0 12px;font-size:9px}.main{padding-top:16px;padding-bottom:82px}.welcome{margin-bottom:12px}.welcome h1{font-size:24px}.welcome p{font-size:10px}.business-summary{grid-template-columns:repeat(3,1fr);gap:7px}.summary-hero{grid-column:1/-1;min-height:100px;padding:14px 16px}.summary-hero strong{font-size:28px}.summary-hero p{font-size:9px}.summary-stat{min-height:82px;padding:10px}.summary-stat .label{font-size:8px}.summary-stat strong{font-size:16px}.summary-icon{width:25px;height:25px;font-size:12px}.buy-again-list{display:flex;overflow:auto;gap:8px;scrollbar-width:none}.buy-again-list::-webkit-scrollbar{display:none}.reorder-card{flex:0 0 285px}.catalogue-toolbar{top:calc(var(--header-h) + var(--category-h));display:block;padding-top:9px}.catalogue-title h2{font-size:19px}.catalogue-title p{display:none}.toolbar-actions{margin-top:7px;justify-content:space-between}.quick-toolbar-btn{display:inline-flex;align-items:center}.product-count{margin-right:auto}.product-card{grid-template-columns:138px minmax(0,1fr);gap:10px;min-height:166px;padding:7px}.product-image{width:138px;height:150px}.product-main{padding:4px 0}.product-name{font-size:13px;margin:3px 0}.product-desc{display:none}.pricing-line{margin-top:7px;gap:4px}.price-block{min-width:0;padding:6px 7px}.price-block small{font-size:6px}.price-block strong{font-size:12px}.price-block.margin{display:none}.product-meta{gap:7px;margin-top:6px;font-size:7px}.tier-row{margin-top:6px;gap:4px}.tier-chip{font-size:6px;padding:4px 5px}.order-box{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 156px;gap:8px;align-items:center;padding:8px 4px 1px;border-left:0;border-top:1px solid var(--line)}.order-box-label,.line-total small,.order-hint{display:none}.line-total{margin:0;font-size:14px}.qty-row{margin:0;grid-template-columns:31px minmax(44px,1fr) 31px}.qty-btn,.qty-input{height:34px}.card-actions{grid-column:1/-1;margin-top:0;grid-template-columns:1fr 40px}.add-cart,.view-product{height:36px}.margin-badge{left:6px;top:6px;min-height:24px;padding:4px 6px;font-size:7px}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:1400;height:calc(62px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);padding:4px 8px env(safe-area-inset-bottom);border-top:1px solid var(--line);background:rgba(255,255,255,.98);backdrop-filter:blur(12px)}.nav{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:8px;color:#7a8492;font-size:8px;font-weight:750}.nav svg{width:18px;height:18px}.nav.active{background:var(--brand-soft);color:var(--brand)}.toast{bottom:74px}.quick-modal{width:100%;max-height:92dvh;border-radius:16px 16px 0 0;align-self:end}.modal-backdrop{padding:0;align-items:end}.quick-row{grid-template-columns:48px minmax(0,1fr) 118px;gap:8px}.quick-row img,.quick-thumb{width:48px;height:48px}.quick-price{display:none}.quick-action{grid-template-columns:46px 1fr}.quick-list{padding-left:14px;padding-right:14px}.quick-search-wrap,.modal-head,.quick-footer{padding-left:14px;padding-right:14px}.splash-overlay{padding:10px}.splash-card{width:min(96vw,560px);max-width:96vw;max-height:90dvh;border-radius:14px}.splash-media{max-height:76dvh;padding:6px}.splash-media img{max-height:72dvh}
 }
 
-@media(max-width:390px){
-  .product-card{grid-template-columns:132px minmax(0,1fr);min-height:146px}
-  .product-image{width:132px;height:146px;min-height:146px}
-  .product-copy{padding-left:9px;padding-right:8px}
-  .product-name{font-size:13px}
-  .price-box strong{font-size:16px}
-  .earn-sticker{padding:6px 8px}
-  .earn-sticker .earn-word{font-size:8.5px}
-  .earn-sticker strong{font-size:12.5px}
-}
-
-@media(max-width:1250px) and (min-width:920px){
-  .topbar-inner{grid-template-columns:120px minmax(300px,1fr) auto;gap:12px}
-  .brand-copy{display:none}
-  .desktop-nav a{padding:0 7px;font-size:10px}
-  .language-wrap{display:none}
-  .product-card{grid-template-columns:270px minmax(0,1fr);min-height:244px}
-  .product-image{width:270px;height:244px;min-height:244px}
-  .desktop-side-brand{font-size:56px;right:10px}
-}
-
-/* Auto scroll slider */
-.product-card[data-has-slider="1"] .slide-btn{opacity:.85}
-.product-card[data-has-slider="1"]:hover .slide-btn{opacity:1}
-
-/* Dropdown for earnings */
-.earnings-dropdown{
-  position:relative;display:inline-block;width:100%
-}
-.earnings-trigger{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  width:100%;padding:8px 12px;border-radius:8px;
-  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.10);
-  color:#fff;font-size:10px;font-weight:800;cursor:pointer;transition:.15s
-}
-.earnings-trigger:hover{background:rgba(255,255,255,.16)}
-.earnings-trigger .chevron{font-size:12px;transition:transform .2s}
-.earnings-trigger.open .chevron{transform:rotate(180deg)}
-.earnings-panel{
-  position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;
-  background:#fff;border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.2);
-  padding:8px;display:none
-}
-.earnings-panel.open{display:block}
-.earnings-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:8px 10px;border-radius:7px;font-size:10px;color:#333
-}
-.earnings-row:hover{background:#f8f5f0}
-.earnings-row .label{color:#666;font-weight:600}
-.earnings-row .value{font-weight:850;color:#68141d}
-
-/* Wave animation for earn boxes */
-@keyframes wave{
-  0%{transform:translateX(-100%)}
-  100%{transform:translateX(100%)}
-}
-.earn-sticker::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;overflow:hidden;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
-  animation:wave 2.8s infinite;pointer-events:none
-}
-
-/* Per piece label */
-.per-piece{
-  display:inline-block;font-size:7px;color:#b8a89a;margin-left:2px;font-weight:600
-}
-
-/* Bottom scroll categories */
-@media(max-width:919px){
-  .market-category-bar{
-    overflow-x:auto;scrollbar-width:none;
-    -webkit-overflow-scrolling:touch
-  }
-  .market-category-bar::-webkit-scrollbar{display:none}
-  .categories{gap:14px}
-  .category{font-size:10px;padding:0 2px}
+@media(max-width:520px){
+  .business-summary{grid-template-columns:repeat(3,1fr)}.summary-stat small{display:none}.summary-stat strong{font-size:14px}.section-title-row h2{font-size:15px}.product-card{grid-template-columns:126px minmax(0,1fr)}.product-image{width:126px;height:142px}.product-name{font-size:12px}.pricing-line{display:grid;grid-template-columns:1fr 1fr}.price-block strong{font-size:11.5px}.tier-row{display:none}.product-meta span:nth-child(2){display:none}.order-box{grid-template-columns:minmax(0,1fr) 145px}.sort-select{max-width:130px}.stock-toggle{font-size:0;width:36px;padding:0;justify-content:center}.stock-toggle input{margin:0}.reorder-card{flex-basis:270px}.splash-bar{grid-template-columns:1fr}.splash-actions{justify-content:flex-end}
 }
 </style>
 </head>
@@ -603,23 +106,30 @@ img{display:block;max-width:100%}
     <div class="loader-copy" id="loaderCopy">Opening your store…</div>
   </div>
 </div>
+
 <div class="app">
 <header class="topbar">
   <div class="shell topbar-inner">
-    <a class="brand" href="retailer-dashboard.html">
-      <div class="logo"><img src="data:image/webp;base64,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" alt="ONeness Group"></div>
-      <div class="brand-copy"><strong>ONeness Group</strong><span id="brandSub">Retailer Store</span></div>
+    <a class="brand" href="retailer-dashboard.html" aria-label="ONeness retailer home">
+      <div class="logo"><img src="data:image/webp;base64,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" alt="ONeness"></div>
+      <div class="brand-copy"><strong>ONeness</strong><span>Business Retailer</span></div>
     </a>
 
     <div class="search">
-      <span class="search-icon">⌕</span>
-      <input id="searchInput" type="search" placeholder="Search products or categories" autocomplete="off">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></svg>
+      <input id="searchInput" type="search" placeholder="Search products, categories or product ID" autocomplete="off">
       <button id="searchClear" class="clear" hidden aria-label="Clear search">×</button>
       <button id="searchGo" class="search-go" type="button">Search</button>
       <div id="searchResults" class="search-results" hidden></div>
     </div>
 
     <div class="header-actions">
+      <nav class="desktop-nav" aria-label="Retailer navigation">
+        <a class="active" href="retailer-dashboard.html" data-i18n="shop">Shop</a>
+        <button id="quickOrderBtn" type="button" data-i18n="quickOrder">Quick order</button>
+        <a href="earnings.html" data-i18n="earnings">Earnings</a>
+        <a href="cart.html" data-i18n="cart">Cart</a>
+      </nav>
       <div class="language-wrap">
         <button class="lang-btn" id="languageBtn" type="button">English ▾</button>
         <div class="language-menu" id="languageMenu" hidden>
@@ -632,89 +142,109 @@ img{display:block;max-width:100%}
         <span class="desktop-avatar"><img id="desktopAvatarImg" alt="" hidden><b id="desktopAvatarLetter">R</b></span>
         <span class="desktop-profile-copy"><strong id="desktopProfileName">Retailer</strong><small data-i18n="account">Account</small></span>
       </a>
-      <button class="icon-btn cart-icon" id="cartTop" aria-label="Cart">🛒<span class="badge" id="cartTopCount" hidden>0</span></button>
+      <button class="icon-btn" id="cartTop" aria-label="Cart" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20.5 7H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+        <span class="badge" id="cartTopCount" hidden>0</span>
+      </button>
     </div>
   </div>
 </header>
 
+<div class="category-shell">
+  <div class="shell category-inner">
+    <span class="category-label" data-i18n="categories">Categories</span>
+    <div id="categories" class="categories"><button class="category active" data-category="">All</button></div>
+  </div>
+</div>
+
 <main class="shell main">
   <section class="welcome">
     <div>
-      <div class="eyebrow" data-i18n="retailerHome">Retailer home</div>
+      <div class="eyebrow" data-i18n="retailerHome">Retailer store</div>
       <h1 id="helloTitle">Welcome 👋</h1>
-      <p id="helloSub">Wholesale catalogue, prices and order options.</p>
+      <p id="helloSub">Wholesale products, business pricing and quick ordering.</p>
     </div>
     <a id="accountLink" class="account-link" href="index.html">Account →</a>
   </section>
 
-  <div class="market-category-bar">
-    <div id="categories" class="categories">
-      <button class="category active" data-category="">All</button>
+  <section class="business-summary" aria-label="Business summary">
+    <article class="summary-hero">
+      <div class="summary-kicker" data-i18n="monthEarn">This month · Potential margin</div>
+      <strong id="monthProfit">₹0</strong>
+      <p id="profitFormula" data-i18n="monthEarnSub">Retail value minus your purchase value</p>
+      <div id="businessNote" hidden></div>
+    </article>
+    <article class="summary-stat">
+      <div class="summary-stat-top"><span class="label" data-i18n="purchased">Purchased</span><span class="summary-icon">₹</span></div>
+      <strong id="monthWholesale">₹0</strong>
+      <small data-i18n="thisMonth">This month</small>
+    </article>
+    <article class="summary-stat profit">
+      <div class="summary-stat-top"><span class="label" data-i18n="retailValue">Retail value</span><span class="summary-icon">↗</span></div>
+      <strong id="monthMrp">₹0</strong>
+      <small data-i18n="atMrp">At MRP value</small>
+    </article>
+    <article class="summary-stat orders">
+      <div class="summary-stat-top"><span class="label" data-i18n="orders">Orders</span><span class="summary-icon">✓</span></div>
+      <strong id="monthMargin">0</strong>
+      <small data-i18n="thisMonth">This month</small>
+    </article>
+  </section>
+
+  <!-- Existing earnings IDs are retained for compatibility with the existing dashboard RPC. -->
+  <div class="hidden-metrics" aria-hidden="true">
+    <span id="allTimeProfit">₹0</span><span id="allTimePurchase">₹0</span><span id="allTimeMrp">₹0</span><span id="lastMonthProfit">₹0</span><span id="trackedOrders">0</span>
+  </div>
+
+  <section id="buyAgainSection" class="buy-again" hidden>
+    <div class="section-title-row">
+      <div><h2 data-i18n="buyAgain">Buy again</h2><p data-i18n="buyAgainSub">Products from your recent orders.</p></div>
+      <button class="section-link" id="buyAgainAll" type="button" data-i18n="openQuickOrder">Quick order →</button>
     </div>
-  </div>
+    <div id="buyAgainList" class="buy-again-list"></div>
+  </section>
 
-  <div class="dashboard-layout">
-    <aside class="performance-rail">
-      <section class="business-card">
-        <div class="business-top">
-          <span data-i18n="monthEarn">This month · Earn opportunity</span>
-          <div id="monthProfit" class="big-profit">₹0</div>
-          <p id="profitFormula" data-i18n="monthEarnSub">Retail value minus your purchase value</p>
-          <!-- Earnings dropdown -->
-          <div class="earnings-dropdown" id="earningsDropdown">
-            <button class="earnings-trigger" id="earningsTrigger" type="button">
-              <span>View breakdown</span>
-              <span class="chevron">▾</span>
-            </button>
-            <div class="earnings-panel" id="earningsPanel">
-              <div class="earnings-row"><span class="label">This month</span><span class="value" id="ddMonthProfit">₹0</span></div>
-              <div class="earnings-row"><span class="label">Last month</span><span class="value" id="ddLastMonthProfit">₹0</span></div>
-              <div class="earnings-row"><span class="label">Last week</span><span class="value" id="ddLastWeekProfit">₹0</span></div>
-              <div class="earnings-row"><span class="label">All time</span><span class="value" id="ddAllTimeProfit">₹0</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="business-stats">
-          <div class="stat"><span data-i18n="purchased">Purchased</span><strong id="monthWholesale">₹0</strong></div>
-          <div class="stat"><span data-i18n="retailValue">Retail value</span><strong id="monthMrp">₹0</strong></div>
-          <div class="stat"><span data-i18n="orders">Orders</span><strong id="monthMargin">0</strong></div>
-        </div>
-        <div id="businessNote" class="business-note" data-i18n="earningNote">Calculated from your tracked orders and stored retail value.</div>
-      </section>
-    </aside>
-
-    <section class="catalogue-panel">
-      <section id="productsSection">
-        <div class="section-head">
-          <div>
-            <h2 data-i18n="products">Products</h2>
-            <p data-i18n="productsSub">Choose a product to view quantity pricing and order options.</p>
-          </div>
-          <div id="productCount" class="product-count">Loading…</div>
-        </div>
-        <div id="products" class="products"></div>
-      </section>
-    </section>
-  </div>
+  <section class="catalogue-panel" id="productsSection">
+    <div class="catalogue-toolbar">
+      <div class="catalogue-title"><h2 data-i18n="products">Wholesale catalogue</h2><p data-i18n="productsSub">Business pricing, MOQ, stock and quantity offers in one view.</p></div>
+      <div class="toolbar-actions">
+        <button id="quickOrderToolbar" class="quick-toolbar-btn" type="button" data-i18n="quickOrder">Quick order</button><span id="productCount" class="product-count">Loading…</span>
+        <label class="stock-toggle"><input id="inStockOnly" type="checkbox"> <span data-i18n="inStockOnly">In stock</span></label>
+        <select id="sortSelect" class="sort-select" aria-label="Sort products">
+          <option value="default" data-i18n="sortRecommended">Recommended</option>
+          <option value="priceAsc" data-i18n="sortPriceLow">Price: low to high</option>
+          <option value="marginDesc" data-i18n="sortMargin">Margin: high to low</option>
+          <option value="stockDesc" data-i18n="sortStock">Stock: high to low</option>
+        </select>
+      </div>
+    </div>
+    <div id="products" class="products"></div>
+  </section>
 </main>
 
-<!-- Desktop vertical brand -->
-<div class="desktop-side-brand">ONENESS</div>
-
-<nav class="bottom-nav">
-  <a class="nav active" href="retailer-dashboard.html"><i>⌂</i><span data-i18n="home">Home</span></a>
-  <a class="nav" href="earnings.html"><i>↗</i><span data-i18n="earnings">Earnings</span></a>
-  <a class="nav" href="cart.html"><i>🛒</i><span data-i18n="cart">Cart</span><span class="badge" id="cartNavCount" hidden>0</span></a>
-  <a class="nav" href="index.html"><i>◯</i><span data-i18n="account">Account</span></a>
+<nav class="bottom-nav" aria-label="Mobile navigation">
+  <a class="nav active" href="retailer-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg><span data-i18n="home">Home</span></a>
+  <a class="nav" href="#productsSection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg><span data-i18n="shop">Shop</span></a>
+  <a class="nav" href="earnings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 18 9 13l3 3 7-8"/><path d="M15 8h4v4"/></svg><span data-i18n="earnings">Earnings</span></a>
+  <a class="nav" href="cart.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20.5 7H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span data-i18n="cart">Cart</span><span class="badge" id="cartNavCount" hidden>0</span></a>
 </nav>
+
+<div id="quickOrderModal" class="modal-backdrop" hidden>
+  <section class="quick-modal" role="dialog" aria-modal="true" aria-labelledby="quickOrderTitle">
+    <div class="modal-head">
+      <div><h3 id="quickOrderTitle" data-i18n="quickOrder">Quick order</h3><p data-i18n="quickOrderSub">Search products, enter quantities and add them without opening each product.</p></div>
+      <button id="quickOrderClose" class="modal-close" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="quick-search-wrap"><input id="quickOrderSearch" class="quick-search" type="search" placeholder="Search product or category"></div>
+    <div id="quickOrderList" class="quick-list"></div>
+    <div class="quick-footer"><span id="quickOrderHint">MOQ and stock rules are respected.</span><a href="cart.html" data-i18n="openCart">Open cart →</a></div>
+  </section>
+</div>
 
 <div id="splashOverlay" class="splash-overlay" hidden>
   <div class="splash-card">
     <div class="splash-media"><img id="splashImage" alt=""></div>
-    <div class="splash-bar">
-      <div class="splash-text"><strong id="splashTitle">ONeness</strong><span id="splashCaption"></span></div>
-      <div class="splash-actions" id="splashActions"></div>
-    </div>
+    <div class="splash-bar"><div class="splash-text"><strong id="splashTitle">ONeness</strong><span id="splashCaption"></span></div><div class="splash-actions" id="splashActions"></div></div>
   </div>
 </div>
 <div id="toast" class="toast"></div>
@@ -727,675 +257,217 @@ img{display:block;max-width:100%}
 
 const SUPABASE_URL='https://djnpsgtlzgebmjtxfpei.supabase.co';
 const SUPABASE_KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
-
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
-  auth:{
-    persistSession:true,
-    autoRefreshToken:true,
-    detectSessionInUrl:true,
-    storageKey:'oneness-retailer'
-  }
-});
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}});
 
 const $=id=>document.getElementById(id);
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-}[c]));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=paise=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(paise||0)/100);
 
-const money=paise=>new Intl.NumberFormat('en-IN',{
-  style:'currency',currency:'INR',maximumFractionDigits:0
-}).format(Number(paise||0)/100);
-
-const state={
-  profile:null,
-  products:[],
-  categories:[],
-  orders:[],
-  earnings:null,
-  selectedCategory:'',
-  search:'',
-  cart:readCart()
-};
-
+const state={profile:null,products:[],categories:[],orders:[],earnings:null,selectedCategory:'',search:'',sort:'default',inStockOnly:false,cart:readCart()};
 const LANG_KEY='oneness-retailer-language';
 let language=localStorage.getItem(LANG_KEY)||'en';
+
 const UI={
  en:{
-  home:'Home',shop:'Shop',earnings:'Earnings',cart:'Cart',account:'Account',retailerHome:'Retailer home',
-  products:'Products',productsSub:'Choose a product to view quantity pricing and order options.',
-  monthEarn:'This month · Earn opportunity',monthEarnSub:'Retail value minus your purchase value',
-  purchased:'Purchased',retailValue:'Retail value',orders:'Orders',earningNote:'Calculated from your tracked orders and stored retail value.',
-  all:'All',buyAt:'Buy at',sellAt:'Sell at',earn:'Earn',stock:'Stock',minQty:'Min qty',
-  unavailable:'Unavailable',search:'Search',searchPlaceholder:'Search products or categories',
-  noProducts:'No matching products',trySearch:'Try another search or category.',
-  goodMorning:'Good morning',goodAfternoon:'Good afternoon',goodEvening:'Good evening',
-  catalogue:'Wholesale catalogue, prices and order options.',loading:'Opening your store…',
-  noExact:'Open Earnings for the complete tracked calculation',
-  earningsOverview:'Earnings overview',allTime:'All time',allTimeEarn:'Total earn',
-  lastMonth:'Last month',trackedOrders:'Tracked orders',viewEarnings:'View →',
-  openAnalytics:'Open detailed analytics'
+  home:'Home',shop:'Shop',quickOrder:'Quick order',earnings:'Earnings',cart:'Cart',account:'Account',retailerHome:'Retailer store',categories:'Categories',
+  products:'Wholesale catalogue',productsSub:'Business pricing, MOQ, stock and quantity offers in one view.',
+  monthEarn:'This month · Potential margin',monthEarnSub:'Retail value minus your purchase value',purchased:'Purchased',retailValue:'Retail value',orders:'Orders',thisMonth:'This month',atMrp:'At MRP value',earningNote:'Calculated from your tracked orders and stored retail value.',
+  all:'All',yourPrice:'Your price',mrp:'MRP',margin:'Margin',earn:'Earn',stock:'Stock',minQty:'MOQ',step:'Step',unit:'Unit',inStock:'In stock',lowStock:'Low stock',unavailable:'Out of stock',
+  search:'Search',searchPlaceholder:'Search products, categories or product ID',noProducts:'No matching products',trySearch:'Try another search, category or filter.',
+  goodMorning:'Good morning',goodAfternoon:'Good afternoon',goodEvening:'Good evening',catalogue:'Wholesale products, business pricing and quick ordering.',loading:'Opening your store…',noExact:'Open Earnings for the complete tracked calculation',
+  buyAgain:'Buy again',buyAgainSub:'Products from your recent orders.',openQuickOrder:'Quick order →',add:'Add to cart',added:'Added to cart',view:'View product',qty:'Quantity',lineTotal:'Order value',
+  inStockOnly:'In stock',sortRecommended:'Recommended',sortPriceLow:'Price: low to high',sortMargin:'Margin: high to low',sortStock:'Stock: high to low',
+  quickOrderSub:'Search products, enter quantities and add them without opening each product.',openCart:'Open cart →',quickSearch:'Search product or category',minimum:'Minimum',available:'available',
+  invalidQty:'Quantity adjusted to the allowed order step.',cartUpdated:'Cart updated',allTime:'All time',lastMonth:'Last month',trackedOrders:'Tracked orders'
  },
  hi:{
-  home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर होम',
-  products:'प्रोडक्ट',productsSub:'मात्रा की कीमत और ऑर्डर विकल्प देखने के लिए प्रोडक्ट चुनें।',
-  monthEarn:'इस महीने · कमाई का अवसर',monthEarnSub:'रिटेल वैल्यू और आपकी खरीद कीमत का अंतर',
-  purchased:'खरीद',retailValue:'रिटेल वैल्यू',orders:'ऑर्डर',earningNote:'आपके ट्रैक किए गए ऑर्डर और रिटेल वैल्यू से गणना।',
-  all:'सभी',buyAt:'खरीदें',sellAt:'बेचें',earn:'कमाएँ',stock:'स्टॉक',minQty:'न्यूनतम',
-  unavailable:'उपलब्ध नहीं',search:'खोजें',searchPlaceholder:'प्रोडक्ट या कैटेगरी खोजें',
-  noProducts:'कोई प्रोडक्ट नहीं मिला',trySearch:'दूसरा नाम या कैटेगरी खोजें।',
-  goodMorning:'सुप्रभात',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्या',
-  catalogue:'होलसेल कैटलॉग, कीमत और ऑर्डर विकल्प।',loading:'आपका स्टोर खुल रहा है…',
-  noExact:'पूरी गणना के लिए Earnings खोलें',
-  earningsOverview:'कमाई सारांश',allTime:'कुल',allTimeEarn:'कुल कमाई',
-  lastMonth:'पिछला महीना',trackedOrders:'ट्रैक ऑर्डर',viewEarnings:'देखें →',
-  openAnalytics:'विस्तृत कमाई देखें'
+  home:'होम',shop:'शॉप',quickOrder:'क्विक ऑर्डर',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर स्टोर',categories:'कैटेगरी',
+  products:'होलसेल कैटलॉग',productsSub:'बिजनेस कीमत, MOQ, स्टॉक और मात्रा ऑफर एक ही जगह।',
+  monthEarn:'इस महीने · संभावित कमाई',monthEarnSub:'रिटेल वैल्यू और आपकी खरीद कीमत का अंतर',purchased:'खरीद',retailValue:'रिटेल वैल्यू',orders:'ऑर्डर',thisMonth:'इस महीने',atMrp:'MRP पर वैल्यू',earningNote:'आपके ट्रैक किए गए ऑर्डर से गणना।',
+  all:'सभी',yourPrice:'आपकी कीमत',mrp:'MRP',margin:'मार्जिन',earn:'कमाएँ',stock:'स्टॉक',minQty:'MOQ',step:'स्टेप',unit:'यूनिट',inStock:'स्टॉक में',lowStock:'कम स्टॉक',unavailable:'स्टॉक खत्म',
+  search:'खोजें',searchPlaceholder:'प्रोडक्ट, कैटेगरी या प्रोडक्ट ID खोजें',noProducts:'कोई प्रोडक्ट नहीं मिला',trySearch:'दूसरा सर्च, कैटेगरी या फिल्टर चुनें।',
+  goodMorning:'सुप्रभात',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्या',catalogue:'होलसेल प्रोडक्ट, बिजनेस कीमत और तेज ऑर्डरिंग।',loading:'आपका स्टोर खुल रहा है…',noExact:'पूरी गणना के लिए Earnings खोलें',
+  buyAgain:'फिर खरीदें',buyAgainSub:'आपके हाल के ऑर्डर के प्रोडक्ट।',openQuickOrder:'क्विक ऑर्डर →',add:'कार्ट में जोड़ें',added:'कार्ट में जोड़ा',view:'प्रोडक्ट देखें',qty:'मात्रा',lineTotal:'ऑर्डर वैल्यू',
+  inStockOnly:'स्टॉक में',sortRecommended:'सुझाए गए',sortPriceLow:'कीमत: कम से ज्यादा',sortMargin:'मार्जिन: ज्यादा से कम',sortStock:'स्टॉक: ज्यादा से कम',
+  quickOrderSub:'प्रोडक्ट खोजें, मात्रा डालें और बिना हर प्रोडक्ट खोले कार्ट में जोड़ें।',openCart:'कार्ट खोलें →',quickSearch:'प्रोडक्ट या कैटेगरी खोजें',minimum:'न्यूनतम',available:'उपलब्ध',invalidQty:'मात्रा को मान्य स्टेप के अनुसार बदला गया।',cartUpdated:'कार्ट अपडेट हुआ',allTime:'कुल',lastMonth:'पिछला महीना',trackedOrders:'ट्रैक ऑर्डर'
  },
  mr:{
-  home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर होम',
-  products:'उत्पादने',productsSub:'प्रमाणानुसार किंमत आणि ऑर्डर पर्याय पाहण्यासाठी उत्पादन निवडा.',
-  monthEarn:'या महिन्यात · कमाईची संधी',monthEarnSub:'रिटेल मूल्य आणि तुमची खरेदी किंमत यातील फरक',
-  purchased:'खरेदी',retailValue:'रिटेल मूल्य',orders:'ऑर्डर्स',earningNote:'तुमच्या ट्रॅक केलेल्या ऑर्डर्स आणि रिटेल मूल्यानुसार गणना.',
-  all:'सर्व',buyAt:'खरेदी',sellAt:'विक्री',earn:'कमवा',stock:'स्टॉक',minQty:'किमान',
-  unavailable:'उपलब्ध नाही',search:'शोधा',searchPlaceholder:'उत्पादन किंवा कॅटेगरी शोधा',
-  noProducts:'उत्पादन सापडले नाही',trySearch:'दुसरे नाव किंवा कॅटेगरी शोधा.',
-  goodMorning:'शुभ सकाळ',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्याकाळ',
-  catalogue:'होलसेल कॅटलॉग, किंमत आणि ऑर्डर पर्याय.',loading:'तुमचे स्टोअर उघडत आहे…',
-  noExact:'पूर्ण गणनेसाठी Earnings उघडा',
-  earningsOverview:'कमाई सारांश',allTime:'एकूण',allTimeEarn:'एकूण कमाई',
-  lastMonth:'मागील महिना',trackedOrders:'ट्रॅक ऑर्डर्स',viewEarnings:'पहा →',
-  openAnalytics:'सविस्तर कमाई पहा'
+  home:'होम',shop:'शॉप',quickOrder:'क्विक ऑर्डर',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर स्टोअर',categories:'कॅटेगरी',
+  products:'होलसेल कॅटलॉग',productsSub:'बिझनेस किंमत, MOQ, स्टॉक आणि प्रमाण ऑफर्स एकाच ठिकाणी.',
+  monthEarn:'या महिन्यात · संभाव्य कमाई',monthEarnSub:'रिटेल मूल्य आणि तुमची खरेदी किंमत यातील फरक',purchased:'खरेदी',retailValue:'रिटेल मूल्य',orders:'ऑर्डर्स',thisMonth:'या महिन्यात',atMrp:'MRP मूल्य',earningNote:'ट्रॅक केलेल्या ऑर्डर्सनुसार गणना.',
+  all:'सर्व',yourPrice:'तुमची किंमत',mrp:'MRP',margin:'मार्जिन',earn:'कमवा',stock:'स्टॉक',minQty:'MOQ',step:'स्टेप',unit:'युनिट',inStock:'स्टॉकमध्ये',lowStock:'कमी स्टॉक',unavailable:'स्टॉक संपला',
+  search:'शोधा',searchPlaceholder:'उत्पादन, कॅटेगरी किंवा प्रोडक्ट ID शोधा',noProducts:'उत्पादन सापडले नाही',trySearch:'दुसरा शोध, कॅटेगरी किंवा फिल्टर वापरा.',
+  goodMorning:'शुभ सकाळ',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्याकाळ',catalogue:'होलसेल उत्पादने, बिझनेस किंमत आणि जलद ऑर्डरिंग.',loading:'तुमचे स्टोअर उघडत आहे…',noExact:'पूर्ण गणनेसाठी Earnings उघडा',
+  buyAgain:'पुन्हा खरेदी',buyAgainSub:'तुमच्या अलीकडील ऑर्डरमधील उत्पादने.',openQuickOrder:'क्विक ऑर्डर →',add:'कार्टमध्ये जोडा',added:'कार्टमध्ये जोडले',view:'उत्पादन पहा',qty:'प्रमाण',lineTotal:'ऑर्डर मूल्य',
+  inStockOnly:'स्टॉकमध्ये',sortRecommended:'शिफारस केलेले',sortPriceLow:'किंमत: कमी ते जास्त',sortMargin:'मार्जिन: जास्त ते कमी',sortStock:'स्टॉक: जास्त ते कमी',
+  quickOrderSub:'उत्पादन शोधा, प्रमाण टाका आणि प्रत्येक उत्पादन न उघडता कार्टमध्ये जोडा.',openCart:'कार्ट उघडा →',quickSearch:'उत्पादन किंवा कॅटेगरी शोधा',minimum:'किमान',available:'उपलब्ध',invalidQty:'प्रमाण योग्य स्टेपनुसार बदलले.',cartUpdated:'कार्ट अपडेट झाले',allTime:'एकूण',lastMonth:'मागील महिना',trackedOrders:'ट्रॅक ऑर्डर्स'
  }
 };
 function tr(k){return UI[language]?.[k]||UI.en[k]||k}
 function langName(){return language==='hi'?'हिन्दी':language==='mr'?'मराठी':'English'}
-function translatedProduct(p){
- const x=p?.translations?.[language];
- if(language==='en'||!x)return {title:p?.title||'',description:p?.description||''};
- return {
-  title:String(x.title||'').trim()||p?.title||'',
-  description:String(x.description||'').trim()||p?.description||''
- };
-}
+function translatedProduct(p){const x=p?.translations?.[language];if(language==='en'||!x)return {title:p?.title||'',description:p?.description||''};return {title:String(x.title||'').trim()||p?.title||'',description:String(x.description||'').trim()||p?.description||''}}
 function productTitle(p){return translatedProduct(p).title}
 function productDescription(p){return translatedProduct(p).description}
-function applyLanguage(){
- document.documentElement.lang=language;
- for(const el of document.querySelectorAll('[data-i18n]'))el.textContent=tr(el.dataset.i18n);
- $('searchInput').placeholder=tr('searchPlaceholder');
- $('searchGo').textContent=tr('search');
- $('languageBtn').textContent=langName()+' ▾';
- $('loaderCopy').textContent=tr('loading');
- if(state.profile){
-  $('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;
-  $('helloSub').textContent=tr('catalogue');
- }
- renderCategories();
- renderProducts();
- renderBusinessSummary();
-}
-function setLanguage(next){
- language=['en','hi','mr'].includes(next)?next:'en';
- localStorage.setItem(LANG_KEY,language);
- $('languageMenu').hidden=true;
- applyLanguage();
-}
+function categoryName(id){return state.categories.find(x=>Number(x.id)===Number(id))?.name||'Wholesale'}
+function imagesOf(p){return Array.isArray(p?.images)?p.images.filter(Boolean):[]}
+function imageOf(p){return imagesOf(p)[0]||''}
+function baseProfit(p,price=Number(p?.price_paise||0)){return Math.max(0,Number(p?.mrp_paise||0)-Number(price||0))}
+function marginPercent(p,price=Number(p?.price_paise||0)){const mrp=Number(p?.mrp_paise||0);return mrp?Math.max(0,Math.round(baseProfit(p,price)*100/mrp)):0}
+function shortDescription(p){const text=String(productDescription(p)||'').trim();return text||`${categoryName(p.category_id)} · ${p.unit||'unit'}`}
+function minQty(p){return Math.max(1,Number(p?.min_qty||1))}
+function qtyStep(p){return Math.max(1,Number(p?.qty_step||1))}
+function maxQty(p){return Math.max(0,Number(p?.stock||0))}
+function isUnavailable(p){return maxQty(p)<minQty(p)}
+function bulkRules(p){return Array.isArray(p?.bulk_rules)?p.bulk_rules.filter(x=>x&&Number(x.price_paise)>0).slice().sort((a,b)=>Number(a.min_qty||a.units||0)-Number(b.min_qty||b.units||0)):[]}
+function unitPriceForQty(p,qty){let price=Number(p?.price_paise||0);const exact=bulkRules(p).find(r=>Number(qty)===Math.max(1,Number(r.units||r.min_qty||1)));return exact?Number(exact.price_paise||price):price}
+function normalizeQty(p,value){const min=minQty(p),step=qtyStep(p),stock=maxQty(p);let q=Math.max(min,Math.round(Number(value)||min));if(step>1)q=min+Math.max(0,Math.ceil((q-min)/step))*step;if(stock>0&&q>stock){q=min+Math.floor(Math.max(0,stock-min)/step)*step}if(q<min||q>stock&&stock>0)return 0;return q}
 
-function readCart(){
-  try{
-    const x=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');
-    return Array.isArray(x)?x:[];
-  }catch{return[]}
-}
+function readCart(){try{const x=JSON.parse(localStorage.getItem('oneness-retailer-cart')||'[]');return Array.isArray(x)?x.filter(i=>Number(i.product_id)>0&&Number(i.qty)>0):[]}catch{return[]}}
+function saveCart(){localStorage.setItem('oneness-retailer-cart',JSON.stringify(state.cart));updateCartBadges()}
+function cartCount(){return state.cart.reduce((sum,item)=>sum+Number(item.qty||0),0)}
+function updateCartBadges(){const count=cartCount();for(const id of ['cartTopCount','cartNavCount']){const el=$(id);if(!el)continue;el.textContent=count>99?'99+':count;el.hidden=count===0}}
+function addToCart(productId,qty){const p=state.products.find(x=>Number(x.id)===Number(productId));if(!p||isUnavailable(p))return false;const normalized=normalizeQty(p,qty);if(!normalized)return false;const existing=state.cart.find(x=>Number(x.product_id)===Number(productId));if(existing)existing.qty=normalizeQty(p,Number(existing.qty||0)+normalized);else state.cart.push({product_id:Number(productId),qty:normalized});saveCart();toast(`${productTitle(p)} · ${tr('added')}`);return true}
+function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),1800)}
 
-function cartCount(){
-  return state.cart.reduce((sum,item)=>sum+Number(item.qty||0),0);
-}
+function greeting(){const h=new Date().getHours();return h<12?tr('goodMorning'):h<17?tr('goodAfternoon'):tr('goodEvening')}
+function firstName(){return (state.profile?.name||'Retailer').trim().split(/\s+/)[0]||'Retailer'}
+function openProduct(id){try{const recent=JSON.parse(localStorage.getItem('oneness-recent-products')||'[]');const arr=Array.isArray(recent)?recent:[];localStorage.setItem('oneness-recent-products',JSON.stringify([id,...arr.filter(x=>Number(x)!==Number(id))].slice(0,12)))}catch{}location.href='product.html?id='+encodeURIComponent(id)}
 
-function updateCartBadges(){
-  const count=cartCount();
-  for(const id of ['cartTopCount','cartNavCount']){
-    const el=$(id);
-    el.textContent=count>99?'99+':count;
-    el.hidden=count===0;
-  }
-}
-
-function greeting(){
-  const h=new Date().getHours();
-  return h<12?tr('goodMorning'):h<17?tr('goodAfternoon'):tr('goodEvening');
-}
-
-function firstName(){
-  return (state.profile?.name||'Retailer').trim().split(/\s+/)[0]||'Retailer';
-}
-
-function categoryName(id){
-  return state.categories.find(x=>Number(x.id)===Number(id))?.name||'Wholesale';
-}
-
-function imagesOf(p){
-  return Array.isArray(p?.images)?p.images.filter(Boolean):[];
-}
-function imageOf(p){return imagesOf(p)[0]||'';}
-
-function baseProfit(p){
-  return Math.max(0,Number(p.mrp_paise||0)-Number(p.price_paise||0));
-}
-
-function marginPercent(p){
-  const mrp=Number(p.mrp_paise||0);
-  if(!mrp)return 0;
-  return Math.max(0,Math.round(baseProfit(p)*100/mrp));
-}
-
-function normalizeOrderItem(raw){
-  if(!raw||typeof raw!=='object')return null;
-  return {
-    qty:Number(raw.qty??raw.quantity??0),
-    mrp_paise:Number(raw.mrp_paise??raw.mrp??0)
-  };
-}
-
-function orderItems(order){
-  const raw=order?.reserved_items;
-  if(Array.isArray(raw))return raw.map(normalizeOrderItem).filter(Boolean);
-  if(raw&&Array.isArray(raw.items))return raw.items.map(normalizeOrderItem).filter(Boolean);
-  return [];
-}
-
-function orderMrp(order){
-  const items=orderItems(order);
-  if(!items.length)return null;
-  if(items.some(i=>!i.mrp_paise))return null;
-  return items.reduce((sum,i)=>sum+i.qty*i.mrp_paise,0);
-}
-
-function cancelled(order){
-  return ['cancelled','canceled','refunded'].includes(String(order.status||'').toLowerCase());
-}
-
-function inCurrentMonth(order){
-  const d=new Date(order.created_at);
-  const now=new Date();
-  return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();
-}
-
-function inLastMonth(order){
-  const d=new Date(order.created_at);
-  const now=new Date();
-  const lm=new Date(now.getFullYear(),now.getMonth()-1,1);
-  return d.getFullYear()===lm.getFullYear()&&d.getMonth()===lm.getMonth();
-}
-
-function inLastWeek(order){
-  const d=new Date(order.created_at);
-  const now=new Date();
-  const weekAgo=new Date(now.getTime()-7*24*60*60*1000);
-  return d>=weekAgo&&d<=now;
-}
-
-function shortDescription(p){
-  const text=String(productDescription(p)||'').trim();
-  if(text)return text;
-  return `${categoryName(p.category_id)} · ${p.unit||'unit'} · ${tr('stock')} ${Number(p.stock||0)}`;
-}
+function stockState(p){const stock=maxQty(p),minimum=minQty(p);if(stock<minimum)return {cls:'out',text:tr('unavailable')};if(stock<=Math.max(minimum*2,Number(p.low_stock_alert_qty||0)))return {cls:'low',text:`${tr('lowStock')} · ${stock}`};return {cls:'',text:`${tr('inStock')} · ${stock}`}}
+function tierMarkup(p){const tiers=bulkRules(p).slice(0,3);if(!tiers.length)return '';return `<div class="tier-row">${tiers.map(r=>{const q=Math.max(1,Number(r.units||r.min_qty||1));const total=Number(r.total_price_paise||0);const label=String(r.title||'').trim();return `<span class="tier-chip">${label?`<b>${esc(label)}</b> · `:''}${q} ${esc(p.unit||'unit')} · ${total?money(total):money(Number(r.price_paise||0)*q)} <small>(${money(r.price_paise)}/${esc(p.unit||'unit')})</small></span>`}).join('')}</div>`}
 
 function productCard(p,index=0){
-  const imgs=imagesOf(p);
-  const img=imgs[0]||'';
-  const unavailable=Number(p.stock||0)<Number(p.min_qty||1);
-  const earn=baseProfit(p);
-  const title=productTitle(p);
-  const dots=imgs.length>1
-    ?`<div class="slider-dots">${imgs.slice(0,5).map((_,i)=>`<span class="slider-dot ${i===0?'active':''}"></span>`).join('')}</div>`
-    :'';
-  const controls=imgs.length>1
-    ?`<div class="image-slider-controls"><button class="slide-btn prev" type="button" data-slide="-1" aria-label="Previous image">‹</button><button class="slide-btn next" type="button" data-slide="1" aria-label="Next image">›</button>${dots}</div>`
-    :'';
-
-  return `
-    <article class="product-card" data-product="${p.id}" data-image-index="0" data-has-slider="${imgs.length>1?'1':'0'}">
-      <div class="product-image">
-        <span class="earn-sticker"><span class="earn-word">${tr('earn')}</span><strong>${money(earn)}</strong><span class="per-piece">/pc</span></span>
-        ${img?`<img src="${esc(img)}" alt="${esc(title)}" ${index<6?'fetchpriority="high"':'loading="lazy"'} decoding="async">`:'◇'}
-        ${controls}
-      </div>
-
-      <div class="product-copy">
-        <div class="product-category">${esc(categoryName(p.category_id))}</div>
-        <div class="product-name">${esc(title)}</div>
-        <div class="product-desc">${esc(shortDescription(p))}</div>
-
-        <div class="price-row">
-          <div class="price-box">
-            <small>${tr('buyAt')}</small>
-            <strong>${money(p.price_paise)}</strong>
-          </div>
-          <div class="price-box sell">
-            <small>MRP</small>
-            <strong>${money(p.mrp_paise)}</strong>
-          </div>
-        </div>
-
-        <div class="profit-row">
-          <span class="profit-chip">${tr('earn')} ${money(earn)} / ${esc(p.unit||'unit')}</span>
-        </div>
-
-        <div class="meta">
-          ${unavailable?tr('unavailable'):`${tr('minQty')} ${Number(p.min_qty||1)} · ${tr('stock')} ${Number(p.stock||0)}`}
-        </div>
-      </div>
-
-      <div class="open-arrow">›</div>
-    </article>
-  `;
+ const unavailable=isUnavailable(p),stock=stockState(p),img=imageOf(p),qty=minQty(p),price=unitPriceForQty(p,qty),earn=baseProfit(p,price),margin=marginPercent(p,price),imgs=imagesOf(p);
+ return `<article class="product-card" data-product="${p.id}">
+   <div class="product-image" data-open-product="${p.id}">
+     <span class="margin-badge"><span>${tr('earn')}</span><strong>${money(earn)} · ${margin}%</strong></span>
+     ${img?`<img src="${esc(img)}" alt="${esc(productTitle(p))}" ${index<5?'fetchpriority="high"':'loading="lazy"'} decoding="async">`:'<span style="font-size:30px;color:#c5cbd3">◇</span>'}
+     ${imgs.length>1?`<span class="image-count">+${imgs.length-1}</span>`:''}
+   </div>
+   <div class="product-main">
+     <div class="product-topline"><span class="product-category">${esc(categoryName(p.category_id))}</span><span class="stock-chip ${stock.cls}">${esc(stock.text)}</span></div>
+     <div class="product-name" data-open-product="${p.id}">${esc(productTitle(p))}</div>
+     <div class="product-desc">${esc(shortDescription(p))}</div>
+     <div class="pricing-line">
+       <div class="price-block primary"><small>${tr('yourPrice')}</small><strong class="js-unit-price">${money(price)}</strong></div>
+       <div class="price-block"><small>${tr('mrp')}</small><strong>${money(p.mrp_paise)}</strong></div>
+       <div class="price-block margin"><small>${tr('margin')}</small><strong class="js-margin">${money(earn)} · ${margin}%</strong></div>
+     </div>
+     <div class="product-meta"><span><b>${tr('minQty')}:</b> ${minQty(p)}</span><span><b>${tr('step')}:</b> ${qtyStep(p)}</span><span><b>${tr('unit')}:</b> ${esc(p.unit||'unit')}</span></div>
+     ${tierMarkup(p)}
+   </div>
+   <div class="order-box">
+     <div>
+       <div class="order-box-label">${tr('lineTotal')}</div>
+       <div class="line-total js-line-total">${money(price*qty)}<small>${money(price)} / ${esc(p.unit||'unit')}</small></div>
+     </div>
+     <div class="qty-row">
+       <button class="qty-btn" type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+       <input class="qty-input" data-qty-input type="number" inputmode="numeric" min="${minQty(p)}" step="${qtyStep(p)}" max="${maxQty(p)||''}" value="${qty}" ${unavailable?'disabled':''}>
+       <button class="qty-btn" type="button" data-qty-plus aria-label="Increase quantity" ${unavailable?'disabled':''}>+</button>
+     </div>
+     <div class="card-actions"><button class="add-cart" type="button" data-add-cart ${unavailable?'disabled':''}>${unavailable?tr('unavailable'):tr('add')}</button><button class="view-product" type="button" data-open-product="${p.id}" aria-label="${tr('view')}">›</button></div>
+     <div class="order-hint">${tr('minimum')} ${minQty(p)} · ${maxQty(p)} ${tr('available')}</div>
+   </div>
+ </article>`;
 }
 
-function setSliderImage(card,nextIndex){
-  const id=Number(card.dataset.product);
-  const p=state.products.find(x=>Number(x.id)===id);
-  const imgs=imagesOf(p);
-  if(imgs.length<2)return;
-  const index=(nextIndex+imgs.length)%imgs.length;
-  card.dataset.imageIndex=String(index);
-  const img=card.querySelector('.product-image img');
-  if(img){
-    img.src=imgs[index];
-    img.alt=productTitle(p);
-  }
-  card.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===Math.min(index,4)));
-}
-function initSliders(){
-  for(const card of $('products').querySelectorAll('.product-card[data-has-slider="1"]')){
-    card.querySelectorAll('[data-slide]').forEach(btn=>btn.onclick=e=>{
-      e.preventDefault();e.stopPropagation();
-      setSliderImage(card,Number(card.dataset.imageIndex||0)+Number(btn.dataset.slide||0));
-    });
-  }
-}
-let sliderTimer=null;
-function startAutoSlider(){
-  clearInterval(sliderTimer);
-  sliderTimer=setInterval(()=>{
-    if(document.hidden)return;
-    const cards=[...document.querySelectorAll('.product-card[data-has-slider="1"]')];
-    const visible=cards.filter(card=>{
-      const r=card.getBoundingClientRect();
-      return r.bottom>80&&r.top<innerHeight-50;
-    }).slice(0,5);
-    for(const card of visible)setSliderImage(card,Number(card.dataset.imageIndex||0)+1);
-  },2000);
-}
-function openProduct(id){
-  try{
-    const recent=JSON.parse(localStorage.getItem('oneness-recent-products')||'[]');
-    const arr=Array.isArray(recent)?recent:[];
-    const next=[id,...arr.filter(x=>Number(x)!==Number(id))].slice(0,12);
-    localStorage.setItem('oneness-recent-products',JSON.stringify(next));
-  }catch{}
-  location.href='product.html?id='+encodeURIComponent(id);
+function filteredProducts(){
+ let rows=state.products.slice();
+ if(state.selectedCategory)rows=rows.filter(p=>String(p.category_id)===String(state.selectedCategory));
+ if(state.search){const q=state.search.toLowerCase();rows=rows.filter(p=>`${p.title} ${p.description||''} ${productTitle(p)} ${productDescription(p)} ${categoryName(p.category_id)} ${p.id}`.toLowerCase().includes(q))}
+ if(state.inStockOnly)rows=rows.filter(p=>!isUnavailable(p));
+ if(state.sort==='priceAsc')rows.sort((a,b)=>Number(a.price_paise||0)-Number(b.price_paise||0));
+ else if(state.sort==='marginDesc')rows.sort((a,b)=>baseProfit(b)-baseProfit(a));
+ else if(state.sort==='stockDesc')rows.sort((a,b)=>Number(b.stock||0)-Number(a.stock||0));
+ return rows;
 }
 
-function renderProducts(){
-  let rows=state.products.slice();
+function refreshCardPricing(card){const p=state.products.find(x=>Number(x.id)===Number(card.dataset.product));const input=card.querySelector('[data-qty-input]');if(!p||!input)return;const qty=normalizeQty(p,input.value)||minQty(p);input.value=qty;const price=unitPriceForQty(p,qty),earn=baseProfit(p,price),margin=marginPercent(p,price);card.querySelector('.js-unit-price').textContent=money(price);card.querySelector('.js-margin').textContent=`${money(earn)} · ${margin}%`;const total=card.querySelector('.js-line-total');total.innerHTML=`${money(price*qty)}<small>${money(price)} / ${esc(p.unit||'unit')}</small>`}
 
-  if(state.selectedCategory){
-    rows=rows.filter(p=>String(p.category_id)===String(state.selectedCategory));
-  }
-
-  if(state.search){
-    const q=state.search.toLowerCase();
-    rows=rows.filter(p=>{
-      const text=`${p.title} ${p.description||''} ${productTitle(p)} ${productDescription(p)} ${categoryName(p.category_id)} ${p.id}`.toLowerCase();
-      return text.includes(q);
-    });
-  }
-
-  $('productCount').textContent=`${rows.length} ${tr('products')}`;
-
-  if(!rows.length){
-    $('products').innerHTML=`
-      <div class="empty">
-        <strong>${tr('noProducts')}</strong>
-        ${tr('trySearch')}
-      </div>`;
-    return;
-  }
-
-  $('products').innerHTML=rows.map(productCard).join('');
-  initSliders();
-  startAutoSlider();
-
-  for(const card of $('products').querySelectorAll('[data-product]')){
-    card.onclick=()=>openProduct(Number(card.dataset.product));
-  }
+function bindProductCards(){
+ for(const card of $('products').querySelectorAll('.product-card')){
+   const id=Number(card.dataset.product),p=state.products.find(x=>Number(x.id)===id),input=card.querySelector('[data-qty-input]');
+   card.querySelector('[data-qty-minus]')?.addEventListener('click',()=>{if(!p||!input)return;input.value=Math.max(minQty(p),Number(input.value||minQty(p))-qtyStep(p));refreshCardPricing(card)});
+   card.querySelector('[data-qty-plus]')?.addEventListener('click',()=>{if(!p||!input)return;input.value=normalizeQty(p,Number(input.value||minQty(p))+qtyStep(p))||input.value;refreshCardPricing(card)});
+   input?.addEventListener('change',()=>{if(!p)return;const before=Number(input.value);const after=normalizeQty(p,before);input.value=after||minQty(p);if(before!==after)toast(tr('invalidQty'));refreshCardPricing(card)});
+   card.querySelector('[data-add-cart]')?.addEventListener('click',()=>addToCart(id,Number(input?.value||minQty(p))));
+   card.querySelectorAll('[data-open-product]').forEach(el=>el.addEventListener('click',()=>openProduct(id)));
+ }
 }
 
-function renderCategories(){
-  $('categories').innerHTML=
-    `<button class="category ${state.selectedCategory===''?'active':''}" data-category="">${tr('all')}</button>`+
-    state.categories.map(c=>`
-      <button class="category ${String(state.selectedCategory)===String(c.id)?'active':''}" data-category="${esc(c.id)}">
-        ${esc(c.name)}
-      </button>`).join('');
+function renderProducts(){const rows=filteredProducts();$('productCount').textContent=`${rows.length} ${tr('products')}`;if(!rows.length){$('products').innerHTML=`<div class="empty"><strong>${tr('noProducts')}</strong>${tr('trySearch')}</div>`;return}$('products').innerHTML=rows.map(productCard).join('');bindProductCards()}
+function renderCategories(){$('categories').innerHTML=`<button class="category ${state.selectedCategory===''?'active':''}" data-category="">${tr('all')}</button>`+state.categories.map(c=>`<button class="category ${String(state.selectedCategory)===String(c.id)?'active':''}" data-category="${esc(c.id)}">${esc(c.name)}</button>`).join('');for(const btn of $('categories').querySelectorAll('[data-category]'))btn.onclick=()=>{state.selectedCategory=btn.dataset.category;renderCategories();renderProducts()}}
 
-  for(const btn of $('categories').querySelectorAll('[data-category]')){
-    btn.onclick=()=>{
-      state.selectedCategory=btn.dataset.category;
-      renderCategories();
-      renderProducts();
-    };
-  }
-}
+function normalizeOrderItem(raw){if(!raw||typeof raw!=='object')return null;return {product_id:Number(raw.product_id??raw.id??0),qty:Number(raw.qty??raw.quantity??0),mrp_paise:Number(raw.mrp_paise??raw.mrp??0)}}
+function orderItems(order){const raw=order?.reserved_items;if(Array.isArray(raw))return raw.map(normalizeOrderItem).filter(Boolean);if(raw&&Array.isArray(raw.items))return raw.items.map(normalizeOrderItem).filter(Boolean);return[]}
+function orderMrp(order){const items=orderItems(order);if(!items.length||items.some(i=>!i.mrp_paise))return null;return items.reduce((sum,i)=>sum+i.qty*i.mrp_paise,0)}
+function cancelled(order){return ['cancelled','canceled','refunded'].includes(String(order.status||'').toLowerCase())}
+function inCurrentMonth(order){const d=new Date(order.created_at),now=new Date();return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()}
 
-function calcProfitForOrders(orders){
-  const purchase=orders.reduce((sum,o)=>sum+Number(o.total_paise||0),0);
-  const mrps=orders.map(orderMrp);
-  const exact=orders.length>0&&mrps.every(v=>v!==null);
-  const mrp=exact?mrps.reduce((sum,v)=>sum+v,0):null;
-  return {purchase,mrp,profit:mrp===null?null:Math.max(0,mrp-purchase)};
+function renderBuyAgain(){
+ const seen=new Set(),ids=[];
+ const orders=state.orders.filter(o=>!cancelled(o)).slice().sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+ for(const o of orders){for(const item of orderItems(o)){if(item.product_id&&!seen.has(item.product_id)){seen.add(item.product_id);ids.push(item.product_id)}if(ids.length>=4)break}if(ids.length>=4)break}
+ const products=ids.map(id=>state.products.find(p=>Number(p.id)===Number(id))).filter(Boolean);
+ const section=$('buyAgainSection');if(!products.length){section.hidden=true;return}section.hidden=false;
+ $('buyAgainList').innerHTML=products.map(p=>`<article class="reorder-card">${imageOf(p)?`<img src="${esc(imageOf(p))}" alt="">`:'<div class="reorder-thumb"></div>'}<div class="reorder-copy"><strong>${esc(productTitle(p))}</strong><span>${money(p.price_paise)} · ${tr('minQty')} ${minQty(p)}</span></div><button class="reorder-add" type="button" data-reorder="${p.id}">${tr('add')}</button></article>`).join('');
+ $('buyAgainList').querySelectorAll('[data-reorder]').forEach(btn=>btn.onclick=()=>{const p=state.products.find(x=>Number(x.id)===Number(btn.dataset.reorder));if(p)addToCart(p.id,minQty(p))});
 }
 
 function renderBusinessSummary(){
-  const monthOrders=state.orders.filter(o=>!cancelled(o)&&inCurrentMonth(o));
-  const lastMonthOrders=state.orders.filter(o=>!cancelled(o)&&inLastMonth(o));
-  const lastWeekOrders=state.orders.filter(o=>!cancelled(o)&&inLastWeek(o));
-  const allOrders=state.orders.filter(o=>!cancelled(o));
-
-  const em=state.earnings?.this_month;
-  const all=state.earnings?.all_time;
-  const last=state.earnings?.last_month;
-
-  // Month card
-  if(em){
-    $('monthProfit').textContent=money(Number(em.profit_paise||0));
-    $('monthWholesale').textContent=money(Number(em.purchase_paise||0));
-    $('monthMrp').textContent=money(Number(em.mrp_paise||0));
-    $('monthMargin').textContent=String(monthOrders.length);
-    $('profitFormula').textContent=tr('monthEarnSub');
-    $('businessNote').textContent=tr('earningNote');
-    $('ddMonthProfit').textContent=money(Number(em.profit_paise||0));
-  }else{
-    const c=calcProfitForOrders(monthOrders);
-    $('monthWholesale').textContent=money(c.purchase);
-    $('monthMargin').textContent=String(monthOrders.length);
-    if(c.profit===null){
-      $('monthProfit').textContent='—';
-      $('monthMrp').textContent='—';
-      $('profitFormula').textContent=tr('noExact');
-      $('ddMonthProfit').textContent='—';
-    }else{
-      $('monthProfit').textContent=money(c.profit);
-      $('monthMrp').textContent=money(c.mrp);
-      $('profitFormula').textContent=tr('monthEarnSub');
-      $('ddMonthProfit').textContent=money(c.profit);
-    }
-  }
-
-  // Last month
-  if(last){
-    $('ddLastMonthProfit').textContent=money(Number(last.profit_paise||0));
-  }else{
-    const c=calcProfitForOrders(lastMonthOrders);
-    $('ddLastMonthProfit').textContent=c.profit===null?'—':money(c.profit);
-  }
-
-  // Last week
-  const cw=calcProfitForOrders(lastWeekOrders);
-  $('ddLastWeekProfit').textContent=cw.profit===null?'—':money(cw.profit);
-
-  // All time
-  if(all){
-    $('ddAllTimeProfit').textContent=money(Number(all.profit_paise||0));
-  }else{
-    const c=calcProfitForOrders(allOrders);
-    $('ddAllTimeProfit').textContent=c.profit===null?'—':money(c.profit);
-  }
+ const monthOrders=state.orders.filter(o=>!cancelled(o)&&inCurrentMonth(o)),allOrders=state.orders.filter(o=>!cancelled(o)),em=state.earnings?.this_month,all=state.earnings?.all_time,last=state.earnings?.last_month;
+ if(em){$('monthProfit').textContent=money(Number(em.profit_paise||0));$('monthWholesale').textContent=money(Number(em.purchase_paise||0));$('monthMrp').textContent=money(Number(em.mrp_paise||0));$('monthMargin').textContent=String(monthOrders.length);$('profitFormula').textContent=tr('monthEarnSub')}
+ else{const wholesale=monthOrders.reduce((s,o)=>s+Number(o.total_paise||0),0),mrps=monthOrders.map(orderMrp),exact=monthOrders.length>0&&mrps.every(v=>v!==null),mrp=exact?mrps.reduce((s,v)=>s+v,0):null;$('monthWholesale').textContent=money(wholesale);$('monthMargin').textContent=String(monthOrders.length);if(mrp===null){$('monthProfit').textContent='—';$('monthMrp').textContent='—';$('profitFormula').textContent=tr('noExact')}else{$('monthProfit').textContent=money(Math.max(0,mrp-wholesale));$('monthMrp').textContent=money(mrp);$('profitFormula').textContent=tr('monthEarnSub')}}
+ if(all){$('allTimeProfit').textContent=money(Number(all.profit_paise||0));$('allTimePurchase').textContent=money(Number(all.purchase_paise||0));$('allTimeMrp').textContent=money(Number(all.mrp_paise||0));$('trackedOrders').textContent=String(all.tracked_orders??allOrders.length)}else{const purchase=allOrders.reduce((s,o)=>s+Number(o.total_paise||0),0),mrps=allOrders.map(orderMrp),exact=allOrders.length>0&&mrps.every(v=>v!==null),mrp=exact?mrps.reduce((s,v)=>s+v,0):null;$('allTimePurchase').textContent=money(purchase);$('allTimeMrp').textContent=mrp===null?'—':money(mrp);$('allTimeProfit').textContent=mrp===null?'—':money(Math.max(0,mrp-purchase));$('trackedOrders').textContent=String(allOrders.length)}
+ $('lastMonthProfit').textContent=last?money(Number(last.profit_paise||0)):'—';
 }
+
+function renderQuickOrder(query=''){
+ const q=String(query||'').trim().toLowerCase();let rows=state.products.filter(p=>!isUnavailable(p));if(q)rows=rows.filter(p=>`${productTitle(p)} ${categoryName(p.category_id)} ${p.id}`.toLowerCase().includes(q));rows=rows.slice(0,40);
+ $('quickOrderList').innerHTML=rows.length?rows.map(p=>`<div class="quick-row" data-quick="${p.id}">${imageOf(p)?`<img src="${esc(imageOf(p))}" alt="">`:'<div class="quick-thumb"></div>'}<div class="quick-copy"><strong>${esc(productTitle(p))}</strong><span>${esc(categoryName(p.category_id))} · ${tr('minQty')} ${minQty(p)} · ${tr('stock')} ${maxQty(p)}</span></div><div class="quick-price"><strong>${money(p.price_paise)}</strong><span>${money(p.mrp_paise)} MRP</span></div><div class="quick-action"><input type="number" min="${minQty(p)}" step="${qtyStep(p)}" max="${maxQty(p)}" value="${minQty(p)}"><button type="button">${tr('add')}</button></div></div>`).join(''):`<div class="empty"><strong>${tr('noProducts')}</strong>${tr('trySearch')}</div>`;
+ $('quickOrderList').querySelectorAll('[data-quick]').forEach(row=>{const id=Number(row.dataset.quick),p=state.products.find(x=>Number(x.id)===id),input=row.querySelector('input');row.querySelector('button').onclick=()=>{const q=normalizeQty(p,input.value);input.value=q||minQty(p);addToCart(id,input.value)}})
+}
+function openQuickOrder(){renderQuickOrder('');$('quickOrderSearch').value='';$('quickOrderModal').hidden=false;setTimeout(()=>$('quickOrderSearch').focus(),30)}
+function closeQuickOrder(){$('quickOrderModal').hidden=true}
+
+function applyLanguage(){document.documentElement.lang=language;for(const el of document.querySelectorAll('[data-i18n]'))el.textContent=tr(el.dataset.i18n);$('searchInput').placeholder=tr('searchPlaceholder');$('searchGo').textContent=tr('search');$('languageBtn').textContent=langName()+' ▾';$('loaderCopy').textContent=tr('loading');$('quickOrderSearch').placeholder=tr('quickSearch');if(state.profile){$('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;$('helloSub').textContent=tr('catalogue')}renderCategories();renderProducts();renderBusinessSummary();renderBuyAgain();if(!$('quickOrderModal').hidden)renderQuickOrder($('quickOrderSearch').value)}
+function setLanguage(next){language=['en','hi','mr'].includes(next)?next:'en';localStorage.setItem(LANG_KEY,language);$('languageMenu').hidden=true;applyLanguage()}
+
 function setupSearch(){
-  const input=$('searchInput');
-  const clear=$('searchClear');
-  const results=$('searchResults');
-
-  input.oninput=()=>{
-    state.search=input.value.trim();
-    clear.hidden=!state.search;
-    renderProducts();
-
-    if(!state.search){
-      results.hidden=true;
-      return;
-    }
-
-    const q=state.search.toLowerCase();
-    const matches=state.products.filter(p=>{
-      const text=`${p.title} ${p.description||''} ${productTitle(p)} ${productDescription(p)} ${categoryName(p.category_id)} ${p.id}`.toLowerCase();
-      return text.includes(q);
-    }).slice(0,6);
-
-    results.innerHTML=matches.length
-      ?matches.map(p=>`
-        <div class="search-row" data-search-product="${p.id}">
-          ${imageOf(p)
-            ?`<img class="search-thumb" src="${esc(imageOf(p))}" alt="">`
-            :`<div class="search-thumb"></div>`}
-          <div>
-            <strong>${esc(productTitle(p))}</strong>
-            <span>${tr('buyAt')} ${money(p.price_paise)} · ${tr('earn')} ${money(baseProfit(p))}</span>
-          </div>
-        </div>`).join('')
-      :`<div class="search-row"><div><strong>${tr('noProducts')}</strong><span>${tr('trySearch')}</span></div></div>`;
-
-    results.hidden=false;
-
-    for(const row of results.querySelectorAll('[data-search-product]')){
-      row.onclick=()=>openProduct(Number(row.dataset.searchProduct));
-    }
-  };
-
-  const submitSearch=()=>{
-    state.search=input.value.trim();
-    clear.hidden=!state.search;
-    renderProducts();
-    results.hidden=true;
-    $('productsSection').scrollIntoView({behavior:'smooth',block:'start'});
-  };
-  $('searchGo').onclick=submitSearch;
-  input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();submitSearch()}};
-
-  clear.onclick=()=>{
-    input.value='';
-    state.search='';
-    clear.hidden=true;
-    results.hidden=true;
-    renderProducts();
-    input.focus();
-  };
-
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('.search'))results.hidden=true;
-  });
+ const input=$('searchInput'),clear=$('searchClear'),results=$('searchResults');
+ input.oninput=()=>{state.search=input.value.trim();clear.hidden=!state.search;renderProducts();if(!state.search){results.hidden=true;return}const q=state.search.toLowerCase(),matches=state.products.filter(p=>`${p.title} ${p.description||''} ${productTitle(p)} ${productDescription(p)} ${categoryName(p.category_id)} ${p.id}`.toLowerCase().includes(q)).slice(0,7);results.innerHTML=matches.length?matches.map(p=>`<div class="search-row" data-search-product="${p.id}">${imageOf(p)?`<img class="search-thumb" src="${esc(imageOf(p))}" alt="">`:'<div class="search-thumb"></div>'}<div><strong>${esc(productTitle(p))}</strong><span>${tr('yourPrice')} ${money(p.price_paise)} · ${tr('earn')} ${money(baseProfit(p))}</span></div></div>`).join(''):`<div class="search-row"><div><strong>${tr('noProducts')}</strong><span>${tr('trySearch')}</span></div></div>`;results.hidden=false;results.querySelectorAll('[data-search-product]').forEach(row=>row.onclick=()=>openProduct(Number(row.dataset.searchProduct)))};
+ const submit=()=>{state.search=input.value.trim();clear.hidden=!state.search;renderProducts();results.hidden=true;$('productsSection').scrollIntoView({behavior:'smooth',block:'start'})};$('searchGo').onclick=submit;input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();submit()}};clear.onclick=()=>{input.value='';state.search='';clear.hidden=true;results.hidden=true;renderProducts();input.focus()};document.addEventListener('click',e=>{if(!e.target.closest('.search'))results.hidden=true})
 }
 
 function paintDashboard(data,earnings=null){
-  state.profile=data.profile||{};
-  state.products=Array.isArray(data.products)?data.products:[];
-  state.categories=Array.isArray(data.categories)?data.categories:[];
-  state.orders=Array.isArray(data.orders)?data.orders:[];
-  state.earnings=earnings?.ok===true?earnings:null;
-
-  $('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;
-  $('helloSub').textContent=tr('catalogue');
-  $('accountLink').textContent=(state.profile.business_name||tr('account'))+' →';
-
-  $('desktopProfileName').textContent=firstName();
-  $('desktopAvatarLetter').textContent=(String(state.profile.name||'R').trim()[0]||'R').toUpperCase();
-  if(state.profile.avatar_url){
-    $('desktopAvatarImg').src=state.profile.avatar_url;
-    $('desktopAvatarImg').hidden=false;
-    $('desktopAvatarLetter').hidden=true;
-  }else{
-    $('desktopAvatarImg').hidden=true;
-    $('desktopAvatarLetter').hidden=false;
-  }
-
-  renderBusinessSummary();
-  renderCategories();
-  renderProducts();
-  updateCartBadges();
-  applyLanguage();
+ state.profile=data.profile||{};state.products=Array.isArray(data.products)?data.products:[];state.categories=Array.isArray(data.categories)?data.categories:[];state.orders=Array.isArray(data.orders)?data.orders:[];state.earnings=earnings?.ok===true?earnings:null;state.cart=readCart();
+ $('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;$('helloSub').textContent=tr('catalogue');$('accountLink').textContent=(state.profile.business_name||tr('account'))+' →';$('desktopProfileName').textContent=firstName();$('desktopAvatarLetter').textContent=(String(state.profile.name||'R').trim()[0]||'R').toUpperCase();if(state.profile.avatar_url){$('desktopAvatarImg').src=state.profile.avatar_url;$('desktopAvatarImg').hidden=false;$('desktopAvatarLetter').hidden=true}else{$('desktopAvatarImg').hidden=true;$('desktopAvatarLetter').hidden=false}
+ renderBusinessSummary();renderCategories();renderProducts();renderBuyAgain();updateCartBadges();
 }
 
 async function loadDashboard(){
-  const {data:{user},error:userError}=await db.auth.getUser();
-  if(userError||!user){location.replace('index.html');return}
-
-  const cacheKey='oneness-retailer-home-v4:'+user.id;
-  try{
-    const cached=JSON.parse(sessionStorage.getItem(cacheKey)||'null');
-    if(cached?.home?.ok===true)paintDashboard(cached.home,cached.earnings||null);
-  }catch{}
-
-  const [homeResult,earningsResult]=await Promise.allSettled([
-    db.rpc('retailer_dashboard_home'),
-    db.rpc('retailer_earnings_dashboard',{p_days:null})
-  ]);
-  if(homeResult.status!=='fulfilled')throw homeResult.reason;
-
-  const {data,error}=homeResult.value;
-  if(error)throw error;
-  if(data?.ok!==true){
-    if(data?.reason==='not_authenticated'){location.replace('index.html');return}
-    if(data?.reason==='not_retailer'){await db.auth.signOut({scope:'local'});location.replace('index.html');return}
-    if(data?.reason==='blocked')throw Error('Your retailer account is blocked. Please contact ONeness.');
-    throw Error('Retailer account could not be opened.');
-  }
-
-  let earnings=null;
-  if(earningsResult.status==='fulfilled'&&!earningsResult.value.error&&earningsResult.value.data?.ok===true){
-    earnings=earningsResult.value.data;
-  }
-  paintDashboard(data,earnings);
-  try{sessionStorage.setItem(cacheKey,JSON.stringify({home:data,earnings,at:Date.now()}))}catch{}
+ const {data:{user},error:userError}=await db.auth.getUser();if(userError||!user){location.replace('index.html');return}
+ const cacheKey='oneness-retailer-home-v5:'+user.id;try{const cached=JSON.parse(sessionStorage.getItem(cacheKey)||'null');if(cached?.home?.ok===true)paintDashboard(cached.home,cached.earnings||null)}catch{}
+ const [homeResult,earningsResult]=await Promise.allSettled([db.rpc('retailer_dashboard_home'),db.rpc('retailer_earnings_dashboard',{p_days:null})]);if(homeResult.status!=='fulfilled')throw homeResult.reason;const {data,error}=homeResult.value;if(error)throw error;if(data?.ok!==true){if(data?.reason==='not_authenticated'){location.replace('index.html');return}if(data?.reason==='not_retailer'){await db.auth.signOut({scope:'local'});location.replace('index.html');return}if(data?.reason==='blocked')throw Error('Your retailer account is blocked. Please contact ONeness.');throw Error('Retailer account could not be opened.')}
+ let earnings=null;if(earningsResult.status==='fulfilled'&&!earningsResult.value.error&&earningsResult.value.data?.ok===true)earnings=earningsResult.value.data;paintDashboard(data,earnings);try{sessionStorage.setItem(cacheKey,JSON.stringify({home:data,earnings,at:Date.now()}))}catch{}
 }
-function showError(message){
-  hideLoader();
-  $('products').innerHTML=`
-    <div class="error">
-      <strong>Could not open the retailer home</strong>
-      ${esc(message)}
-      <br>
-      <button class="retry" onclick="location.reload()">Retry</button>
-    </div>`;
-  $('productCount').textContent='Unavailable';
-}
-
-function hideLoader(){
-  const el=$('pageLoader');if(!el)return;
-  el.classList.add('hide');
-  setTimeout(()=>el.remove(),280);
-}
-
-$('languageBtn').onclick=e=>{
-  e.stopPropagation();
-  $('languageMenu').hidden=!$('languageMenu').hidden;
-};
-for(const b of document.querySelectorAll('[data-lang]'))b.onclick=()=>setLanguage(b.dataset.lang);
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.language-wrap'))$('languageMenu').hidden=true;
-});
-
-// Earnings dropdown toggle
-$('earningsTrigger').onclick=function(e){
-  e.stopPropagation();
-  const panel=$('earningsPanel');
-  const trigger=this;
-  const isOpen=panel.classList.contains('open');
-  panel.classList.toggle('open');
-  trigger.classList.toggle('open');
-  if(!isOpen){
-    // Recalc dropdown values on open
-    renderBusinessSummary();
-  }
-};
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#earningsDropdown')){
-    $('earningsPanel').classList.remove('open');
-    $('earningsTrigger').classList.remove('open');
-  }
-});
+function showError(message){hideLoader();$('products').innerHTML=`<div class="error"><strong>Could not open the retailer store</strong>${esc(message)}<br><button class="retry" onclick="location.reload()">Retry</button></div>`;$('productCount').textContent='Unavailable'}
+function hideLoader(){const el=$('pageLoader');if(!el)return;el.classList.add('hide');setTimeout(()=>el.remove(),260)}
 
 /* Admin-controlled splash posters */
-function splashSeenKey(p){
-  const revision=String(p?.updated_at||p?.created_at||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,40);
-  return `oneness-splash:${p.id}:${revision}`;
-}
-function splashSeen(p){
- const key=splashSeenKey(p),f=p.display_frequency||'once_per_session';
- if(f==='always')return false;
- if(f==='once_per_session')return sessionStorage.getItem(key)==='1';
- const v=localStorage.getItem(key);
- if(f==='once_per_account')return v==='1';
- if(f==='once_per_day')return v===new Date().toISOString().slice(0,10);
- return false;
-}
-function markSplash(p){
- const key=splashSeenKey(p),f=p.display_frequency||'once_per_session';
- if(f==='once_per_session')sessionStorage.setItem(key,'1');
- else if(f==='once_per_account')localStorage.setItem(key,'1');
- else if(f==='once_per_day')localStorage.setItem(key,new Date().toISOString().slice(0,10));
-}
-async function preloadImage(url,timeout=4500){
- return await new Promise(resolve=>{
-  const img=new Image();let done=false;
-  const finish=v=>{if(done)return;done=true;resolve(v)};
-  img.onload=()=>finish(true);img.onerror=()=>finish(false);img.src=url;
-  setTimeout(()=>finish(false),timeout);
- });
-}
-async function maybeSplash(){
- try{
-  const {data,error}=await db.rpc('retailer_splash_feed',{p_page:'home'});
-  if(error)return;
-  const rows=(Array.isArray(data)?data:[]).filter(x=>x?.image_url&&!splashSeen(x));
-  if(!rows.length)return;
-  let index=0;
-  const overlay=$('splashOverlay'),img=$('splashImage'),title=$('splashTitle'),caption=$('splashCaption'),actions=$('splashActions');
-  const close=()=>{rows.forEach(markSplash);overlay.hidden=true};
-  const draw=async()=>{
-   const p=rows[index];
-   if(!(await preloadImage(p.image_url)))return index<rows.length-1?(index++,draw()):close();
-   overlay.hidden=true;
-   img.src=p.image_url;title.textContent=p.title||'ONeness';caption.textContent=p.caption||'';actions.innerHTML='';
-   if(p.dismissible!==false){
-    const skip=document.createElement('button');skip.type='button';skip.textContent='Skip';skip.onclick=close;actions.append(skip);
-   }
-   if(p.button_url){
-    const a=document.createElement('a');a.href=p.button_url;a.textContent=p.button_label||'Open';actions.append(a);
-   }
-   const next=document.createElement('button');next.type='button';next.className='primary-splash';
-   next.textContent=index===rows.length-1?'Continue':'Next';
-   next.onclick=()=>{markSplash(p);if(index<rows.length-1){index++;draw()}else close()};
-   actions.append(next);overlay.hidden=false;
-  };
-  draw();
- }catch{}
-}
+function splashSeenKey(p){const revision=String(p?.updated_at||p?.created_at||'').replace(/[^0-9A-Za-z_-]/g,'').slice(0,40);return `oneness-splash:${p.id}:${revision}`}
+function splashSeen(p){const key=splashSeenKey(p),f=p.display_frequency||'once_per_session';if(f==='always')return false;if(f==='once_per_session')return sessionStorage.getItem(key)==='1';const v=localStorage.getItem(key);if(f==='once_per_account')return v==='1';if(f==='once_per_day')return v===new Date().toISOString().slice(0,10);return false}
+function markSplash(p){const key=splashSeenKey(p),f=p.display_frequency||'once_per_session';if(f==='once_per_session')sessionStorage.setItem(key,'1');else if(f==='once_per_account')localStorage.setItem(key,'1');else if(f==='once_per_day')localStorage.setItem(key,new Date().toISOString().slice(0,10))}
+async function preloadImage(url,timeout=4500){return await new Promise(resolve=>{const img=new Image();let done=false;const finish=v=>{if(done)return;done=true;resolve(v)};img.onload=()=>finish(true);img.onerror=()=>finish(false);img.src=url;setTimeout(()=>finish(false),timeout)})}
+async function maybeSplash(){try{const {data,error}=await db.rpc('retailer_splash_feed',{p_page:'home'});if(error)return;const rows=(Array.isArray(data)?data:[]).filter(x=>x?.image_url&&!splashSeen(x));if(!rows.length)return;let index=0;const overlay=$('splashOverlay'),img=$('splashImage'),title=$('splashTitle'),caption=$('splashCaption'),actions=$('splashActions');const close=()=>{rows.forEach(markSplash);overlay.hidden=true};const draw=async()=>{const p=rows[index];if(!(await preloadImage(p.image_url)))return index<rows.length-1?(index++,draw()):close();overlay.hidden=true;img.src=p.image_url;title.textContent=p.title||'ONeness';caption.textContent=p.caption||'';actions.innerHTML='';if(p.dismissible!==false){const skip=document.createElement('button');skip.type='button';skip.textContent='Skip';skip.onclick=close;actions.append(skip)}if(p.button_url){const a=document.createElement('a');a.href=p.button_url;a.textContent=p.button_label||'Open';actions.append(a)}const next=document.createElement('button');next.type='button';next.className='primary-splash';next.textContent=index===rows.length-1?'Continue':'Next';next.onclick=()=>{markSplash(p);if(index<rows.length-1){index++;draw()}else close()};actions.append(next);overlay.hidden=false};draw()}catch{}}
 
-$('cartTop').onclick=()=>location.href='cart.html';
+$('languageBtn').onclick=e=>{e.stopPropagation();$('languageMenu').hidden=!$('languageMenu').hidden};for(const b of document.querySelectorAll('[data-lang]'))b.onclick=()=>setLanguage(b.dataset.lang);document.addEventListener('click',e=>{if(!e.target.closest('.language-wrap'))$('languageMenu').hidden=true});
+$('cartTop').onclick=()=>location.href='cart.html';$('quickOrderBtn').onclick=openQuickOrder;$('quickOrderToolbar').onclick=openQuickOrder;$('buyAgainAll').onclick=openQuickOrder;$('quickOrderClose').onclick=closeQuickOrder;$('quickOrderModal').onclick=e=>{if(e.target===$('quickOrderModal'))closeQuickOrder()};$('quickOrderSearch').oninput=e=>renderQuickOrder(e.target.value);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('quickOrderModal').hidden)closeQuickOrder()});
+$('sortSelect').onchange=e=>{state.sort=e.target.value;renderProducts()};$('inStockOnly').onchange=e=>{state.inStockOnly=e.target.checked;renderProducts()};
 
-applyLanguage();
-setupSearch();
-updateCartBadges();
-
-loadDashboard()
-  .then(()=>{hideLoader();setTimeout(maybeSplash,300)})
-  .catch(err=>{
-    console.error(err);
-    hideLoader();
-    showError(err?.message||'Unexpected error');
-  });
-
+applyLanguage();setupSearch();updateCartBadges();
+loadDashboard().then(()=>{applyLanguage();hideLoader();setTimeout(maybeSplash,300)}).catch(err=>{console.error(err);hideLoader();showError(err?.message||'Unexpected error')});
 })();
 </script>
 </body>
