@@ -962,6 +962,9 @@ const KEY='sb_publishable_97Gyvl_3GC_4irWpbIg0uA_SXDXeWb6';
 const db=window.supabase.createClient(URL,KEY,{
   auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'oneness-retailer'}
 });
+// Reuse this exact client for cart + splash. Creating a second GoTrueClient
+// with the same storage key can produce undefined session behaviour.
+window.ONenessRetailerSupabase=db;
 
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
@@ -1063,7 +1066,10 @@ async function quoteCart(showLoader=false){
       p_coupon_code:state.coupon||null
     });
 
-    if(error)throw error;
+    if(error){
+      console.error('retailer_cart_quote failed',error);
+      throw error;
+    }
 
     if(data?.ok!==true){
       if(data?.reason==='not_authenticated'){location.replace('index.html');return}
@@ -1083,7 +1089,8 @@ async function quoteCart(showLoader=false){
     toast(err?.message||'Could not refresh cart.');
   }finally{
     state.loading=false;
-    $('loading').hidden=true;
+    const loadingEl=$('loading');
+    if(loadingEl)loadingEl.hidden=true;
     if(showLoader)hideLoader();
   }
 }
@@ -1116,7 +1123,10 @@ function render(){
   const finalEarn=Math.max(0,Number(totals.mrp_paise||0)-Number(totals.payable_paise||0));
 
   $('heroProfit').textContent=money(finalEarn);
-  $('heroFormula').textContent=`${tr('sellAt')} ${money(totals.mrp_paise)} − ${tr('finalPayable')} ${money(totals.payable_paise)}`;
+  const heroFormula=$('heroFormula');
+  if(heroFormula){
+    heroFormula.textContent=`${tr('sellAt')} ${money(totals.mrp_paise)} − ${tr('finalPayable')} ${money(totals.payable_paise)}`;
+  }
   $('heroPay').textContent=money(totals.payable_paise);
   $('heroMrp').textContent=money(totals.mrp_paise);
   $('heroMargin').textContent=String(cartUnits());
@@ -1444,9 +1454,11 @@ async function showSplash(rows){
 async function runRetailerSplash(){
   try{
     if(!window.supabase?.createClient)return;
-    const client=window.supabase.createClient(SPLASH_URL,SPLASH_KEY,{
-      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'oneness-retailer'}
-    });
+    const client=window.ONenessRetailerSupabase;
+    if(!client){
+      console.warn('ONeness splash: shared Supabase client is unavailable.');
+      return;
+    }
     const {data,error}=await client.rpc('retailer_splash_feed',{p_page:splashPage});
     if(error){
       console.warn('ONeness splash feed:',error.message||error);
