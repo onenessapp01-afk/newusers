@@ -76,7 +76,7 @@ img { display: block; max-width: 100%; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: var(--c-surface-solid); /* Fallback */
+  background: var(--c-surface-solid);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -498,11 +498,10 @@ img { display: block; max-width: 100%; }
 .price-box.sell { background: rgba(0,0,0,0.02); }
 .price-box.sell strong { color: var(--c-text-main); text-decoration: line-through; opacity: 0.7; font-size: 15px; }
 
-.profit-row { display: none; /* Covered beautifully by the earn sticker */ }
+.profit-row { display: none; }
 
 .meta { font-size: 12px; font-weight: 600; color: var(--c-text-light); border-top: 1px solid rgba(0,0,0,0.06); padding-top: 16px; }
 
-/* The generic arrow converted into a proper View action */
 .open-arrow {
   margin-top: 16px; width: 100%; padding: 14px;
   background: var(--c-gold-light); color: var(--c-burgundy);
@@ -511,7 +510,7 @@ img { display: block; max-width: 100%; }
   transition: var(--transition);
 }
 .open-arrow::before { content: 'View Product Details'; }
-.open-arrow { font-size: 0; } /* Hide original chevron */
+.open-arrow { font-size: 0; }
 .open-arrow::before { font-size: 14px; }
 .product-card:hover .open-arrow { background: var(--c-burgundy); color: #FFF; border-color: var(--c-burgundy); }
 
@@ -544,7 +543,6 @@ img { display: block; max-width: 100%; }
 
   .app { padding-bottom: 80px; }
   
-  /* Mobile Header overrides */
   .topbar-inner {
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
@@ -564,11 +562,9 @@ img { display: block; max-width: 100%; }
   .welcome h1 { font-size: 24px; }
   .welcome p { font-size: 13px; }
   
-  /* Stack Layout */
   .dashboard-layout { grid-template-columns: 1fr; gap: 24px; }
   .performance-rail { position: relative; top: 0; gap: 16px; }
   
-  /* Mobile Business Card (Compact) */
   .business-card { padding: 24px; }
   .business-card::after { display: none; }
   .big-profit { font-size: 36px; }
@@ -580,9 +576,7 @@ img { display: block; max-width: 100%; }
   /* EXACTLY 1 CARD PER ROW ON MOBILE */
   .products { grid-template-columns: 1fr; gap: 16px; }
   
-  .product-card {
-    border-radius: var(--border-radius-lg);
-  }
+  .product-card { border-radius: var(--border-radius-lg); }
   .product-image { height: 280px; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .product-copy { padding: 20px; }
   .product-name { font-size: 17px; }
@@ -693,9 +687,9 @@ img { display: block; max-width: 100%; }
       </a>
 
       <div class="search">
-        <span class="search-icon">⌕</span>
+        <span class="search-icon">&#9005;</span>
         <input id="searchInput" type="search" placeholder="Search products or categories" autocomplete="off">
-        <button id="searchClear" class="clear" hidden aria-label="Clear search">×</button>
+        <button id="searchClear" class="clear" hidden aria-label="Clear search">&#215;</button>
         <button id="searchGo" class="search-go" type="button">Search</button>
         <div id="searchResults" class="search-results" hidden></div>
       </div>
@@ -708,7 +702,7 @@ img { display: block; max-width: 100%; }
           <a href="cart.html" data-i18n="cart">Cart</a>
         </nav>
         <div class="language-wrap">
-          <button class="lang-btn" id="languageBtn" type="button">English ▾</button>
+          <button class="lang-btn" id="languageBtn" type="button">English &#9662;</button>
           <div class="language-menu" id="languageMenu" hidden>
             <button type="button" data-lang="en">English</button>
             <button type="button" data-lang="hi">हिन्दी</button>
@@ -719,7 +713,7 @@ img { display: block; max-width: 100%; }
           <span class="desktop-avatar"><img id="desktopAvatarImg" alt="" hidden><b id="desktopAvatarLetter">R</b></span>
           <span class="desktop-profile-copy"><strong id="desktopProfileName">Retailer</strong><small data-i18n="account">Account</small></span>
         </a>
-        <button class="icon-btn cart-icon" id="cartTop" aria-label="Cart">🛒<span class="badge" id="cartTopCount" hidden>0</span></button>
+        <button class="icon-btn cart-icon" id="cartTop" aria-label="Cart">&#128722;<span class="badge" id="cartTopCount" hidden>0</span></button>
       </div>
     </div>
   </header>
@@ -727,16 +721,16 @@ img { display: block; max-width: 100%; }
   <div class="announcement-strip">
     <div class="marquee-track">
       <div class="marquee-content">
-        <span>Shop Smart • Earn More with ONeness</span><span class="sep">|</span>
-        <span>Wholesale Prices • Better Margins • Bigger Opportunities</span><span class="sep">|</span>
-        <span>आपकी दुकान, आपकी कमाई — ONeness के साथ</span><span class="sep">|</span>
-        <span>स्वस्त खरेदी • जास्त नफा • ONeness सोबत प्रगती</span><span class="sep">|</span>
+        <span>Shop Smart &bull; Earn More with ONeness</span><span class="sep">|</span>
+        <span>Wholesale Prices &bull; Better Margins &bull; Bigger Opportunities</span><span class="sep">|</span>
+        <span>आपकी दुकान, आपकी कमाई &mdash; ONeness के साथ</span><span class="sep">|</span>
+        <span>स्वस्त खरेदी &bull; जास्त नफा &bull; ONeness सोबत प्रगती</span><span class="sep">|</span>
       </div>
       <div class="marquee-content" aria-hidden="true">
-        <span>Shop Smart • Earn More with ONeness</span><span class="sep">|</span>
-        <span>Wholesale Prices • Better Margins • Bigger Opportunities</span><span class="sep">|</span>
-        <span>आपकी दुकान, आपकी कमाई — ONeness के साथ</span><span class="sep">|</span>
-        <span>स्वस्त खरेदी • जास्त नफा • ONeness सोबत प्रगती</span><span class="sep">|</span>
+        <span>Shop Smart &bull; Earn More with ONeness</span><span class="sep">|</span>
+        <span>Wholesale Prices &bull; Better Margins &bull; Bigger Opportunities</span><span class="sep">|</span>
+        <span>आपकी दुकान, आपकी कमाई &mdash; ONeness के साथ</span><span class="sep">|</span>
+        <span>स्वस्त खरेदी &bull; जास्त नफा &bull; ONeness सोबत प्रगती</span><span class="sep">|</span>
       </div>
     </div>
   </div>
@@ -745,10 +739,10 @@ img { display: block; max-width: 100%; }
     <section class="welcome">
       <div>
         <div class="eyebrow" data-i18n="retailerHome">Retailer home</div>
-        <h1 id="helloTitle">Welcome 👋</h1>
+        <h1 id="helloTitle">Welcome &#128075;</h1>
         <p id="helloSub">Wholesale catalogue, prices and order options.</p>
       </div>
-      <a id="accountLink" class="account-link" href="index.html">Account →</a>
+      <a id="accountLink" class="account-link" href="index.html">Account &rarr;</a>
     </section>
 
     <div class="categories" id="categories">
@@ -760,13 +754,13 @@ img { display: block; max-width: 100%; }
       <aside class="performance-rail">
         <section class="business-card">
           <div class="business-top">
-            <span data-i18n="monthEarn">This month · Earn opportunity</span>
-            <div id="monthProfit" class="big-profit">₹0</div>
+            <span data-i18n="monthEarn">This month &middot; Earn opportunity</span>
+            <div id="monthProfit" class="big-profit">&#8377;0</div>
             <p id="profitFormula" data-i18n="monthEarnSub">Retail value minus your purchase value</p>
           </div>
           <div class="business-stats">
-            <div class="stat"><span data-i18n="purchased">Purchased</span><strong id="monthWholesale">₹0</strong></div>
-            <div class="stat"><span data-i18n="retailValue">Retail value</span><strong id="monthMrp">₹0</strong></div>
+            <div class="stat"><span data-i18n="purchased">Purchased</span><strong id="monthWholesale">&#8377;0</strong></div>
+            <div class="stat"><span data-i18n="retailValue">Retail value</span><strong id="monthMrp">&#8377;0</strong></div>
             <div class="stat"><span data-i18n="orders">Orders</span><strong id="monthMargin">0</strong></div>
           </div>
           <div id="businessNote" class="business-note" data-i18n="earningNote">Calculated from your tracked orders and stored retail value.</div>
@@ -782,13 +776,13 @@ img { display: block; max-width: 100%; }
 
           <div class="overview-primary">
             <span data-i18n="allTimeEarn">Total earn</span>
-            <strong id="allTimeProfit">₹0</strong>
+            <strong id="allTimeProfit">&#8377;0</strong>
           </div>
 
           <div class="overview-grid">
-            <div><span data-i18n="purchased">Purchased</span><strong id="allTimePurchase">₹0</strong></div>
-            <div><span data-i18n="retailValue">Retail value</span><strong id="allTimeMrp">₹0</strong></div>
-            <div><span data-i18n="lastMonth">Last month</span><strong id="lastMonthProfit">₹0</strong></div>
+            <div><span data-i18n="purchased">Purchased</span><strong id="allTimePurchase">&#8377;0</strong></div>
+            <div><span data-i18n="retailValue">Retail value</span><strong id="allTimeMrp">&#8377;0</strong></div>
+            <div><span data-i18n="lastMonth">Last month</span><strong id="lastMonthProfit">&#8377;0</strong></div>
             <div><span data-i18n="trackedOrders">Tracked orders</span><strong id="trackedOrders">0</strong></div>
           </div>
         </section>
@@ -798,11 +792,11 @@ img { display: block; max-width: 100%; }
             <small data-i18n="earnings">Earnings</small>
             <strong data-i18n="openAnalytics">Open detailed analytics</strong>
           </span>
-          <b>↗</b>
+          <b>&#8599;</b>
         </a>
       </aside>
 
-      <!-- Main Product Catalogue - Two Column Desktop -->
+      <!-- Main Product Catalogue -->
       <section class="catalogue-panel">
         <section id="productsSection">
           <div class="section-head">
@@ -810,7 +804,7 @@ img { display: block; max-width: 100%; }
               <h2 data-i18n="products">Products</h2>
               <p data-i18n="productsSub">Choose a product to view quantity pricing and order options.</p>
             </div>
-            <div id="productCount" class="product-count">Loading…</div>
+            <div id="productCount" class="product-count">Loading...</div>
           </div>
           <div id="products" class="products"></div>
         </section>
@@ -819,10 +813,10 @@ img { display: block; max-width: 100%; }
   </main>
 
   <nav class="bottom-nav">
-    <a class="nav active" href="retailer-dashboard.html"><i>⌂</i><span data-i18n="home">Home</span></a>
-    <a class="nav" href="earnings.html"><i>↗</i><span data-i18n="earnings">Earnings</span></a>
-    <a class="nav" href="cart.html"><i>🛒</i><span data-i18n="cart">Cart</span><span class="badge" id="cartNavCount" hidden>0</span></a>
-    <a class="nav" href="index.html"><i>◯</i><span data-i18n="account">Account</span></a>
+    <a class="nav active" href="retailer-dashboard.html"><i>&#8962;</i><span data-i18n="home">Home</span></a>
+    <a class="nav" href="earnings.html"><i>&#8599;</i><span data-i18n="earnings">Earnings</span></a>
+    <a class="nav" href="cart.html"><i>&#128722;</i><span data-i18n="cart">Cart</span><span class="badge" id="cartNavCount" hidden>0</span></a>
+    <a class="nav" href="index.html"><i>&#9711;</i><span data-i18n="account">Account</span></a>
   </nav>
 
   <div id="splashOverlay" class="splash-overlay" hidden>
@@ -881,51 +875,51 @@ const UI={
  en:{
   home:'Home',shop:'Shop',earnings:'Earnings',cart:'Cart',account:'Account',retailerHome:'Retailer home',
   products:'Products',productsSub:'Choose a product to view quantity pricing and order options.',
-  monthEarn:'This month · Earn opportunity',monthEarnSub:'Retail value minus your purchase value',
+  monthEarn:'This month \u00B7 Earn opportunity',monthEarnSub:'Retail value minus your purchase value',
   purchased:'Purchased',retailValue:'Retail value',orders:'Orders',earningNote:'Calculated from your tracked orders and stored retail value.',
   all:'All',buyAt:'Buy at',sellAt:'Sell at',earn:'Earn',stock:'Stock',minQty:'Min qty',
   unavailable:'Unavailable',search:'Search',searchPlaceholder:'Search products or categories',
   noProducts:'No matching products',trySearch:'Try another search or category.',
   goodMorning:'Good morning',goodAfternoon:'Good afternoon',goodEvening:'Good evening',
-  catalogue:'Wholesale catalogue, prices and order options.',loading:'Opening your store…',
+  catalogue:'Wholesale catalogue, prices and order options.',loading:'Opening your store...',
   noExact:'Open Earnings for the complete tracked calculation',
   earningsOverview:'Earnings overview',allTime:'All time',allTimeEarn:'Total earn',
-  lastMonth:'Last month',trackedOrders:'Tracked orders',viewEarnings:'View →',
+  lastMonth:'Last month',trackedOrders:'Tracked orders',viewEarnings:'View \u2192',
   openAnalytics:'Open detailed analytics'
  },
  hi:{
-  home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर होम',
-  products:'प्रोडक्ट',productsSub:'मात्रा की कीमत और ऑर्डर विकल्प देखने के लिए प्रोडक्ट चुनें।',
-  monthEarn:'इस महीने · कमाई का अवसर',monthEarnSub:'रिटेल वैल्यू और आपकी खरीद कीमत का अंतर',
-  purchased:'खरीद',retailValue:'रिटेल वैल्यू',orders:'ऑर्डर',earningNote:'आपके ट्रैक किए गए ऑर्डर और रिटेल वैल्यू से गणना।',
-  all:'सभी',buyAt:'खरीदें',sellAt:'बेचें',earn:'कमाएँ',stock:'स्टॉक',minQty:'न्यूनतम',
-  unavailable:'उपलब्ध नहीं',search:'खोजें',searchPlaceholder:'प्रोडक्ट या कैटेगरी खोजें',
-  noProducts:'कोई प्रोडक्ट नहीं मिला',trySearch:'दूसरा नाम या कैटेगरी खोजें।',
-  goodMorning:'सुप्रभात',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्या',
-  catalogue:'होलसेल कैटलॉग, कीमत और ऑर्डर विकल्प।',loading:'आपका स्टोर खुल रहा है…',
-  noExact:'पूरी गणना के लिए Earnings खोलें',
-  earningsOverview:'कमाई सारांश',allTime:'कुल',allTimeEarn:'कुल कमाई',
-  lastMonth:'पिछला महीना',trackedOrders:'ट्रैक ऑर्डर',viewEarnings:'देखें →',
-  openAnalytics:'विस्तृत कमाई देखें'
+  home:'\u0939\u094B\u092E',shop:'\u0936\u0949\u092A',earnings:'\u0915\u092E\u093E\u0908',cart:'\u0915\u093E\u0930\u094D\u091F',account:'\u0905\u0915\u093E\u0909\u0902\u091F',retailerHome:'\u0930\u093F\u091F\u0947\u0932\u0930 \u0939\u094B\u092E',
+  products:'\u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F',productsSub:'\u092E\u093E\u0924\u094D\u0930\u093E \u0915\u0940 \u0915\u0940\u092E\u0924 \u0914\u0930 \u0911\u0930\u094D\u0921\u0930 \u0935\u093F\u0915\u0932\u094D\u092A \u0926\u0947\u0916\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F \u091A\u0941\u0928\u0947\u0902\u0964',
+  monthEarn:'\u0907\u0938 \u092E\u0939\u0940\u0928\u0947 \u00B7 \u0915\u092E\u093E\u0908 \u0915\u093E \u0905\u0935\u0938\u0930',monthEarnSub:'\u0930\u093F\u091F\u0947\u0932 \u0935\u0948\u0932\u094D\u092E\u0942 \u0914\u0930 \u0906\u092A\u0915\u0940 \u0916\u0930\u0940\u0926 \u0915\u0940\u092E\u0924 \u0915\u093E \u0905\u0902\u0924\u0930',
+  purchased:'\u0916\u0930\u0940\u0926',retailValue:'\u0930\u093F\u091F\u0947\u0932 \u0935\u0948\u0932\u094D\u092E\u0942',orders:'\u0911\u0930\u094D\u0921\u0930',earningNote:'\u0906\u092A\u0915\u0947 \u091F\u094D\u0930\u0948\u0915 \u0915\u093F\u090F \u0917\u090F \u0911\u0930\u094D\u0921\u0930 \u0914\u0930 \u0930\u093F\u091F\u0947\u0932 \u0935\u0948\u0932\u094D\u092E\u0942 \u0938\u0947 \u0917\u0923\u0928\u093E\u0964',
+  all:'\u0938\u092D\u0940',buyAt:'\u0916\u0930\u0940\u0926\u0947\u0902',sellAt:'\u092C\u0947\u091A\u0947\u0902',earn:'\u0915\u092E\u093E\u090F\u0901',stock:'\u0938\u094D\u091F\u0949\u0915',minQty:'\u0928\u094D\u092E\u0942\u0928\u0924\u092E',
+  unavailable:'\u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902',search:'\u0916\u094B\u091C\u0947\u0902',searchPlaceholder:'\u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F \u092F\u093E \u0915\u0948\u091F\u0947\u0917\u0930\u0940 \u0916\u094B\u091C\u0947\u0902',
+  noProducts:'\u0915\u094B\u0908 \u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F \u0928\u0939\u0940\u0902 \u092E\u093F\u0932\u093E',trySearch:'\u0926\u0942\u0938\u0930\u093E \u0928\u093E\u092E \u092F\u093E \u0915\u0948\u091F\u0947\u0917\u0930\u0940 \u0916\u094B\u091C\u0947\u0902\u0964',
+  goodMorning:'\u0938\u0941\u092A\u094D\u0930\u092D\u093E\u0924',goodAfternoon:'\u0928\u092E\u0938\u094D\u0915\u093E\u0930',goodEvening:'\u0936\u0941\u092D \u0938\u0902\u0927\u094D\u092F\u093E',
+  catalogue:'\u0939\u094B\u0932\u0938\u0947\u0932 \u0915\u0948\u091F\u0932\u0949\u0917, \u0915\u0940\u092E\u0924 \u0914\u0930 \u0911\u0930\u094D\u0921\u0930 \u0935\u093F\u0915\u0932\u094D\u092A\u0964',loading:'\u0906\u092A\u0915\u093E \u0938\u094D\u091F\u094B\u0930 \u0916\u0941\u0932 \u0930\u0939\u093E \u0939\u0948...',
+  noExact:'\u092A\u0942\u0930\u0940 \u0917\u0923\u0928\u093E \u0915\u0947 \u0932\u093F\u090F Earnings \u0916\u094B\u0932\u0947\u0902',
+  earningsOverview:'\u0915\u092E\u093E\u0908 \u0938\u093E\u0930\u093E\u0902\u0936',allTime:'\u0915\u0941\u0932',allTimeEarn:'\u0915\u0941\u0932 \u0915\u092E\u093E\u0908',
+  lastMonth:'\u092A\u093F\u091B\u0932\u093E \u092E\u0939\u0940\u0928\u093E',trackedOrders:'\u091F\u094D\u0930\u0948\u0915 \u0911\u0930\u094D\u0921\u0930',viewEarnings:'\u0926\u0947\u0916\u0947\u0902 \u2192',
+  openAnalytics:'\u0935\u093F\u0938\u094D\u0924\u0943\u0924 \u0915\u092E\u093E\u0908 \u0926\u0947\u0916\u0947\u0902'
  },
  mr:{
-  home:'होम',shop:'शॉप',earnings:'कमाई',cart:'कार्ट',account:'अकाउंट',retailerHome:'रिटेलर होम',
-  products:'उत्पादने',productsSub:'प्रमाणानुसार किंमत आणि ऑर्डर पर्याय पाहण्यासाठी उत्पादन निवडा.',
-  monthEarn:'या महिन्यात · कमाईची संधी',monthEarnSub:'रिटेल मूल्य आणि तुमची खरेदी किंमत यातील फरक',
-  purchased:'खरेदी',retailValue:'रिटेल मूल्य',orders:'ऑर्डर्स',earningNote:'तुमच्या ट्रॅक केलेल्या ऑर्डर्स आणि रिटेल मूल्यानुसार गणना.',
-  all:'सर्व',buyAt:'खरेदी',sellAt:'विक्री',earn:'कमवा',stock:'स्टॉक',minQty:'किमान',
-  unavailable:'उपलब्ध नाही',search:'शोधा',searchPlaceholder:'उत्पादन किंवा कॅटेगरी शोधा',
-  noProducts:'उत्पादन सापडले नाही',trySearch:'दुसरे नाव किंवा कॅटेगरी शोधा.',
-  goodMorning:'शुभ सकाळ',goodAfternoon:'नमस्कार',goodEvening:'शुभ संध्याकाळ',
-  catalogue:'होलसेल कॅटलॉग, किंमत आणि ऑर्डर पर्याय.',loading:'तुमचे स्टोअर उघडत आहे…',
-  noExact:'पूर्ण गणनेसाठी Earnings उघडा',
-  earningsOverview:'कमाई सारांश',allTime:'एकूण',allTimeEarn:'एकूण कमाई',
-  lastMonth:'मागील महिना',trackedOrders:'ट्रॅक ऑर्डर्स',viewEarnings:'पहा →',
-  openAnalytics:'सविस्तर कमाई पहा'
+  home:'\u0939\u094B\u092E',shop:'\u0936\u0949\u092A',earnings:'\u0915\u092E\u093E\u0908',cart:'\u0915\u093E\u0930\u094D\u091F',account:'\u0905\u0915\u093E\u0909\u0902\u091F',retailerHome:'\u0930\u093F\u091F\u0947\u0932\u0930 \u0939\u094B\u092E',
+  products:'\u0909\u0924\u094D\u092A\u093E\u0926\u0928\u0947',productsSub:'\u092A\u094D\u0930\u092E\u093E\u0923\u093E\u0928\u0941\u0938\u093E\u0930 \u0915\u093F\u0902\u092E\u0924 \u0906\u0923\u093F \u0911\u0930\u094D\u0921\u0930 \u092A\u0930\u094D\u092F\u093E\u092F \u092A\u093E\u0939\u0923\u094D\u092F\u093E\u0938\u093E\u0920\u0940 \u0909\u0924\u094D\u092A\u093E\u0926\u0928 \u0928\u093F\u0935\u0921\u093E.',
+  monthEarn:'\u092F\u093E \u092E\u0939\u093F\u0928\u094D\u092F\u093E\u0924 \u00B7 \u0915\u092E\u093E\u0908\u091A\u0940 \u0938\u0902\u0927\u0940',monthEarnSub:'\u0930\u093F\u091F\u0947\u0932 \u092E\u0942\u0932\u094D\u092F \u0906\u0923\u093F \u0924\u0941\u092E\u091A\u0940 \u0916\u0930\u0947\u0926\u0940 \u0915\u093F\u0902\u092E\u0924 \u092F\u093E\u0924\u0940\u0932 \u092B\u0930\u0915',
+  purchased:'\u0916\u0930\u0947\u0926\u0940',retailValue:'\u0930\u093F\u091F\u0947\u0932 \u092E\u0942\u0932\u094D\u092F',orders:'\u0911\u0930\u094D\u0921\u0930\u094D\u0938',earningNote:'\u0924\u0941\u092E\u091A\u094D\u092F\u093E \u091F\u094D\u0930\u0948\u0915 \u0915\u0947\u0932\u0947\u0932\u094D\u092F\u093E \u0911\u0930\u094D\u0921\u0930\u094D\u0938 \u0906\u0923\u093F \u0930\u093F\u091F\u0947\u0932 \u092E\u0942\u0932\u094D\u092F\u093E\u0928\u0941\u0938\u093E\u0930 \u0917\u0923\u0928\u093E.',
+  all:'\u0938\u0930\u094D\u0935',buyAt:'\u0916\u0930\u0947\u0926\u0940',sellAt:'\u0935\u093F\u0915\u094D\u0930\u0940',earn:'\u0915\u092E\u0935\u093E',stock:'\u0938\u094D\u091F\u0949\u0915',minQty:'\u0915\u093F\u092E\u093E\u0928',
+  unavailable:'\u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u093E\u0939\u0940',search:'\u0936\u094B\u0927\u093E',searchPlaceholder:'\u0909\u092A\u0924\u094D\u092A\u093E\u0926\u0928 \u0915\u093F\u0902\u0935\u093E \u0915\u0945\u091F\u0947\u0917\u0930\u0940 \u0936\u094B\u0927\u093E',
+  noProducts:'\u0909\u0924\u094D\u092A\u093E\u0926\u0928 \u0938\u093E\u092A\u0921\u0932\u0947 \u0928\u093E\u0939\u0940',trySearch:'\u0926\u0941\u0938\u0930\u0947 \u0928\u093E\u0935 \u0915\u093F\u0902\u0935\u093E \u0915\u0945\u091F\u0947\u0917\u0930\u0940 \u0936\u094B\u0927\u093E.',
+  goodMorning:'\u0936\u0941\u092D \u0938\u0915\u093E\u0933',goodAfternoon:'\u0928\u092E\u0938\u094D\u0915\u093E\u0930',goodEvening:'\u0936\u0941\u092D \u0938\u0902\u0927\u094D\u092F\u093E\u0915\u093E\u0933',
+  catalogue:'\u0939\u094B\u0932\u0938\u0947\u0932 \u0915\u0945\u091F\u0932\u0949\u0917, \u0915\u093F\u0902\u092E\u0924 \u0906\u0923\u093F \u0911\u0930\u094D\u0921\u0930 \u092A\u0930\u094D\u092F\u093E\u092F.',loading:'\u0924\u0941\u092E\u091A\u0947 \u0938\u094D\u091F\u094B\u0905\u0930 \u0909\u0918\u0921\u0924 \u0906\u0939\u0947...',
+  noExact:'\u092A\u0942\u0930\u094D\u0923 \u0917\u0923\u0928\u0947\u0938\u093E\u0920\u0940 Earnings \u0909\u0918\u0921\u093E',
+  earningsOverview:'\u0915\u092E\u093E\u0908 \u0938\u093E\u0930\u093E\u0902\u0936',allTime:'\u0917\u0947\u0932\u0947\u0932\u0947 \u0938\u0930\u094D\u0935',allTimeEarn:'\u090F\u0915\u0942\u0923 \u0915\u092E\u093E\u0908',
+  lastMonth:'\u092E\u093E\u0917\u0940\u0932 \u092E\u0939\u093F\u0928\u093E',trackedOrders:'\u091F\u094D\u0930\u0948\u0915 \u0911\u0930\u094D\u0921\u0930\u094D\u0938',viewEarnings:'\u092A\u0939\u093E \u2192',
+  openAnalytics:'\u0938\u0935\u093F\u0938\u094D\u0924\u0930 \u0915\u092E\u093E\u0908 \u092A\u0939\u093E'
  }
 };
 function tr(k){return UI[language]?.[k]||UI.en[k]||k}
-function langName(){return language==='hi'?'हिन्दी':language==='mr'?'मराठी':'English'}
+function langName(){return language==='hi'?'\u0939\u093F\u0928\u094D\u0926\u0940':language==='mr'?'\u092E\u0930\u093E\u0920\u0940':'English'}
 function translatedProduct(p){
  const x=p?.translations?.[language];
  if(language==='en'||!x)return {title:p?.title||'',description:p?.description||''};
@@ -941,10 +935,10 @@ function applyLanguage(){
  for(const el of document.querySelectorAll('[data-i18n]'))el.textContent=tr(el.dataset.i18n);
  $('searchInput').placeholder=tr('searchPlaceholder');
  $('searchGo').textContent=tr('search');
- $('languageBtn').textContent=langName()+' ▾';
+ $('languageBtn').innerHTML=langName()+' &#9662;';
  $('loaderCopy').textContent=tr('loading');
  if(state.profile){
-  $('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;
+  $('helloTitle').innerHTML=`${greeting()}, ${firstName()} &#128075;`;
   $('helloSub').textContent=tr('catalogue');
  }
  renderCategories();
@@ -1041,7 +1035,7 @@ function inCurrentMonth(order){
 function shortDescription(p){
   const text=String(productDescription(p)||'').trim();
   if(text)return text;
-  return `${categoryName(p.category_id)} · ${p.unit||'unit'} · ${tr('stock')} ${Number(p.stock||0)}`;
+  return `${categoryName(p.category_id)} \u00B7 ${p.unit||'unit'} \u00B7 ${tr('stock')} ${Number(p.stock||0)}`;
 }
 
 function productCard(p,index=0){
@@ -1054,14 +1048,14 @@ function productCard(p,index=0){
     ?`<div class="slider-dots">${imgs.slice(0,5).map((_,i)=>`<span class="slider-dot ${i===0?'active':''}"></span>`).join('')}</div>`
     :'';
   const controls=imgs.length>1
-    ?`<div class="image-slider-controls"><button class="slide-btn prev" type="button" data-slide="-1" aria-label="Previous image">‹</button><button class="slide-btn next" type="button" data-slide="1" aria-label="Next image">›</button>${dots}</div>`
+    ?`<div class="image-slider-controls"><button class="slide-btn prev" type="button" data-slide="-1" aria-label="Previous image">&#8249;</button><button class="slide-btn next" type="button" data-slide="1" aria-label="Next image">&#8250;</button>${dots}</div>`
     :'';
 
   return `
     <article class="product-card" data-product="${p.id}" data-image-index="0" data-has-slider="${imgs.length>1?'1':'0'}">
       <div class="product-image">
         <span class="earn-sticker"><span class="earn-word">${tr('earn')}</span><strong>${money(earn)}</strong></span>
-        ${img?`<img src="${esc(img)}" alt="${esc(title)}" ${index<6?'fetchpriority="high"':'loading="lazy"'} decoding="async">`:'◇'}
+        ${img?`<img src="${esc(img)}" alt="${esc(title)}" ${index<6?'fetchpriority="high"':'loading="lazy"'} decoding="async">`:'&#9671;'}
         ${controls}
       </div>
 
@@ -1086,10 +1080,10 @@ function productCard(p,index=0){
         </div>
 
         <div class="meta">
-          ${unavailable?tr('unavailable'):`${tr('minQty')}${Number(p.min_qty||1)} · ${tr('stock')}${Number(p.stock||0)}`}
+          ${unavailable?tr('unavailable'):`${tr('minQty')}${Number(p.min_qty||1)} \u00B7 ${tr('stock')}${Number(p.stock||0)}`}
         </div>
         
-        <div class="open-arrow">›</div>
+        <div class="open-arrow">View Details</div>
       </div>
     </article>
   `;
@@ -1200,8 +1194,10 @@ function renderBusinessSummary(){
   const last=state.earnings?.last_month;
 
   if(em){
-    $('monthProfit').textContent=money(Number(em.profit_paise\vert{}\vert{}0));$('monthWholesale').textContent=money(Number(em.purchase_paise||0));
-    $('monthMrp').textContent=money(Number(em.mrp_paise\vert{}\vert{}0));$('monthMargin').textContent=String(monthOrders.length);
+    $('monthProfit').innerHTML='&#8377;'+money(Number(em.profit_paise||0)).replace(/[^0-9.]/g,'');
+    $('monthWholesale').innerHTML='&#8377;'+money(Number(em.purchase_paise||0)).replace(/[^0-9.]/g,'');
+    $('monthMrp').innerHTML='&#8377;'+money(Number(em.mrp_paise||0)).replace(/[^0-9.]/g,'');
+    $('monthMargin').textContent=String(monthOrders.length);
     $('profitFormula').textContent=tr('monthEarnSub');$('businessNote').textContent=tr('earningNote');
   }else{
     const wholesale=monthOrders.reduce((sum,o)=>sum+Number(o.total_paise||0),0);
@@ -1209,29 +1205,36 @@ function renderBusinessSummary(){
     const exact=monthOrders.length>0&&mrps.every(v=>v!==null);
     const mrp=exact?mrps.reduce((sum,v)=>sum+v,0):null;
 
-    $('monthWholesale').textContent=money(wholesale);$('monthMargin').textContent=String(monthOrders.length);
+    $('monthWholesale').innerHTML='&#8377;'+money(wholesale).replace(/[^0-9.]/g,'');
+    $('monthMargin').textContent=String(monthOrders.length);
     if(mrp===null){
-      $('monthProfit').textContent='—';
-      $('monthMrp').textContent='—';$('profitFormula').textContent=tr('noExact');
+      $('monthProfit').textContent='\u2014';
+      $('monthMrp').textContent='\u2014';
+      $('profitFormula').textContent=tr('noExact');
     }else{
-      $('monthProfit').textContent=money(Math.max(0,mrp-wholesale));
-      $('monthMrp').textContent=money(mrp);$('profitFormula').textContent=tr('monthEarnSub');
+      $('monthProfit').innerHTML='&#8377;'+money(Math.max(0,mrp-wholesale)).replace(/[^0-9.]/g,'');
+      $('monthMrp').innerHTML='&#8377;'+money(mrp).replace(/[^0-9.]/g,'');
+      $('profitFormula').textContent=tr('monthEarnSub');
     }
   }
 
   if(all){
-    $('allTimeProfit').textContent=money(Number(all.profit_paise\vert{}\vert{}0));$('allTimePurchase').textContent=money(Number(all.purchase_paise||0));
-    $('allTimeMrp').textContent=money(Number(all.mrp_paise\vert{}\vert{}0));$('trackedOrders').textContent=String(all.tracked_orders??allOrders.length);
+    $('allTimeProfit').innerHTML='&#8377;'+money(Number(all.profit_paise||0)).replace(/[^0-9.]/g,'');
+    $('allTimePurchase').innerHTML='&#8377;'+money(Number(all.purchase_paise||0)).replace(/[^0-9.]/g,'');
+    $('allTimeMrp').innerHTML='&#8377;'+money(Number(all.mrp_paise||0)).replace(/[^0-9.]/g,'');
+    $('trackedOrders').textContent=String(all.tracked_orders??allOrders.length);
   }else{
     const purchase=allOrders.reduce((sum,o)=>sum+Number(o.total_paise||0),0);
     const mrps=allOrders.map(orderMrp);
     const exact=allOrders.length>0&&mrps.every(v=>v!==null);
     const mrp=exact?mrps.reduce((sum,v)=>sum+v,0):null;
-    $('allTimePurchase').textContent=money(purchase);$('allTimeMrp').textContent=mrp===null?'—':money(mrp);
-    $('allTimeProfit').textContent=mrp===null?'—':money(Math.max(0,mrp-purchase));$('trackedOrders').textContent=String(allOrders.length);
+    $('allTimePurchase').innerHTML='&#8377;'+money(purchase).replace(/[^0-9.]/g,'');
+    $('allTimeMrp').innerHTML=mrp===null?'\u2014':'&#8377;'+money(mrp).replace(/[^0-9.]/g,'');
+    $('allTimeProfit').innerHTML=mrp===null?'\u2014':'&#8377;'+money(Math.max(0,mrp-purchase)).replace(/[^0-9.]/g,'');
+    $('trackedOrders').textContent=String(allOrders.length);
   }
 
-  $('lastMonthProfit').textContent=last?money(Number(last.profit_paise||0)):'—';
+  $('lastMonthProfit').innerHTML=last?'&#8377;'+money(Number(last.profit_paise||0)).replace(/[^0-9.]/g,''):'\u2014';
 }
 function setupSearch(){
   const input=$('searchInput');
@@ -1262,7 +1265,7 @@ function setupSearch(){
             :`<div class="search-thumb"></div>`}
           <div>
             <strong>${esc(productTitle(p))}</strong>
-            <span>${tr('buyAt')} ${money(p.price_paise)} · ${tr('earn')} ${money(baseProfit(p))}</span>
+            <span>${tr('buyAt')} ${money(p.price_paise)} &middot; ${tr('earn')} ${money(baseProfit(p))}</span>
           </div>
         </div>`).join('')
       :`<div class="search-row"><div><strong>${tr('noProducts')}</strong><span>${tr('trySearch')}</span></div></div>`;
@@ -1305,8 +1308,8 @@ function paintDashboard(data,earnings=null){
   state.orders=Array.isArray(data.orders)?data.orders:[];
   state.earnings=earnings?.ok===true?earnings:null;
 
-  $('helloTitle').textContent=`${greeting()}, ${firstName()} 👋`;
-  $('helloSub').textContent=tr('catalogue');$('accountLink').textContent=(state.profile.business_name||tr('account'))+' →';
+  $('helloTitle').innerHTML=`${greeting()}, ${firstName()} &#128075;`;
+  $('helloSub').textContent=tr('catalogue');$('accountLink').innerHTML=(state.profile.business_name||tr('account'))+' &#8594;';
 
   $('desktopProfileName').textContent=firstName();$('desktopAvatarLetter').textContent=(String(state.profile.name||'R').trim()[0]||'R').toUpperCase();
   if(state.profile.avatar_url){
