@@ -582,7 +582,7 @@ body[data-page="account"] .profile-photo-preview #editAvatarImage[hidden]{
     <a class="nav" href="retailer-dashboard.html"><span class="nav-icon">⌂</span><span>Home</span></a>
     <a class="nav" href="earnings.html"><span class="nav-icon">↗</span><span>Earnings</span></a>
     <a class="nav" href="cart.html"><span class="nav-icon">🛒</span><span>Cart</span></a>
-    <a class="nav active" href="index.html"><span class="nav-icon">◯</span><span>Account</span></a>
+    <a class="nav active" href="index.html?view=account"><span class="nav-icon">◯</span><span>Account</span></a>
   </nav>
 </div>
 
@@ -1131,7 +1131,15 @@ async function boot(){
   const callbackError=new URLSearchParams(location.hash.replace(/^#/,'')).get('error_description');
   const {data:{user}}=await db.auth.getUser();
   if(user){
-    try{const p=await fetchAccount();renderAccount(p);return}
+    try{
+      const p=await fetchAccount();
+      // Keep the profile page accessible from the Account navigation.
+      // Normal visits to the auth/home entry point go to the retailer dashboard.
+      const accountRequested=new URLSearchParams(location.search).get('view')==='account'||location.hash==='#orders';
+      if(accountRequested){renderAccount(p);return}
+      location.replace('retailer-dashboard.html');
+      return;
+    }
     catch(err){
       try{await db.auth.signOut({scope:'local'})}catch{}
       renderLogin();message(err.code==='not_retailer'||err.code==='NOT_RETAILER'||err.message.includes('admin portal')?'This email is registered for the ONeness admin portal, not the retailer portal. Use a different retailer email.':friendly(err),true);return
