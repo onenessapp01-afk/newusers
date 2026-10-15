@@ -663,6 +663,183 @@ img { display: block; max-width: 100%; }
   .marquee-track { animation: none; transform: none; width: auto; overflow-x: auto; scrollbar-width: none; }
   .earn-sticker::after { animation: none; display: none; }
 }
+
+/* ==========================================================
+   CONNECTED PRODUCT CATALOGUE GRID — RESPONSIVE UI REFRESH
+   Presentation-only change: all existing product information,
+   links, image sliders, filters and purchase logic are retained.
+   ========================================================== */
+.catalogue-panel { min-width: 0; }
+
+/* A single, joined catalogue surface with fine tile separators. */
+.products {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  background: #fff;
+  border: 1px solid #e9e5e2;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 5px 24px rgba(54, 30, 25, 0.035);
+}
+.product-card {
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid #eae6e1;
+  border-bottom: 1px solid #eae6e1;
+  border-radius: 0;
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  transition: background-color .2s ease;
+}
+.product-card:hover {
+  transform: none;
+  border-color: #eae6e1;
+  background: #fffcf8;
+  box-shadow: none;
+}
+.product-card:focus-within { outline: 2px solid var(--c-burgundy); outline-offset: -2px; }
+.product-image {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  background: #fff;
+  overflow: hidden;
+}
+.product-image img { width: 100%; height: 100%; padding: 14px; object-fit: contain; }
+.product-card:hover .product-image img { transform: scale(1.025); }
+.earn-sticker {
+  top: 9px;
+  left: 9px;
+  padding: 5px 8px;
+  gap: 5px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(104, 20, 29, .17);
+}
+.earn-sticker .earn-word { font-size: 9px; letter-spacing: .35px; }
+.earn-sticker strong { font-size: 12px; }
+.slide-btn { width: 28px; height: 28px; font-size: 17px; }
+.slide-btn.prev { left: 6px; }
+.slide-btn.next { right: 6px; }
+.slider-dots { bottom: 6px; padding: 4px 7px; gap: 4px; }
+.slider-dot { width: 5px; height: 5px; }
+.slider-dot.active { width: 12px; }
+.product-copy { padding: 13px; min-width: 0; }
+.product-category {
+  font-size: 10px;
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+  color: #966c27;
+}
+.product-name {
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  min-height: 2.7em;
+}
+.product-desc {
+  font-size: 11px;
+  line-height: 1.45;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+.price-row { gap: 6px; margin-bottom: 9px; }
+.price-box {
+  min-width: 0;
+  padding: 8px 7px;
+  border: 1px solid #f0e9df;
+  border-radius: 8px;
+  background: #faf7f3;
+}
+.price-box small {
+  font-size: 9px;
+  letter-spacing: .2px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+.price-box strong { font-size: 15px; line-height: 1.15; overflow-wrap: anywhere; }
+.price-box.sell { background: #fff; }
+.price-box.sell strong { font-size: 13px; }
+.meta {
+  min-height: 26px;
+  padding-top: 8px;
+  font-size: 10px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.open-arrow {
+  margin-top: 9px;
+  padding: 10px 5px;
+  border-radius: 8px;
+  border-color: rgba(104, 20, 29, .13);
+  background: #f8edf0;
+}
+.open-arrow::before { content: 'View Details'; font-size: 12px; }
+.product-card:hover .open-arrow { background: var(--c-burgundy); color: white; }
+
+/* The sidebar takes some desktop space, so allow two wider tiles. */
+@media (min-width: 920px) and (max-width: 1199px) {
+  .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Tablet: app-like catalogue with three attached tiles per row. */
+@media (min-width: 601px) and (max-width: 919px) {
+  .products { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .product-card { border-radius: 0; }
+  .product-image { height: auto; aspect-ratio: 1 / 1; }
+  .product-copy { padding: 13px; }
+  .product-name { font-size: 15px; }
+  .earn-sticker { padding: 5px 8px; }
+  .earn-sticker .earn-word { font-size: 9px; }
+  .earn-sticker strong { font-size: 12px; }
+}
+
+/* Phones: two side-by-side tiles, joined edge-to-edge like an app. */
+@media (max-width: 600px) {
+  .catalogue-panel { margin-inline: -16px; min-width: 0; }
+  .section-head { padding-inline: 16px; gap: 10px; }
+  .section-head h2 { font-size: 20px; }
+  .section-head p { font-size: 11px; line-height: 1.35; }
+  .product-count { font-size: 11px; text-align: right; flex-shrink: 0; }
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .product-card { border-radius: 0; }
+  .product-image { height: auto; aspect-ratio: 1 / 1; }
+  .product-image img { padding: 10px; }
+  .product-copy { padding: 10px; }
+  .product-category { font-size: 9px; letter-spacing: .2px; margin-bottom: 4px; }
+  .product-name { font-size: 13px; line-height: 1.35; margin-bottom: 5px; }
+  .product-desc { font-size: 10px; line-height: 1.4; margin-bottom: 8px; }
+  .earn-sticker { top: 6px; left: 6px; padding: 4px 6px; gap: 4px; border-radius: 6px; }
+  .earn-sticker .earn-word { font-size: 8px; }
+  .earn-sticker strong { font-size: 11px; }
+  .price-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; margin-bottom: 7px; }
+  .price-box { padding: 7px 5px; border-radius: 6px; }
+  .price-box small { font-size: 8px; letter-spacing: 0; }
+  .price-box strong { font-size: 13px; }
+  .price-box.sell strong { font-size: 11px; }
+  .meta { font-size: 9px; padding-top: 7px; min-height: 25px; }
+  .open-arrow { margin-top: 7px; padding: 9px 3px; border-radius: 6px; }
+  .open-arrow::before { font-size: 11px; }
+  .slider-dots { bottom: 5px; }
+}
+
+/* Touch devices still need access to multi-photo slider arrows. */
+@media (hover: none) {
+  .product-card[data-has-slider="1"] .slide-btn { opacity: .84; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card, .product-image img { transition: none; }
+}
+
 </style>
 </head>
 <body data-page="home">
