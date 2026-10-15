@@ -127,7 +127,35 @@ body{font-family:"Segoe UI",Inter,system-ui,sans-serif!important}.shell{width:mi
 .on-splash-runtime-actions .primary-splash{background:#d5a83f;border-color:#d5a83f;color:#2d1909}.on-splash-runtime-dots{display:flex;justify-content:center;gap:4px;padding:0 10px 9px}.on-splash-runtime-dot{width:5px;height:5px;border-radius:50%;background:#566470}.on-splash-runtime-dot.active{width:15px;border-radius:999px;background:#d5a83f}
 @media(max-width:560px){.on-splash-runtime{padding:0;align-items:end}.on-splash-runtime-card{width:100%;max-width:none;border:0;border-radius:18px 18px 0 0}}
 
+
+/* Additive India-wide Leaflet + Photon address finder. Existing layout and form remain intact. */
+.location-assist{position:relative;margin-bottom:15px;padding:14px;border:1px solid #e0cfae;border-radius:14px;background:linear-gradient(135deg,#fffaf1,#fff);box-shadow:0 5px 22px rgba(104,20,29,.035)}
+.location-assist-title{display:flex;gap:10px;align-items:center;margin-bottom:9px}
+.location-assist-icon{width:35px;height:35px;border-radius:10px;background:#68141d;color:#fff;display:grid;place-items:center;font-size:17px;flex:none}
+.location-assist-title strong{display:block;color:#430a11;font-size:12px;font-weight:850}
+.location-assist-title small{display:block;margin-top:3px;color:#82736a;font-size:9px;line-height:1.4}
+.location-search-wrap{position:relative}
+#indiaAddressSearch{height:45px;width:100%;padding:0 40px 0 13px;border-radius:11px;border:1px solid #d6c7ae;outline:none;background:#fff;color:#2a211c;font-size:12px}
+#indiaAddressSearch:focus{border-color:#b88c40;box-shadow:0 0 0 3px rgba(200,148,45,.15)}
+#indiaAddressSearch::placeholder{color:#a39a92}
+.location-search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:17px;pointer-events:none;color:#8c7446}
+.location-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:1100;max-height:240px;overflow:auto;background:#fff;border:1px solid #dcccae;border-radius:12px;box-shadow:0 14px 36px rgba(61,35,13,.17);padding:4px}
+.location-option{display:block;width:100%;text-align:left;padding:10px 11px;border:0;border-radius:8px;background:transparent;color:#332721;cursor:pointer}
+.location-option:hover,.location-option:focus-visible,.location-option.active{outline:none;background:#fff3d9}
+.location-option strong{display:block;font-size:11px;line-height:1.4;font-weight:850}
+.location-option small{display:block;font-size:9px;line-height:1.4;color:#817368;margin-top:3px}
+.location-assist-state{min-height:16px;margin-top:7px;font-size:9px;line-height:1.5;color:#7e6c57}
+.location-assist-state.warning{color:#aa622a}.location-assist-state.success{color:#47744d}
+.location-map-toggle{margin-top:9px;display:flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #dcc6a4;border-radius:9px;background:white;color:#68141d;font-size:10px;font-weight:850}
+.location-map-panel{margin-top:9px;min-width:0}
+#indiaAddressMap{height:215px;width:100%;border-radius:11px;border:1px solid #ddcfb6;background:#f4efe3;z-index:0}
+.location-map-foot{font-size:8px;color:#82766b;line-height:1.5;margin:6px 1px 0}
+.location-assist-note{font-size:8px;color:#887b6c;line-height:1.5;margin-top:8px}
+.location-assist .leaflet-container{font-family:inherit}
+@media (max-width:620px){.location-assist{padding:11px;border-radius:11px}.location-assist-title strong{font-size:11px}#indiaAddressMap{height:190px}}
+
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 <body data-page="address">
 <div id="pageLoader" class="page-loader"><div class="infinity-loader"><div class="loader-brand">ONeness</div><svg viewBox="0 0 160 74"><path class="infinity-track" d="M18 37C18 18 39 11 53 24L80 49 107 24C121 11 142 18 142 37s-21 26-35 13L80 25 53 50C39 63 18 56 18 37Z"/><path class="infinity-run" pathLength="100" d="M18 37C18 18 39 11 53 24L80 49 107 24C121 11 142 18 142 37s-21 26-35 13L80 25 53 50C39 63 18 56 18 37Z"/></svg><div class="loader-copy">Loading addresses…</div></div></div>
@@ -218,6 +246,25 @@ body{font-family:"Segoe UI",Inter,system-ui,sans-serif!important}.shell{width:mi
     </div>
 
     <div class="form-card">
+        <!-- Optional map-assisted search; no changes to existing saved address fields. -->
+        <section class="location-assist" aria-label="Find an Indian address">
+          <div class="location-assist-title">
+            <span class="location-assist-icon" aria-hidden="true">⌖</span>
+            <div><strong>Find your address anywhere in India</strong><small>Search a village, city, locality, road or PIN code. Choose a suggestion to fill the form.</small></div>
+          </div>
+          <div class="location-search-wrap">
+            <input id="indiaAddressSearch" type="search" placeholder="Search village, city, locality or landmark…" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="indiaAddressSuggestions" aria-expanded="false" aria-label="Search for address in India">
+            <span class="location-search-icon" aria-hidden="true">⌕</span>
+            <div id="indiaAddressSuggestions" class="location-suggestions" role="listbox" aria-label="Indian location suggestions" hidden></div>
+          </div>
+          <div id="indiaAddressSearchStatus" class="location-assist-state" role="status" aria-live="polite">Start typing at least 3 letters to see places across India.</div>
+          <button id="indiaMapToggle" class="location-map-toggle" type="button" aria-expanded="false" aria-controls="indiaMapPanel">▧ Show interactive map</button>
+          <div id="indiaMapPanel" class="location-map-panel" hidden>
+            <div id="indiaAddressMap" role="application" aria-label="OpenStreetMap map of India; tap to choose a delivery location"></div>
+            <p class="location-map-foot">Tap on the map or drag the marker to identify a place. Verify the PIN and full house/shop address before saving.</p>
+          </div>
+          <p class="location-assist-note">Location details are suggestions, not postal verification. All existing address fields remain editable. Map data © OpenStreetMap contributors.</p>
+        </section>
       <div class="form-grid">
         <div class="field" data-field="contact_name">
           <label>Receiver name *</label>
@@ -239,8 +286,8 @@ body{font-family:"Segoe UI",Inter,system-ui,sans-serif!important}.shell{width:mi
           <div class="field-error"></div>
         </div>
         <div class="field full">
-          <label>Area / locality</label>
-          <input id="address2" maxlength="180" placeholder="Area, colony, locality">
+          <label>Village / area / locality</label>
+          <input id="address2" maxlength="180" placeholder="Village, area, colony, locality">
         </div>
         <div class="field full">
           <label>Landmark</label>
@@ -289,6 +336,7 @@ body{font-family:"Segoe UI",Inter,system-ui,sans-serif!important}.shell{width:mi
 <div id="toast" class="toast"></div>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script>
 (()=>{
@@ -784,8 +832,199 @@ function renderAddresses(){
  for(const b of $('addressList').querySelectorAll('[data-use]'))b.onclick=()=>selectAddress(Number(b.dataset.use));for(const b of $('addressList').querySelectorAll('[data-edit]'))b.onclick=()=>openForm(Number(b.dataset.edit));for(const b of $('addressList').querySelectorAll('[data-default]'))b.onclick=()=>makeDefault(Number(b.dataset.default));for(const b of $('addressList').querySelectorAll('[data-delete]'))b.onclick=()=>deleteAddress(Number(b.dataset.delete));
 }
 function renderSticky(){const a=selectedAddress(),d=a?.details||{},hasCart=state.cart.length>0,serviceable=a&&a.serviceable!==false;$('selectedLabel').textContent=a?`${labelText(a.label||'Address')} · ${d.contact_name||''}`:(language==='mr'?'पत्ता निवडा':language==='hi'?'पता चुनें':'Choose an address');$('selectedPin').textContent=a?`${d.city||''} · ${d.pincode||''}`:(language==='mr'?'पत्ता निवडलेला नाही':language==='hi'?'पता नहीं चुना':'No address selected');$('continueBtn').disabled=!(a&&serviceable&&hasCart);if(!hasCart)$('continueBtn').textContent=language==='mr'?'कार्ट रिकामी आहे':language==='hi'?'कार्ट खाली है':'Cart is empty';else if(!a)$('continueBtn').textContent=language==='mr'?'पत्ता निवडा':language==='hi'?'पता चुनें':'Select an address';else if(!serviceable)$('continueBtn').textContent=language==='mr'?'PIN सेवा क्षेत्रात नाही':language==='hi'?'PIN सेवा क्षेत्र में नहीं':'PIN not serviceable';else $('continueBtn').textContent=language==='mr'?'पेमेंटकडे जा →':language==='hi'?'भुगतान पर जाएँ →':'Continue to payment →'}
-function openForm(id=null){state.editing=id?state.addresses.find(a=>Number(a.id)===Number(id)):null;clearFieldErrors();const a=state.editing,d=a?.details||{};$('formTitle').textContent=a?(language==='mr'?'पत्ता बदला':language==='hi'?'पता बदलें':'Edit address'):(language==='mr'?'डिलिव्हरी पत्ता जोडा':language==='hi'?'डिलीवरी पता जोड़ें':'Add delivery address');setLabel(a?.label||'Shop');$('contactName').value=d.contact_name||state.profile?.name||'';$('phone').value=d.phone||state.profile?.phone||'';$('businessName').value=d.business_name||state.profile?.business_name||'';$('address1').value=d.address_line1||'';$('address2').value=d.address_line2||'';$('landmark').value=d.landmark||'';$('pincode').value=d.pincode||'';$('city').value=d.city||'';$('taluka').value=d.taluka||'';$('district').value=d.district||'';$('stateInput').value=d.state||'Maharashtra';$('makeDefault').checked=a?.is_default||state.addresses.length===0;updatePinStatus();$('addressOverlay').hidden=false;document.body.style.overflow='hidden';applyStaticLanguage()}
+function openForm(id=null){state.editing=id?state.addresses.find(a=>Number(a.id)===Number(id)):null;clearFieldErrors();const a=state.editing,d=a?.details||{};$('formTitle').textContent=a?(language==='mr'?'पत्ता बदला':language==='hi'?'पता बदलें':'Edit address'):(language==='mr'?'डिलिव्हरी पत्ता जोडा':language==='hi'?'डिलीवरी पता जोड़ें':'Add delivery address');setLabel(a?.label||'Shop');$('contactName').value=d.contact_name||state.profile?.name||'';$('phone').value=d.phone||state.profile?.phone||'';$('businessName').value=d.business_name||state.profile?.business_name||'';$('address1').value=d.address_line1||'';$('address2').value=d.address_line2||'';$('landmark').value=d.landmark||'';$('pincode').value=d.pincode||'';$('city').value=d.city||'';$('taluka').value=d.taluka||'';$('district').value=d.district||'';$('stateInput').value=d.state||'Maharashtra';$('makeDefault').checked=a?.is_default||state.addresses.length===0;updatePinStatus();$('addressOverlay').hidden=false;document.body.style.overflow='hidden';applyStaticLanguage();indiaPrepareFinder()}
 function rerenderLanguage(){if(state.profile)render()}
+
+/* INDIA ADDRESS ASSIST — UI-only: existing Supabase payload, business rules and form validation unchanged. */
+const INDIA_PHOTON_ENDPOINT='https://photon.komoot.io';
+let indiaMap=null, indiaMarker=null, indiaMapLastCoords=null, indiaRequest=null, indiaSearchTimer=null;
+let indiaRequestSeq=0, indiaChoices=[], indiaActive=-1, indiaFormOpen=false;
+const indiaGeoCache=new Map();
+function indiaGeoStatus(message,type=''){
+  const el=$('indiaAddressSearchStatus'); el.textContent=message; el.className='location-assist-state'+(type?' '+type:'');
+}
+function indiaHideSuggestions(){
+  $('indiaAddressSuggestions').hidden=true;
+  $('indiaAddressSearch').setAttribute('aria-expanded','false');
+  $('indiaAddressSearch').removeAttribute('aria-activedescendant');
+  indiaActive=-1;
+}
+function indiaEscape(v){return esc(v??'')}
+function indiaGeoHeading(f){
+  const p=f?.properties||{};
+  return [p.name,p.street,p.housenumber].filter(Boolean).join(', ')||p.city||p.village||'Selected location';
+}
+function indiaGeoSubtitle(f){
+  const p=f?.properties||{};
+  return [...new Set([p.suburb,p.district,p.city,p.county,p.state,p.postcode,'India'].filter(Boolean))].join(' · ');
+}
+function indiaSetActive(i){
+  const buttons=$('indiaAddressSuggestions').querySelectorAll('.location-option');
+  if(!buttons.length)return;
+  indiaActive=(i+buttons.length)%buttons.length;
+  buttons.forEach((b,n)=>{b.classList.toggle('active',n===indiaActive);b.setAttribute('aria-selected',String(n===indiaActive))});
+  $('indiaAddressSearch').setAttribute('aria-activedescendant',buttons[indiaActive].id);
+  buttons[indiaActive].scrollIntoView({block:'nearest'});
+}
+function indiaDrawChoices(features){
+  indiaChoices=features.filter(f=>{const p=f?.properties||{};return String(p.countrycode||'').toUpperCase()==='IN'||String(p.country||'').toLowerCase()==='india'}).slice(0,8);
+  if(!indiaChoices.length){indiaHideSuggestions();indiaGeoStatus('No matching place found. Try the village with its district, or enter the address manually.','warning');return}
+  $('indiaAddressSuggestions').innerHTML=indiaChoices.map((f,i)=>`<button type="button" class="location-option" id="indiaSuggestion${i}" role="option" aria-selected="false" data-india-index="${i}"><strong>${indiaEscape(indiaGeoHeading(f))}</strong><small>${indiaEscape(indiaGeoSubtitle(f))}</small></button>`).join('');
+  $('indiaAddressSuggestions').hidden=false;
+  $('indiaAddressSearch').setAttribute('aria-expanded','true');
+  indiaActive=-1;
+  indiaGeoStatus(`${indiaChoices.length} Indian location suggestion${indiaChoices.length===1?'':'s'}. Select the correct place.`);
+}
+async function indiaSearchLocations(query){
+  const seq=++indiaRequestSeq;
+  if(indiaRequest)indiaRequest.abort();
+  const cacheKey=query.toLowerCase();
+  if(indiaGeoCache.has(cacheKey)){indiaDrawChoices(indiaGeoCache.get(cacheKey));return}
+  const controller=new AbortController();indiaRequest=controller;
+  indiaGeoStatus('Finding Indian addresses…');
+  const params=new URLSearchParams({q:query,countrycode:'IN',limit:'8',lang:'en'});
+  try{
+    const response=await fetch(`${INDIA_PHOTON_ENDPOINT}/api/?${params}`,{signal:controller.signal,headers:{Accept:'application/json'}});
+    if(!response.ok)throw new Error('Location service is unavailable');
+    const json=await response.json();
+    if(seq!==indiaRequestSeq||!indiaFormOpen)return;
+    const features=Array.isArray(json.features)?json.features:[];
+    if(indiaGeoCache.size>=30)indiaGeoCache.delete(indiaGeoCache.keys().next().value);
+    indiaGeoCache.set(cacheKey,features);
+    indiaDrawChoices(features);
+  }catch(e){
+    if(e.name==='AbortError'||seq!==indiaRequestSeq)return;
+    indiaHideSuggestions();indiaGeoStatus('Suggestions unavailable right now. You can still enter all fields manually.','warning');
+  }finally{if(indiaRequest===controller)indiaRequest=null}
+}
+function indiaWriteIfDifferent(id,value){
+  const input=$(id); if(!input||!value)return false;
+  input.value=String(value).slice(0,input.maxLength>0?input.maxLength:200);
+  input.dispatchEvent(new Event('input',{bubbles:true}));return true;
+}
+function indiaApplyGeo(f,fromMap=false){
+  if(!f||!indiaFormOpen)return;
+  const p=f.properties||{};
+  if(p.countrycode&&String(p.countrycode).toUpperCase()!=='IN')return indiaGeoStatus('Please select a location in India.','warning');
+  const isVillage=['village','hamlet','locality','isolated_dwelling'].includes(String(p.osm_value||'').toLowerCase());
+  const locality=p.village||p.suburb||p.locality||p.neighbourhood||p.district||(isVillage?p.name:'');
+  const city=p.city||p.town||p.village||(isVillage?p.name:'')||p.locality||(['city','town'].includes(String(p.osm_value||'').toLowerCase())?p.name:'')||'';
+  const taluka=p.taluka||p.tehsil||p.municipality||'';
+  const district=p.county||p.state_district||p.district||'';
+  const pin=/^\d{6}$/.test(String(p.postcode||'').trim())?String(p.postcode).trim():'';
+  // Replace geographic values only when the provider actually knows them;
+  // do not overwrite the house/shop and landmark entered by the retailer.
+  if(locality)indiaWriteIfDifferent('address2',locality);
+  if(city)indiaWriteIfDifferent('city',city);
+  if(taluka)indiaWriteIfDifferent('taluka',taluka);
+  if(district)indiaWriteIfDifferent('district',district);
+  if(p.state)indiaWriteIfDifferent('stateInput',p.state);
+  if(pin)indiaWriteIfDifferent('pincode',pin);
+  else if($('pincode').value){$('pincode').value='';$('pincode').dispatchEvent(new Event('input',{bubbles:true}))}
+  if(!$('address1').value.trim()){
+    const street=[p.housenumber,p.street].filter(Boolean).join(', ');
+    if(street.length>=5)indiaWriteIfDifferent('address1',street);
+  }
+  updatePinStatus();
+  const loc=f.geometry?.coordinates;
+  if(Array.isArray(loc)&&loc.length>=2)indiaLocateMap(Number(loc[1]),Number(loc[0]));
+  const name=indiaGeoHeading(f);$('indiaAddressSearch').value=name;
+  indiaHideSuggestions();
+  const missing=[!pin&&'PIN code',!district&&'district',!city&&'city / village'].filter(Boolean);
+  indiaGeoStatus(`✓ ${fromMap?'Map location':'Location'} selected. ${missing.length?'Please check / complete: '+missing.join(', ')+'.':'Review the address details before saving.'}`,'success');
+}
+function indiaLocateMap(lat,lng){
+  if(!Number.isFinite(lat)||!Number.isFinite(lng))return;
+  indiaMapLastCoords=[lat,lng];
+  if(!indiaMap&&(!$('indiaMapPanel').hidden))indiaInitMap();
+  if(!indiaMap)return;
+  indiaMap.setView([lat,lng],Math.max(indiaMap.getZoom(),14));
+  if(indiaMarker)indiaMarker.setLatLng([lat,lng]);
+  else{
+    indiaMarker=window.L.marker([lat,lng],{draggable:true}).addTo(indiaMap);
+    indiaMarker.on('dragend',()=>{const point=indiaMarker.getLatLng();indiaReverse(point.lat,point.lng)});
+  }
+}
+async function indiaReverse(lat,lng){
+  if(!indiaFormOpen||!Number.isFinite(lat)||!Number.isFinite(lng))return;
+  if(lat<6||lat>38||lng<68||lng>98)return indiaGeoStatus('Choose a point inside India.','warning');
+  const seq=++indiaRequestSeq;
+  if(indiaRequest)indiaRequest.abort();
+  const controller=new AbortController();indiaRequest=controller;
+  indiaGeoStatus('Looking up the selected map position…');
+  try{
+    const params=new URLSearchParams({lat:String(lat),lon:String(lng),radius:'2',limit:'5',lang:'en'});
+    const response=await fetch(`${INDIA_PHOTON_ENDPOINT}/reverse?${params}`,{signal:controller.signal});
+    if(!response.ok)throw new Error('Reverse search failed');
+    const data=await response.json();
+    if(seq!==indiaRequestSeq||!indiaFormOpen)return;
+    const features=(data.features||[]).filter(f=>String(f.properties?.countrycode||'').toUpperCase()==='IN');
+    if(features.length)indiaApplyGeo(features[0],true);
+    else indiaGeoStatus('No mapped address was found here. Enter the village, district and PIN code manually.','warning');
+  }catch(e){if(e.name!=='AbortError'&&seq===indiaRequestSeq)indiaGeoStatus('Map lookup unavailable. Enter the location details manually.','warning')}
+  finally{if(indiaRequest===controller)indiaRequest=null}
+}
+function indiaInitMap(){
+  if(indiaMap){setTimeout(()=>{if(indiaMap)indiaMap.invalidateSize()},50);return}
+  if(!window.L){indiaGeoStatus('Map library could not load. Text search and manual address entry remain available.','warning');return}
+  indiaMap=L.map('indiaAddressMap',{scrollWheelZoom:false,zoomControl:true}).setView([22.9,79.0],5);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+  }).addTo(indiaMap);
+  indiaMap.on('click',e=>{indiaLocateMap(e.latlng.lat,e.latlng.lng);indiaReverse(e.latlng.lat,e.latlng.lng)});
+  if(indiaMapLastCoords)indiaLocateMap(indiaMapLastCoords[0],indiaMapLastCoords[1]);
+  setTimeout(()=>{if(indiaMap)indiaMap.invalidateSize()},100);
+}
+function indiaResetFinder(){
+  indiaFormOpen=false;indiaRequestSeq++;
+  clearTimeout(indiaSearchTimer);
+  if(indiaRequest){indiaRequest.abort();indiaRequest=null}
+  indiaHideSuggestions();indiaChoices=[];
+  $('indiaAddressSearch').value='';
+  indiaGeoStatus('Start typing at least 3 letters to see places across India.');
+  $('indiaMapPanel').hidden=true;$('indiaMapToggle').textContent='▧ Show interactive map';
+  $('indiaMapToggle').setAttribute('aria-expanded','false');
+  if(indiaMap){indiaMap.remove();indiaMap=null;indiaMarker=null}
+  indiaMapLastCoords=null;
+}
+function indiaPrepareFinder(){
+  indiaResetFinder();indiaFormOpen=true;
+}
+(function indiaSetupEvents(){
+  const search=$('indiaAddressSearch'),suggestions=$('indiaAddressSuggestions');
+  search.addEventListener('input',()=>{
+    clearTimeout(indiaSearchTimer);indiaRequestSeq++;
+    if(indiaRequest){indiaRequest.abort();indiaRequest=null}
+    indiaHideSuggestions();
+    const query=search.value.trim();
+    if(query.length<3){indiaGeoStatus('Enter at least 3 letters of a village, town, city or area.');return}
+    indiaGeoStatus('Searching…');
+    indiaSearchTimer=setTimeout(()=>indiaSearchLocations(query),450);
+  });
+  search.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){indiaHideSuggestions();return}
+    if($('indiaAddressSuggestions').hidden)return;
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();indiaSetActive(indiaActive+(e.key==='ArrowDown'?1:-1))}
+    else if(e.key==='Enter'&&indiaActive>=0){e.preventDefault();indiaApplyGeo(indiaChoices[indiaActive])}
+  });
+  suggestions.addEventListener('mousedown',e=>{if(e.target.closest('.location-option'))e.preventDefault()});
+  suggestions.addEventListener('click',e=>{
+    const target=e.target.closest('[data-india-index]');if(!target)return;
+    const f=indiaChoices[Number(target.dataset.indiaIndex)];if(f)indiaApplyGeo(f);
+  });
+  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.location-search-wrap'))indiaHideSuggestions()});
+  $('indiaMapToggle').addEventListener('click',()=>{
+    const panel=$('indiaMapPanel'),expanded=panel.hidden;
+    panel.hidden=!expanded;
+    $('indiaMapToggle').setAttribute('aria-expanded',String(expanded));
+    $('indiaMapToggle').textContent=expanded?'▧ Hide interactive map':'▧ Show interactive map';
+    if(expanded)indiaInitMap();
+  });
+  $('closeSheet').addEventListener('click',indiaResetFinder);
+  $('cancelForm').addEventListener('click',indiaResetFinder);
+  $('addressOverlay').addEventListener('click',e=>{if(e.target===$('addressOverlay'))indiaResetFinder()});
+})();
+
 
 boot().then(()=>hidePageLoader()).catch(err=>{hidePageLoader();
   console.error(err);
